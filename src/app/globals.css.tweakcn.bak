@@ -1,0 +1,170 @@
+/* =========================================================================
+   arduino-academy — Theme
+   Kompass: klar & fokussiert, soft-premium, kalt/neutral mit warmem Touch,
+   dezenter Teal/Blau-Akzent. Optimiert fuer Lesbarkeit auf Schul-iPads.
+
+   Quelle: ~/Desktop/arduino-academy-theme.css (tweakcn-Export).
+   Backup vor shadcn init: src/app/globals.css.tweakcn.bak
+   ========================================================================= */
+
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.625rem; /* soft-premium: leicht gerundet, freundlich */
+
+  /* Grundflaechen — neutral, ruhig, hoher Kontrast fuer Lesbarkeit */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.16 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0 0);
+
+  /* Akzent — gedaempftes Teal mit leichtem Blau-Einschlag (Hue ~195) */
+  --primary: oklch(0.57 0.105 195);
+  --primary-foreground: oklch(0.985 0 0);
+
+  /* Sekundaer / gedaempft — neutrale Grautoene */
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.22 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.55 0 0);
+
+  /* Accent — blasse Teal-Toenung fuer Hover-/Aktiv-Zustaende */
+  --accent: oklch(0.95 0.025 195);
+  --accent-foreground: oklch(0.40 0.08 195);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.57 0.105 195);
+
+  /* Diagramm-/Badge-Palette — Teal-Anker + ein warmer Ton (chart-4) */
+  --chart-1: oklch(0.57 0.105 195); /* teal */
+  --chart-2: oklch(0.62 0.12 230);  /* blau  */
+  --chart-3: oklch(0.68 0.13 160);  /* gruen-teal */
+  --chart-4: oklch(0.76 0.14 75);   /* amber — der "warme Touch" */
+  --chart-5: oklch(0.60 0.14 300);  /* violett */
+
+  /* Sidebar */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.16 0 0);
+  --sidebar-primary: oklch(0.57 0.105 195);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.95 0.025 195);
+  --sidebar-accent-foreground: oklch(0.40 0.08 195);
+  --sidebar-border: oklch(0.92 0 0);
+  --sidebar-ring: oklch(0.57 0.105 195);
+
+  /* Weiche Schatten — soft-premium, dezent kuehl getoent */
+  --shadow-xs: 0 1px 2px 0 hsl(200 25% 18% / 0.05);
+  --shadow-sm: 0 1px 3px 0 hsl(200 25% 18% / 0.07), 0 1px 2px -1px hsl(200 25% 18% / 0.05);
+  --shadow-md: 0 4px 10px -2px hsl(200 25% 18% / 0.08), 0 2px 4px -2px hsl(200 25% 18% / 0.05);
+  --shadow-lg: 0 10px 24px -4px hsl(200 25% 18% / 0.10), 0 4px 8px -4px hsl(200 25% 18% / 0.06);
+}
+
+.dark {
+  /* Dunkle Grundflaechen — minimaler kuehler Blau-Stich = ruhige Lernumgebung */
+  --background: oklch(0.17 0.008 240);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.21 0.008 240);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.21 0.008 240);
+  --popover-foreground: oklch(0.97 0 0);
+
+  /* Akzent heller, damit Teal auf Dunkel "pop"t */
+  --primary: oklch(0.72 0.12 195);
+  --primary-foreground: oklch(0.18 0.01 240);
+
+  --secondary: oklch(0.27 0.008 240);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.27 0.008 240);
+  --muted-foreground: oklch(0.71 0.01 240);
+
+  --accent: oklch(0.30 0.04 195);
+  --accent-foreground: oklch(0.95 0.02 195);
+
+  --destructive: oklch(0.70 0.19 22);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.30 0.01 240);
+  --input: oklch(0.30 0.01 240);
+  --ring: oklch(0.72 0.12 195);
+
+  --chart-1: oklch(0.72 0.12 195);
+  --chart-2: oklch(0.68 0.13 230);
+  --chart-3: oklch(0.74 0.14 160);
+  --chart-4: oklch(0.80 0.14 75);
+  --chart-5: oklch(0.68 0.15 300);
+
+  --sidebar: oklch(0.21 0.008 240);
+  --sidebar-foreground: oklch(0.97 0 0);
+  --sidebar-primary: oklch(0.72 0.12 195);
+  --sidebar-primary-foreground: oklch(0.18 0.01 240);
+  --sidebar-accent: oklch(0.30 0.04 195);
+  --sidebar-accent-foreground: oklch(0.95 0.02 195);
+  --sidebar-border: oklch(0.30 0.01 240);
+  --sidebar-ring: oklch(0.72 0.12 195);
+
+  --shadow-xs: 0 1px 2px 0 hsl(220 40% 4% / 0.30);
+  --shadow-sm: 0 1px 3px 0 hsl(220 40% 4% / 0.40), 0 1px 2px -1px hsl(220 40% 4% / 0.30);
+  --shadow-md: 0 4px 10px -2px hsl(220 40% 4% / 0.45), 0 2px 4px -2px hsl(220 40% 4% / 0.30);
+  --shadow-lg: 0 10px 24px -4px hsl(220 40% 4% / 0.50), 0 4px 8px -4px hsl(220 40% 4% / 0.35);
+}
+
+/* Tailwind-v4-Mapping: macht die Variablen als Utility-Klassen verfuegbar */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  /* Fonts aus create-next-app (Geist) erhalten */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}

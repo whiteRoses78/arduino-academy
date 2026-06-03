@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# webapp-saas-erstellen
+.env.local
+.mcp.json
+.claude/settings.local.json
+# .env.example ist Vorlage ohne Secrets -> committen (Negation nach .env*)
+!.env.example

@@ -1,26 +1,332 @@
+/* =========================================================================
+   arduino-academy — Theme
+   Kompass: klar & fokussiert, soft-premium, kalt/neutral mit warmem Touch,
+   dezenter Teal/Blau-Akzent. Optimiert fuer Lesbarkeit auf Schul-iPads.
+
+   Quelle: ~/Desktop/arduino-academy-theme.css (tweakcn-Export).
+   Backup: src/app/globals.css.tweakcn.bak
+   Merge-Hinweis: Farbwerte = tweakcn-Theme; Imports/@apply/extra-Radii = shadcn init.
+   ========================================================================= */
+
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 0.625rem; /* soft-premium: leicht gerundet, freundlich */
+
+  /* Grundflaechen — neutral, ruhig, hoher Kontrast fuer Lesbarkeit */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.16 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0 0);
+
+  /* Akzent — gedaempftes Teal mit leichtem Blau-Einschlag (Hue ~195) */
+  --primary: oklch(0.57 0.105 195);
+  --primary-foreground: oklch(0.985 0 0);
+
+  /* Sekundaer / gedaempft — neutrale Grautoene */
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.22 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.55 0 0);
+
+  /* Accent — blasse Teal-Toenung fuer Hover-/Aktiv-Zustaende */
+  --accent: oklch(0.95 0.025 195);
+  --accent-foreground: oklch(0.40 0.08 195);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.57 0.105 195);
+
+  /* Diagramm-/Badge-Palette — Teal-Anker + ein warmer Ton (chart-4) */
+  --chart-1: oklch(0.57 0.105 195); /* teal */
+  --chart-2: oklch(0.62 0.12 230);  /* blau  */
+  --chart-3: oklch(0.68 0.13 160);  /* gruen-teal */
+  --chart-4: oklch(0.76 0.14 75);   /* amber — der "warme Touch" */
+  --chart-5: oklch(0.60 0.14 300);  /* violett */
+
+  /* Sidebar */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.16 0 0);
+  --sidebar-primary: oklch(0.57 0.105 195);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.95 0.025 195);
+  --sidebar-accent-foreground: oklch(0.40 0.08 195);
+  --sidebar-border: oklch(0.92 0 0);
+  --sidebar-ring: oklch(0.57 0.105 195);
+
+  /* Weiche Schatten — soft-premium, dezent kuehl getoent */
+  --shadow-xs: 0 1px 2px 0 hsl(200 25% 18% / 0.05);
+  --shadow-sm: 0 1px 3px 0 hsl(200 25% 18% / 0.07), 0 1px 2px -1px hsl(200 25% 18% / 0.05);
+  --shadow-md: 0 4px 10px -2px hsl(200 25% 18% / 0.08), 0 2px 4px -2px hsl(200 25% 18% / 0.05);
+  --shadow-lg: 0 10px 24px -4px hsl(200 25% 18% / 0.10), 0 4px 8px -4px hsl(200 25% 18% / 0.06);
 }
 
+.dark {
+  /* Dunkle Grundflaechen — minimaler kuehler Blau-Stich = ruhige Lernumgebung */
+  --background: oklch(0.17 0.008 240);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.21 0.008 240);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.21 0.008 240);
+  --popover-foreground: oklch(0.97 0 0);
+
+  /* Akzent heller, damit Teal auf Dunkel "pop"t */
+  --primary: oklch(0.72 0.12 195);
+  --primary-foreground: oklch(0.18 0.01 240);
+
+  --secondary: oklch(0.27 0.008 240);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.27 0.008 240);
+  --muted-foreground: oklch(0.71 0.01 240);
+
+  --accent: oklch(0.30 0.04 195);
+  --accent-foreground: oklch(0.95 0.02 195);
+
+  --destructive: oklch(0.70 0.19 22);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.30 0.01 240);
+  --input: oklch(0.30 0.01 240);
+  --ring: oklch(0.72 0.12 195);
+
+  --chart-1: oklch(0.72 0.12 195);
+  --chart-2: oklch(0.68 0.13 230);
+  --chart-3: oklch(0.74 0.14 160);
+  --chart-4: oklch(0.80 0.14 75);
+  --chart-5: oklch(0.68 0.15 300);
+
+  --sidebar: oklch(0.21 0.008 240);
+  --sidebar-foreground: oklch(0.97 0 0);
+  --sidebar-primary: oklch(0.72 0.12 195);
+  --sidebar-primary-foreground: oklch(0.18 0.01 240);
+  --sidebar-accent: oklch(0.30 0.04 195);
+  --sidebar-accent-foreground: oklch(0.95 0.02 195);
+  --sidebar-border: oklch(0.30 0.01 240);
+  --sidebar-ring: oklch(0.72 0.12 195);
+
+  --shadow-xs: 0 1px 2px 0 hsl(220 40% 4% / 0.30);
+  --shadow-sm: 0 1px 3px 0 hsl(220 40% 4% / 0.40), 0 1px 2px -1px hsl(220 40% 4% / 0.30);
+  --shadow-md: 0 4px 10px -2px hsl(220 40% 4% / 0.45), 0 2px 4px -2px hsl(220 40% 4% / 0.30);
+  --shadow-lg: 0 10px 24px -4px hsl(220 40% 4% / 0.50), 0 4px 8px -4px hsl(220 40% 4% / 0.35);
+}
+
+/* Tailwind-v4-Mapping: macht die Variablen als Utility-Klassen verfuegbar */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  /* Fonts: layout.tsx liefert --font-geist-sans / --font-geist-mono (next/font) */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =========================================================================
+   Lesson-Content — Port der Vanilla-Content-Klassen (css/style.css) ins
+   App-Theme. Gescopt unter .lesson-content (trifft nur gerenderten
+   Lektions-HTML). Vanilla-Vars gemappt: --text->foreground, --accent->primary,
+   --sidebar-bg->muted, --border->border. Box-Farben dark-mode-fest via color-mix.
+   ========================================================================= */
+.lesson-content { color: var(--foreground); line-height: 1.7; }
+.lesson-content h2 { font-size: 1.4rem; font-weight: 600; margin: 1.75rem 0 0.75rem; }
+.lesson-content h3 { font-size: 1.15rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+.lesson-content p { margin-bottom: 1rem; }
+.lesson-content ul, .lesson-content ol { margin: 0 0 1rem 1.25rem; }
+.lesson-content li { margin-bottom: 0.35rem; }
+.lesson-content strong { font-weight: 600; }
+.lesson-content code {
+  font-family: var(--font-mono);
+  background: var(--muted);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.lesson-content .section-divider {
+  border: none; height: 1px; background: var(--border); margin: 2rem 0;
+}
+
+.lesson-content .info-card {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.lesson-content .info-card h3 { margin-top: 0; }
+
+.lesson-content .analogy-box {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.lesson-content .analogy-box::before {
+  content: "💡"; font-size: 1.3rem; margin-right: 0.5rem;
+}
+
+.lesson-content .tip-box {
+  background: color-mix(in oklch, var(--primary) 12%, var(--background));
+  border-left: 4px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+.lesson-content .tip-box strong { color: var(--primary); }
+
+.lesson-content .warning-box {
+  background: color-mix(in oklch, var(--chart-4) 20%, var(--background));
+  border-left: 4px solid var(--chart-4);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.lesson-content .icon-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  margin: 1rem 0; font-size: 0.95rem;
+}
+.lesson-content .icon-table th {
+  background: var(--primary); color: var(--primary-foreground);
+  padding: 0.6rem 1rem; text-align: left; font-weight: 600;
+}
+.lesson-content .icon-table th:first-child { border-radius: 8px 0 0 0; }
+.lesson-content .icon-table th:last-child { border-radius: 0 8px 0 0; }
+.lesson-content .icon-table td {
+  padding: 0.6rem 1rem; border-bottom: 1px solid var(--border);
+}
+.lesson-content .icon-table tr:nth-child(even) td { background: var(--muted); }
+
+/* SVGs sind via viewBox + inline max-width:100% responsive — sichern. */
+.lesson-content svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+/* example-step (Beispiel-Akkordeon, <details>) */
+.lesson-content .example-step {
+  background: var(--muted); border: 1px solid var(--border);
+  border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden;
+}
+.lesson-content .example-step summary {
+  padding: 0.75rem 1rem; cursor: pointer; font-weight: 600; list-style: none;
+}
+.lesson-content .example-step summary::-webkit-details-marker { display: none; }
+.lesson-content .example-step summary::before {
+  content: "▶"; font-size: 0.7rem; margin-right: 0.5rem;
+  display: inline-block; transition: transform 0.2s;
+}
+.lesson-content .example-step[open] summary::before { transform: rotate(90deg); }
+.lesson-content .step-content { padding: 0 1rem 1rem; }
+
+/* Code: Ligaturen aus — sonst zieht die Mono-Schrift // und ===== zu
+   Sonderzeichen-Glyphen zusammen, die Buchstaben überdecken. */
+.lesson-content pre, .lesson-content code {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+.lesson-content pre { overflow-x: auto; }
+/* Block-Code (in <pre>) bekommt KEINEN Inline-Chip-Hintergrund pro Zeile. */
+.lesson-content pre code { background: none; padding: 0; border-radius: 0; }
+
+/* code-card — dunkle, terminal-artige Box (Port aus Vanilla style.css). */
+.lesson-content .code-card {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+.lesson-content .code-card h4 {
+  color: #94a3b8; font-size: 0.85rem; text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 0.75rem;
+}
+.lesson-content .code-card pre { margin: 0; font-size: 0.95rem; line-height: 1.6; }
+.lesson-content .code-card code { color: #e2e8f0; font-size: 0.95rem; }
+.lesson-content .code-card .comment { color: #94a3b8; }
+.lesson-content .code-card .keyword { color: #7dd3fc; }
+.lesson-content .code-card .function { color: #fcd34d; }
+.lesson-content .code-card .value { color: #86efac; }
+
+/* =========================================================================
+   Polish (Phase 5)
+   ========================================================================= */
+
+/* Tabellen mobil bändigen: in einen horizontal scrollbaren Wrapper (.table-wrap,
+   gesetzt in lesson-content.tsx). Die Tabelle behält lesbare Spaltenbreiten und
+   normalen Wort-Umbruch; nur bei echtem Überhang scrollt der Wrapper — kein
+   Seiten-Overflow mehr (gefunden @375 in analog/spannungsteiler). */
+.lesson-content .table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1rem 0;
+}
+.lesson-content .table-wrap .icon-table { margin: 0; }
+
+/* prefers-reduced-motion (Pflicht laut design-system.md): Animationen und
+   Transitions für Nutzer mit "Bewegung reduzieren" praktisch deaktivieren. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
