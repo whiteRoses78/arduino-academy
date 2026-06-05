@@ -53,8 +53,12 @@ create index if not exists exercises_lesson_position_idx on public.exercises (le
 create table if not exists public.profiles (
   id           uuid primary key references auth.users(id) on delete cascade,
   display_name text,
+  role         text not null default 'student',  -- student|teacher|admin (Spec 04)
   created_at   timestamptz not null default now()
 );
+alter table public.profiles drop constraint if exists profiles_role_chk;
+alter table public.profiles add constraint profiles_role_chk
+  check (role in ('student','teacher','admin'));
 
 -- ---------- USER_PROGRESS (Trio: Status + Leitner-SR + Selbsteinschaetzung) ----------
 create table if not exists public.user_progress (
