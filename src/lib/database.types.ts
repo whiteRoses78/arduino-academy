@@ -82,6 +82,7 @@ export type Database = {
           id: string
           legacy_id: number | null
           module: string
+          parts: Json
           position: number
           slug: string
           title: string
@@ -94,6 +95,7 @@ export type Database = {
           id?: string
           legacy_id?: number | null
           module: string
+          parts?: Json
           position: number
           slug: string
           title: string
@@ -106,6 +108,7 @@ export type Database = {
           id?: string
           legacy_id?: number | null
           module?: string
+          parts?: Json
           position?: number
           slug?: string
           title?: string
