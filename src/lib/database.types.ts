@@ -73,6 +73,41 @@ export type Database = {
           },
         ]
       }
+      lesson_solutions: {
+        Row: {
+          didactics: string | null
+          lesson_id: string
+          mistakes: string | null
+          sketch: string | null
+          updated_at: string
+          wiring: string | null
+        }
+        Insert: {
+          didactics?: string | null
+          lesson_id: string
+          mistakes?: string | null
+          sketch?: string | null
+          updated_at?: string
+          wiring?: string | null
+        }
+        Update: {
+          didactics?: string | null
+          lesson_id?: string
+          mistakes?: string | null
+          sketch?: string | null
+          updated_at?: string
+          wiring?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_solutions_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: true
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lessons: {
         Row: {
           content: Json
@@ -128,16 +163,19 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          role: string
         }
         Insert: {
           created_at?: string
           display_name?: string | null
           id: string
+          role?: string
         }
         Update: {
           created_at?: string
           display_name?: string | null
           id?: string
+          role?: string
         }
         Relationships: []
       }
@@ -190,7 +228,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      list_teachers: {
+        Args: never
+        Returns: {
+          email: string
+          id: string
+          role: string
+        }[]
+      }
+      set_teacher_role: {
+        Args: { make_teacher: boolean; target_email: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
