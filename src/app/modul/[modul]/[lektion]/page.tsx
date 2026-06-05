@@ -4,6 +4,8 @@ import { getLesson, getExercises, type LessonContent } from "@/lib/lessons";
 import { createClient } from "@/lib/supabase/server";
 import { LessonContentView } from "@/components/lesson-content";
 import { ExerciseSection } from "@/components/exercises/exercise-section";
+import { PartsList } from "@/components/parts-list";
+import { getLessonParts } from "@/lib/parts";
 import type { ExercisePayload } from "@/lib/exercises";
 
 type Props = { params: Promise<{ modul: string; lektion: string }> };
@@ -37,6 +39,7 @@ export default async function LessonPage({ params }: Props) {
       <h1 className="mt-4 text-3xl font-semibold tracking-tight">
         {lesson.title}
       </h1>
+      <PartsList parts={getLessonParts(lesson.parts)} />
       <LessonContentView content={content} />
       <ExerciseSection
         exercises={exercises.map((e) => ({
