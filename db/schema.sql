@@ -30,6 +30,7 @@ create table if not exists public.lessons (
   slug          text not null,
   title         text not null,
   content       jsonb not null default '{}'::jsonb,  -- Erklaerung/Tabs/Praxis/SVG-Refs
+  parts         jsonb not null default '[]'::jsonb,  -- Bauteilliste [{name,qty?}] (Spec 03); leer = kein Block
   exam_relevant boolean not null default false,
   created_at    timestamptz not null default now(),
   unique (course_id, slug)
