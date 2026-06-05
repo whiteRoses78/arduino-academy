@@ -18,6 +18,8 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 // PostgREST-Client direkt (kein Realtime/WebSocket -> laeuft auch auf Node 20).
 import { PostgrestClient } from "@supabase/postgrest-js";
+// Bauteildaten je Lektion (Spec 03) -> re-seed-fest in die parts-Spalte.
+import { PARTS } from "./parts-data.mjs";
 
 const VANILLA_DIR = join(homedir(), "Desktop/Arduino-Lernprogramm/js");
 
@@ -156,6 +158,7 @@ const lessons = LESSONS.map((lesson, i) => {
       slug: slugify(title),
       title,
       content: patchContent(content),
+      parts: PARTS[moduleKey]?.[slugify(title)] ?? [],
       exam_relevant: false,
     },
     exercises: exercises ?? [],
