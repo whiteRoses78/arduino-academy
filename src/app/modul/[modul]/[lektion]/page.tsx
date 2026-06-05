@@ -1,11 +1,19 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getLesson, getExercises, type LessonContent } from "@/lib/lessons";
+import {
+  getLesson,
+  getExercises,
+  getLessonSolution,
+  type LessonContent,
+} from "@/lib/lessons";
 import { createClient } from "@/lib/supabase/server";
 import { LessonContentView } from "@/components/lesson-content";
 import { ExerciseSection } from "@/components/exercises/exercise-section";
 import { PartsList } from "@/components/parts-list";
 import { getLessonParts } from "@/lib/parts";
+import { getCurrentUserRole } from "@/lib/auth/role";
+import { canViewSolutions } from "@/lib/roles";
+import { TeacherSolution } from "@/components/teacher-solution";
 import type { ExercisePayload } from "@/lib/exercises";
 
 type Props = { params: Promise<{ modul: string; lektion: string }> };
@@ -27,6 +35,13 @@ export default async function LessonPage({ params }: Props) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  // Lehrer-Lösung nur für teacher/admin laden (RLS verweigert sie ohnehin allen
+  // anderen — das hier spart den Query und blendet den Block korrekt aus).
+  const role = await getCurrentUserRole();
+  const solution = canViewSolutions(role)
+    ? await getLessonSolution(lesson.id)
+    : null;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
@@ -51,6 +66,7 @@ export default async function LessonPage({ params }: Props) {
         lessonId={lesson.id}
         isLoggedIn={!!user}
       />
+      {solution && <TeacherSolution solution={solution} />}
     </main>
   );
 }
