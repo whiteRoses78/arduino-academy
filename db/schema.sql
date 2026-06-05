@@ -173,3 +173,42 @@ create trigger on_auth_user_created
 -- Haertung: SECURITY DEFINER-Funktion nicht per PostgREST-RPC aufrufbar machen
 -- (Trigger feuert ueber den Trigger-Mechanismus, braucht kein EXECUTE-Recht).
 revoke execute on function public.handle_new_user() from public, anon, authenticated;
+
+-- =========================================================================
+-- Lehrer-Rollenvergabe (Spec 04) — SECURITY DEFINER, intern admin-checked.
+-- Die App nutzt nur den anon-Key und kommt nicht an auth.users; diese
+-- Funktionen erledigen Rollenvergabe + Lehrerliste sicher per RPC.
+-- =========================================================================
+create or replace function public.set_teacher_role(target_email text, make_teacher boolean)
+returns void language plpgsql security definer set search_path = public as $$
+declare target_id uuid;
+begin
+  if not exists (select 1 from public.profiles where id = auth.uid() and role = 'admin') then
+    raise exception 'Nur Admins duerfen Rollen vergeben.';
+  end if;
+  select id into target_id from auth.users where lower(email) = lower(target_email);
+  if target_id is null then
+    raise exception 'Kein Konto mit dieser E-Mail gefunden.';
+  end if;
+  update public.profiles
+    set role = case when make_teacher then 'teacher' else 'student' end
+    where id = target_id;
+end; $$;
+
+create or replace function public.list_teachers()
+returns table (id uuid, email text, role text)
+language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.profiles where id = auth.uid() and role = 'admin') then
+    raise exception 'Nur Admins.';
+  end if;
+  return query
+    select p.id, u.email::text, p.role
+    from public.profiles p join auth.users u on u.id = p.id
+    where p.role in ('teacher','admin') order by u.email;
+end; $$;
+
+revoke execute on function public.set_teacher_role(text, boolean) from public, anon;
+revoke execute on function public.list_teachers() from public, anon;
+grant execute on function public.set_teacher_role(text, boolean) to authenticated;
+grant execute on function public.list_teachers() to authenticated;
