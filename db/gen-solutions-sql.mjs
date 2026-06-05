@@ -1,13 +1,17 @@
 // Generiert EIN Upsert-Statement aus solutions-data.mjs (DRY: gleiche Quelle
 // fuer alle Befuellungen). Ausgabe nach stdout -> via Supabase MCP execute_sql.
-//   node db/gen-solutions-sql.mjs
+//   node db/gen-solutions-sql.mjs            # alle Module
+//   node db/gen-solutions-sql.mjs digital    # nur ein Modul
 import { SOLUTIONS } from "./solutions-data.mjs";
+
+const filter = process.argv[2]; // optional: nur dieses Modul befuellen
 
 const esc = (v) =>
   v == null || v === "" ? "null" : `'${String(v).replaceAll("'", "''")}'`;
 
 const rows = [];
 for (const [module, lessons] of Object.entries(SOLUTIONS)) {
+  if (filter && module !== filter) continue;
   for (const [slug, s] of Object.entries(lessons)) {
     rows.push(
       `('${module}','${slug}',${esc(s.sketch)},${esc(s.wiring)},${esc(s.mistakes)},${esc(s.didactics)})`,
