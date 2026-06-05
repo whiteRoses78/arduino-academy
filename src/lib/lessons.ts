@@ -5,6 +5,8 @@ import type { Database } from "@/lib/database.types";
 export type Course = Database["public"]["Tables"]["courses"]["Row"];
 export type Lesson = Database["public"]["Tables"]["lessons"]["Row"];
 export type ExerciseRow = Database["public"]["Tables"]["exercises"]["Row"];
+export type LessonSolution =
+  Database["public"]["Tables"]["lesson_solutions"]["Row"];
 
 // Form des content-JSONB (faithful zur Vanilla-Struktur lessons-grundlagen.js).
 export type LessonContent = {
@@ -49,6 +51,20 @@ export async function getLesson(moduleSlug: string, lessonSlug: string) {
     .single();
 
   return lesson; // Lesson | null
+}
+
+// Lehrer-Lösung einer Lektion. RLS gibt sie nur teacher/admin zurück — für
+// alle anderen kommt null, selbst wenn diese Funktion aufgerufen wird.
+export async function getLessonSolution(
+  lessonId: string,
+): Promise<LessonSolution | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("lesson_solutions")
+    .select("*")
+    .eq("lesson_id", lessonId)
+    .maybeSingle();
+  return data ?? null;
 }
 
 // Übungen einer Lektion, sortiert nach position.
