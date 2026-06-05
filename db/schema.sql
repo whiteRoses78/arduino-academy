@@ -49,6 +49,26 @@ create table if not exists public.exercises (
 );
 create index if not exists exercises_lesson_position_idx on public.exercises (lesson_id, position);
 
+-- ---------- LESSON_SOLUTIONS (Lehrer-only, Spec 04) ----------
+-- Geheime Lehrer-Loesungen pro Lektion. Eigene Tabelle statt Spalte auf lessons,
+-- weil lessons public-read ist -> hier strenge RLS (nur teacher/admin lesen).
+create table if not exists public.lesson_solutions (
+  lesson_id  uuid primary key references public.lessons(id) on delete cascade,
+  sketch     text,                    -- kompletter Arduino-Sketch
+  wiring     text,                    -- Aufbau-/Verdrahtungshinweis
+  mistakes   text,                    -- haeufige Schuelerfehler
+  didactics  text,                    -- didaktischer Hinweis
+  updated_at timestamptz not null default now()
+);
+alter table public.lesson_solutions enable row level security;
+drop policy if exists "teachers read solutions" on public.lesson_solutions;
+create policy "teachers read solutions" on public.lesson_solutions
+  for select using (exists (
+    select 1 from public.profiles p where p.id = auth.uid() and p.role in ('teacher','admin')
+  ));
+-- Nur authenticated SELECT (RLS schraenkt auf teacher/admin ein); kein anon, kein write.
+grant select on public.lesson_solutions to authenticated;
+
 -- ---------- PROFILES ----------
 create table if not exists public.profiles (
   id           uuid primary key references auth.users(id) on delete cascade,
