@@ -46,3 +46,6 @@ next-env.d.ts
 .claude/settings.local.json
 # .env.example ist Vorlage ohne Secrets -> committen (Negation nach .env*)
 !.env.example
+
+# lokale Design-Backups (Theme-Quelle lebt versioniert in src/app/globals.css)
+/docs/design/
