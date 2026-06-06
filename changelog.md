@@ -253,3 +253,11 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 - **Commit `35859de`** (`chore: PDF-Helfer + lokale Design-Backups ausschließen`) liegt lokal auf `main`, **bewusst noch nicht gepusht** (Push = Netlify-Deploy, App nicht betroffen) → reist beim nächsten Feature-Push mit.
 
 ### → NÄCHSTER SCHRITT (Marco-Wahl): Verkaufs-Teilprojekt (Lizenzcode, Beamten-Nebentätigkeit zuerst klären) ODER Inhalte (Arbeitsblätter, weitere Prüfungsprojekte, Schüler-Anleitungen). Vor echtem öffentlichem Launch weiterhin offen: E-Mail-Bestätigung AN, echte Impressum-Daten, Leaked-PW-Schutz (Pro-Plan).
+
+---
+
+## 2026-06-06 — Admin-Link im Header (nur für Admins) ✅ LIVE
+
+- **Was:** Eingeloggte Admins sehen jetzt einen „Admin"-Knopf im Header (neben „Dashboard"), der direkt auf `/admin` führt — vorher war die Verwaltungsseite nur per manueller URL erreichbar. Für Lehrer und Schüler bleibt der Link unsichtbar.
+- **Wie:** `src/components/site-header.tsx` (Server Component) holt bei eingeloggtem User `getCurrentUserRole()` und blendet den Link via `canAdminister(role)` ein — dieselben getesteten Helfer, die `/admin` + die Lösungs-RLS absichern (defense in depth, kein neuer Sicherheits-Pfad). Gleicher ghost-Button-Stil wie „Dashboard" (Hover/Focus inklusive).
+- **Verifiziert:** tsc + lint + 28 Tests + `npm run build` grün (10 Routes). Commit `9e4231b`. Mit diesem Push gingen die zuvor lokal wartenden Commits `35859de` (PDF-Helfer) + `54acbf8` (changelog) ebenfalls live → `git push` als whiteRoses78 → Netlify-Auto-Deploy.
