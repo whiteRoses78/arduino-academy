@@ -214,3 +214,42 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 3. **Leaked-Password-Schutz:** auf Free-Plan nicht aktivierbar (Supabase: „available on Pro Plans and up", Save schlug fehl) → vertagt bis Pro. Security-Advisor-WARN bleibt = ab jetzt ERWARTET, kein Handlungsbedarf. Nebenbei DB-seitige **Min-Passwortlänge 6→8** (konsistent mit App-zod-Schema).
 
 ### → OFFEN (vor echtem öffentlichem Launch): E-Mail-Bestätigung AN + Site-URLs; echte Impressum-Daten ODER DSB-konformes Hosting; ggf. Pro-Plan (Leaked-PW-Schutz + Backups). Organisatorisch (Marcos Hausaufgabe): Schulleitung + schulische:r DSB für offiziellen Einsatz.
+
+---
+
+## 2026-06-05 — Teilprojekt: Bauteilliste („Das brauchst du") ✅ LIVE
+
+- **Was:** Schüler-Block „🧰 Das brauchst du" (Menge + Bauteilname) ganz oben in jeder praktischen Lektion. 18 praktische Lektionen befüllt, die 5 Grundlagen-(Theorie-)Lektionen bleiben leer (kein Block).
+- **Wie:** Spalte `parts jsonb` additiv auf `lessons` (Ansatz C — keine bestehende Struktur angefasst). Parser `src/lib/parts.ts` (`getLessonParts`, `qty` OPTIONAL für „nach Bedarf"-Mengen). Server-Komponente `src/components/parts-list.tsx` (Theme-Tokens `bg-muted`/`border`, rendert `null` bei leer), eingebunden oberhalb `LessonContentView`. Daten in `db/parts-data.mjs` (re-seed-feste Quelle, Marco-geprüft) — via `seed.mjs` beim Insert mitgeschrieben + die 18 bestehenden Zeilen einmalig per MCP `execute_sql`-UPDATE (DRY-Generator aus `parts-data.mjs`) befüllt.
+- **Marco-Design-Entscheidungen:** Block OBEN statt unter dem Schaltbild (das SVG steckt inline im re-seed-festen `content`-HTML → kein Eingriff nötig); USB-Kabel raus, Multimeter rein (für Spannungsteiler); Bauteiltypen konkret benannt (BC547/SG90/L298N/1N4148).
+- **Verifiziert:** tsc/lint/build + 25 Tests + Visual @375/@1280 (overflow 0) + Theorie-Lektion zeigt korrekt keinen Block + Live-curl. Plan: `docs/superpowers/plans/2026-06-05-bauteilliste.md`. 6 Commits auf `main` → Netlify-Auto-Deploy.
+
+---
+
+## 2026-06-05 — Teilprojekt: Lehrerzugang + geheime Lösungen (Etappe 1) ✅ LIVE
+
+- **Was:** Rollenabhängiger Lehrer-Bereich. Lehrer/Admins sehen pro Lektion einen klappbaren Lösungs-Block (Sketch / Verdrahtung / typische Fehler / Didaktik-Hinweise); Schüler bekommen diese Daten serverseitig NICHT. Plus eine `/admin`-Seite zum Freischalten von Lehrer:innen.
+- **Wie:** Rollen `student|teacher|admin` (Spalte `profiles.role`, Default `student`); beide Marco-Accounts (gmail + gmx) per Migration auf `admin` gesetzt. Geheime Lösungen in eigener Tabelle `lesson_solutions` (sketch/wiring/mistakes/didactics, alle nullable) mit strenger RLS — nur `teacher`/`admin` dürfen SELECT, kein `anon`-Grant. Rollenvergabe via SECURITY-DEFINER-RPC `set_teacher_role`/`list_teachers` (admin-checked, kein Service-Key in der App). `/admin`-Seite mit Guard (`redirect("/")` wenn nicht Admin). Anzeige: `src/components/teacher-solution.tsx` (klappbares `<details>`, nur gefüllte Felder), rollenabhängig via `getCurrentUserRole` (`src/lib/auth/role.ts`) + `canViewSolutions` (`src/lib/roles.ts`, getestet).
+- **Content:** Quelle `db/solutions-data.mjs` (re-seed-fest, Marco-geprüft) → 3 Projekt-Lektionen befüllt.
+- **Verifiziert:** tsc/lint/build, 28 Tests, anon = kein Block + `/admin`-Guard greift, DB-Schutz (RLS) + Transport (Längen-Check). Spec `specs/04-lehrerzugang-loesungen.md`, Plan `docs/superpowers/plans/2026-06-05-lehrerzugang-loesungen.md`.
+
+---
+
+## 2026-06-05 — Lösungs-Content Etappe 2: alle 23 Lektionen + Fakten-Check ✅ LIVE
+
+- **Was:** Die restlichen 20 Lektionen mit Lehrer-Lösungen befüllt → jetzt haben ALLE 23 Lektionen einen Lösungs-Block. digital (6) + analog (6) + aktoren (3) = 15 praktische mit `sketch`/`wiring`/`mistakes`/`didactics`; grundlagen (5, Theorie) nur `didactics`; Sonderfall `analog/spannungsteiler-verstehen` = reine Theorie ohne `sketch` (nur Mess-Schaltung/Fehler/Didaktik).
+- **Wie:** Entwürfe via 4 parallele Subagenten (1 pro Modul) aus der Vanilla-Quelle → Review-Doc `docs/review-loesungen-etappe2.md` → Marco-Freigabe (u. a. L298N-Pinbelegung ENA=10/IN1=9/IN2=8 gegen das echte BW-PDF verifiziert). Befüllung: `node db/gen-solutions-sql.mjs <modul>` erzeugt EIN idempotentes Upsert (`on conflict (lesson_id)`, Single-Quote-Escaping), modulweise via MCP `execute_sql` ausgeführt → Transport-Kontrolle (Soll- vs. DB-`length()`): alle 23 zeichen-genau identisch.
+- **Fakten-Check:** 4 unabhängige Reviewer-Subagenten haben adversarial geprüft + kritische Punkte nachgerechnet (Spannungsteiler-Physik, L298N-Pins, BC547-Belegung, Vorwiderstand, Knight-Rider/Toggle/Ampel-Logik): **0 BLOCKER, 0 FIX, 5 harmlose NITs** = fachlich freigabereif. Einziger Entscheidungspunkt (`dc-motor-mit-l298n`-Sketch fährt halbe Drehzahl rückwärts) von Marco bewusst so behalten.
+- **Wichtig:** Daten liegen im Prod-Supabase → für eingeloggte Admin/Teacher sofort live (kein Deploy nötig). Marcos Admin-Test: Lehrer-Block erscheint korrekt ✅. Commit `e65cadc` auf `main`.
+
+---
+
+## 2026-06-06 — 20 Schüler-Accounts für den 1. Klasseneinsatz + HTML→PDF-Tool
+
+- **Was:** 20 vorgenerierte Schüler-Accounts (`arduino01@klasse.de` … `arduino20@klasse.de`) für Marcos ersten echten Klasseneinsatz am Montag (08.06.). Marco-Wahl: vorgenerierte Accounts statt Self-Signup (robust für eine ganze Klasse). Plus druckbare Zugangskärtchen.
+- **Datensparsamkeit:** Schema anonym + durchnummeriert (Fantasie-Mails, nie echt → kein realer Personenbezug in der Cloud; Klarname-Zuordnung nur auf Papier via „Name:"-Feld auf dem Kärtchen). Passwörter tippsicher (Wort + Zahl, nur Kleinbuchstaben/Ziffern, kein `0/O`/`1/l`), je ≥ 8 Zeichen.
+- **Anlege-Mechanik:** direkt via MCP `execute_sql` — atomares CTE `insert into auth.users` (bcrypt-Passwort via `extensions.crypt(pw, extensions.gen_salt('bf'))`, `email_confirmed_at=now()`) **+** `insert into auth.identities` (provider `email`). Der Trigger `handle_new_user` legt `profiles` automatisch an (role-Default `student`). **Verifiziert (alle 20):** Mail bestätigt, Identity vorhanden, Rolle `student`, Passwort-Hash-Check (richtig passt / falsch passt nicht), 0 ohne Profil.
+- **Kärtchen + Tool:** `~/Desktop/arduino-zugangskarten.html` → PDF (3 Seiten, 8/8/4 Kärtchen, nichts zerschnitten); enthält Klartext-Passwörter → bewusst NICHT im Repo. Neues Werkzeug `scripts/html-to-pdf.mjs` (HTML→PDF via installiertes Chrome/puppeteer). `docs/design/` (lokale Theme-Backups) per `.gitignore` ausgeschlossen.
+- **Commit `35859de`** (`chore: PDF-Helfer + lokale Design-Backups ausschließen`) liegt lokal auf `main`, **bewusst noch nicht gepusht** (Push = Netlify-Deploy, App nicht betroffen) → reist beim nächsten Feature-Push mit.
+
+### → NÄCHSTER SCHRITT (Marco-Wahl): Verkaufs-Teilprojekt (Lizenzcode, Beamten-Nebentätigkeit zuerst klären) ODER Inhalte (Arbeitsblätter, weitere Prüfungsprojekte, Schüler-Anleitungen). Vor echtem öffentlichem Launch weiterhin offen: E-Mail-Bestätigung AN, echte Impressum-Daten, Leaked-PW-Schutz (Pro-Plan).
