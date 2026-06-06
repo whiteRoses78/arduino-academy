@@ -1,15 +1,20 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { signOutAction } from "@/lib/auth/actions";
+import { getCurrentUserRole } from "@/lib/auth/role";
+import { canAdminister } from "@/lib/roles";
 import { Button } from "@/components/ui/button";
 
 // Globale Kopfzeile. Server Component: liest den Auth-Status serverseitig
 // und zeigt entweder die eingeloggte E-Mail + Abmelden oder die Auth-Links.
+// Der Admin-Link erscheint NUR fuer eingeloggte Admins (sonst unsichtbar).
 export async function SiteHeader() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  // Rolle nur bei eingeloggtem User holen; steuert die Sichtbarkeit des Links.
+  const isAdmin = user ? canAdminister(await getCurrentUserRole()) : false;
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -26,6 +31,11 @@ export async function SiteHeader() {
             <Button asChild variant="ghost" size="sm">
               <Link href="/dashboard">Dashboard</Link>
             </Button>
+            {isAdmin && (
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/admin">Admin</Link>
+              </Button>
+            )}
             <span className="hidden text-sm text-muted-foreground sm:inline">
               {user.email}
             </span>
