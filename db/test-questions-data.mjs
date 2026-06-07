@@ -1656,4 +1656,324 @@ export const TEST_QUESTIONS = {
         "Gestaffelte Schwellenwerte prueft man der Reihe nach mit if / else if / else, so wird genau ein passender Zweig ausgefuehrt. map() rechnet nur Wertebereiche um und pinMode() legt nur die Pin-Richtung fest, beide unterscheiden keine Stufen.",
     },
   ],
+  "aktoren/servomotor-ansteuern": [
+    {
+      type: "multiple-choice",
+      question: "Welche Zeile muss ganz oben im Programm stehen, damit der Arduino den Befehl Servo ueberhaupt kennt?",
+      options: [
+        "#include <Servo.h>",
+        "import Servo;",
+        "Servo.begin();",
+        "#define Servo 9",
+      ],
+      correct: 0,
+      explanation:
+        "Richtig ist #include <Servo.h> - damit wird die Servo-Library eingebunden, sonst gibt es den Compiler-Fehler 'Servo was not declared'. import gibt es in Arduino-C nicht, begin() ist fuer andere Bauteile, und #define legt nur eine Ersatz-Zahl fest.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welchem Befehl sagst du dem Arduino, dass dein Servo an Pin 9 angeschlossen ist?",
+      options: [
+        "meinServo.write(9);",
+        "meinServo.attach(9);",
+        "meinServo.pin(9);",
+        "pinMode(9, OUTPUT);",
+      ],
+      correct: 1,
+      explanation:
+        "attach(9) haengt den Servo einmalig im setup() an Pin 9 - genau so steht es in der Lektion. write(9) wuerde dagegen den Servo auf 9 Grad fahren, pin() gibt es nicht und pinMode() ist fuer LEDs, nicht fuer Servos.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Zahl gibst du bei meinServo.write() an, damit der Arm in die Mittelstellung (nach oben) zeigt?",
+      options: [
+        "1",
+        "45",
+        "90",
+        "180",
+      ],
+      correct: 2,
+      explanation:
+        "Laut Lektion ist 90 die Mittelstellung (Arm zeigt nach oben), 0 ist ganz links und 180 ganz rechts. 45 liegt zwischen links und Mitte, und 1 waere fast ganz links - beides ist nicht die Mitte.",
+    },
+    {
+      type: "multiple-choice",
+      question: "An welchen Anschluss am Arduino gehoert das rote Servo-Kabel?",
+      options: [
+        "an einen GND-Pin",
+        "an Pin 13",
+        "an Pin 9 (Signal)",
+        "an +5V",
+      ],
+      correct: 3,
+      explanation:
+        "Rot ist die Plus-/Versorgungsspannung und gehoert an +5V. GND ist fuer das braune/schwarze Kabel, das orange/gelbe Signal-Kabel kommt an Pin 9, und Pin 13 wird laut Lektion vermieden (dort sitzt die Onboard-LED).",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Servo-Kabelfarbe ist das Steuer-Signal und gehoert an einen digitalen Pin wie Pin 9?",
+      options: [
+        "orange (oder gelb)",
+        "rot",
+        "braun",
+        "blau",
+      ],
+      correct: 0,
+      explanation:
+        "Das orange (oder gelbe) Kabel ist das Steuer-Signal und kommt an einen digitalen Pin, z.B. Pin 9. Braun ist Minus/GND, rot ist Plus/5V, und blau kommt beim Servo gar nicht vor.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum steht im Beispiel nach jedem write() ein delay(1000)?",
+      options: [
+        "Damit der Arduino nicht ueberhitzt",
+        "Damit der Servo Zeit hat, die Position zu erreichen, bevor der naechste Befehl kommt",
+        "Weil der Servo sonst kaputtgeht",
+        "Damit die Library geladen wird",
+      ],
+      correct: 1,
+      explanation:
+        "Ohne das delay() bekaeme der Servo sofort den naechsten Befehl und koennte sich nicht sichtbar bewegen - mechanisch braucht er etwas Zeit. Ueberhitzen oder Kaputtgehen durch fehlendes delay nennt die Lektion nicht, und die Library wird durch #include geladen, nicht durch delay.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was bewirkt diese Schleife: for (int winkel = 0; winkel <= 180; winkel++) { meinServo.write(winkel); delay(15); } ?",
+      options: [
+        "Der Servo springt sofort von 0 auf 180 Grad",
+        "Der Servo bleibt bei 0 Grad stehen",
+        "Der Servo faehrt Grad fuer Grad langsam von 0 bis 180 Grad",
+        "Der Servo dreht sich endlos im Kreis",
+      ],
+      correct: 2,
+      explanation:
+        "Die for-Schleife zaehlt winkel von 0 in Einer-Schritten bis 180 hoch und faehrt bei jedem Schritt einen Grad weiter - das kurze delay(15) macht die Bewegung fluessig (sanfter Sweep). Ein hartes Springen waere ohne Schleife, stehenbleiben passt nicht zum Hochzaehlen, und ein normaler Servo dreht maximal 180 Grad, nicht endlos.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Ein Schueler laedt sein Programm hoch, aber der Servo brummt nur und bewegt sich nicht. Was ist laut Lektion die wahrscheinlichste Ursache?",
+      options: [
+        "Das delay() ist zu lang eingestellt",
+        "Die Library wurde doppelt eingebunden",
+        "Der Wert in write() ist groesser als 90",
+        "Das Signal-Kabel ist nicht angeschlossen oder steckt am falschen Pin",
+      ],
+      correct: 3,
+      explanation:
+        "Brummen ohne Bewegung heisst laut Lektion: das orange/gelbe Signal-Kabel haengt nicht an Pin 9 oder steckt falsch - pruefen, ob attach(9) zum Anschluss passt. Ein langes delay laesst den Servo nur warten, write()-Werte bis 180 sind erlaubt, und ein doppeltes #include erzeugt einen anderen Fehler.",
+    },
+  ],
+
+  "aktoren/transistor-als-schalter-grundlagen": [
+    {
+      type: "multiple-choice",
+      question: "Warum darf man einen kleinen DC-Motor nicht direkt an einen Arduino-Pin anschliessen, sondern braucht einen Transistor?",
+      options: [
+        "Weil der Arduino-Pin nur etwa 20 mA liefert, der Motor aber 50-100 mA zieht und der Pin sonst durchbrennt",
+        "Weil der Arduino-Pin nur Wechselstrom liefert, der Motor aber Gleichstrom braucht",
+        "Weil der Motor sonst rueckwaerts laufen wuerde",
+        "Weil der Arduino-Pin zu viel Strom liefert und den Motor sofort zerstoert",
+      ],
+      correct: 0,
+      explanation:
+        "Ein Pin liefert nur ca. 20 mA (kurz bis 40 mA), ein Hobby-Motor zieht 50-100 mA - bei Direktanschluss brennt der Pin durch. Der Arduino liefert immer Gleichstrom (kein Wechselstrom), und das Problem ist zu wenig, nicht zu viel Pin-Strom.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du haeltst einen BC547 so, dass die flache Seite mit dem Aufdruck dich anschaut und die Beine nach unten zeigen. Wie heissen die Beine von links nach rechts?",
+      options: [
+        "Emitter - Basis - Collector",
+        "Collector - Basis - Emitter",
+        "Basis - Collector - Emitter",
+        "Collector - Emitter - Basis",
+      ],
+      correct: 1,
+      explanation:
+        "Beim BC547 gilt mit flacher Seite zum Betrachter von links: C - B - E (Merksatz 'Chef Befiehlt Ende'). Die anderen Reihenfolgen wuerden Collector und Emitter vertauschen - dann laeuft der Motor staendig oder gar nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Aufgabe hat der 1 kOhm-Widerstand zwischen Arduino-Pin und Basis des Transistors?",
+      options: [
+        "Er sorgt dafuer, dass der Motor langsamer dreht",
+        "Er erhoeht die Spannung am Motor auf 9 V",
+        "Er begrenzt den Basis-Strom auf ca. 4 mA, damit der Arduino-Pin nicht zerstoert wird",
+        "Er glaettet das PWM-Signal, damit der Motor ruhig laeuft",
+      ],
+      correct: 2,
+      explanation:
+        "Die Basis-Emitter-Strecke wirkt wie eine Diode; ohne Widerstand wuerde der Strom den Pin grillen. 1 kOhm begrenzt den Basis-Strom auf ca. 4 mA. Mit der Drehzahl, der Motorspannung oder PWM-Glaettung hat der Basiswiderstand nichts zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wozu dient die Freilaufdiode (1N4148) parallel zum Motor?",
+      options: [
+        "Sie verstaerkt das Signal vom Arduino-Pin",
+        "Sie begrenzt den Strom durch den Motor auf 20 mA",
+        "Sie macht aus Gleichstrom Wechselstrom fuer den Motor",
+        "Sie faengt die hohe Spannungsspitze ab, die beim Abschalten des Motors entsteht, und schuetzt so den Transistor",
+      ],
+      correct: 3,
+      explanation:
+        "Der Motor ist eine Spule: Beim Abschalten entsteht eine sehr hohe Spannungsspitze in umgekehrter Richtung, die den Transistor zerstoeren wuerde. Die Diode fuehrt diese Spitze sicher ab. Verstaerken tut der Transistor, nicht die Diode; eine Strombegrenzung leistet sie nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie muss die Freilaufdiode beim Einbau gepolt sein?",
+      options: [
+        "Der Ring (Kathode) zeigt zur +5V-Seite des Motors",
+        "Der Ring (Kathode) zeigt zur GND-Seite",
+        "Die Diode wird ohne Beachtung der Richtung eingebaut, sie funktioniert in beide Richtungen",
+        "Der Ring (Kathode) zeigt zum Arduino-Pin 9",
+      ],
+      correct: 0,
+      explanation:
+        "Der Ring (Kathode) muss zur +5V-Seite zeigen; so sperrt die Diode im Normalbetrieb und leitet nur die Spannungsspitze ab. Falsch herum eingebaut schliesst sie die Versorgung kurz - der Motor laeuft nicht und es kann rauchen.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was bewirkt die Code-Zeile digitalWrite(motorPin, HIGH); in diesem Programm?",
+      options: [
+        "Pin 9 liefert 0 V, der Transistor sperrt und der Motor stoppt",
+        "Pin 9 liefert 5 V, Strom fliesst in die Basis, der Transistor leitet und der Motor laeuft",
+        "Pin 9 liest den Zustand des Motors ein",
+        "Pin 9 dreht den Motor in die andere Richtung",
+      ],
+      correct: 1,
+      explanation:
+        "HIGH bedeutet 5 V am Pin: Strom fliesst ueber den Basiswiderstand in die Basis, der Transistor macht auf und der Motor laeuft. LOW (0 V) wuerde ihn stoppen; digitalWrite sendet aus, liest nichts ein, und die Drehrichtung aendert sich dabei nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Im setup() steht pinMode(motorPin, OUTPUT);. Warum genau OUTPUT und nicht INPUT?",
+      options: [
+        "Weil nur OUTPUT-Pins eine Freilaufdiode brauchen",
+        "Weil OUTPUT den Motor vor Ueberhitzung schuetzt",
+        "Weil Pin 9 ein Signal aussenden soll (Transistor steuern), nicht etwas einlesen",
+        "Weil INPUT nur fuer Servomotoren funktioniert",
+      ],
+      correct: 2,
+      explanation:
+        "Pin 9 soll etwas aussenden (den Transistor schalten), deshalb OUTPUT - INPUT waere zum Einlesen, z.B. eines Tasters. OUTPUT hat nichts mit Ueberhitzungsschutz, Diode oder Servos zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Ein Schueler baut alles auf, aber der Motor laeuft staendig - auch wenn der Pin auf LOW steht. Was ist laut Lektion die wahrscheinliche Ursache?",
+      options: [
+        "Der Basiswiderstand ist zu gross gewaehlt",
+        "Die Freilaufdiode fehlt",
+        "Pin 9 ist nicht PWM-faehig",
+        "Collector und Emitter des BC547 wurden vertauscht",
+      ],
+      correct: 3,
+      explanation:
+        "Laut Lektion bedeutet 'Motor laeuft staendig, auch bei LOW', dass Collector und Emitter vertauscht sind (beim BC547: C-B-E von links). Eine fehlende Diode macht ruckeligen Lauf, ein zu grosser Widerstand schwaches Schalten, und Pin 9 ist sehr wohl PWM-faehig.",
+    },
+  ],
+
+  "aktoren/dc-motor-mit-l298n": [
+    {
+      type: "multiple-choice",
+      question: "Warum wird der DC-Motor in dieser Lektion ueber einen Motortreiber L298N angesteuert und nicht ueber einen einzelnen Transistor?",
+      options: [
+        "Weil der L298N die Drehrichtung umkehren kann (vorwaerts/rueckwaerts) und genug Motorstrom aus einer eigenen Quelle schaltet",
+        "Weil ein Transistor zu teuer fuer die Pruefung ist",
+        "Weil der Arduino ohne L298N gar keinen Strom liefert",
+        "Weil der L298N den Motor leiser macht",
+      ],
+      correct: 0,
+      explanation:
+        "Ein Transistor schaltet den Motor nur an/aus in immer derselben Richtung; der L298N hat eine H-Bruecke und eigene Stromversorgung, daher Vorwaerts/Rueckwaerts und mehr Strom. Preis, Lautstaerke oder gar kein Strom sind keine Gruende aus der Lektion.",
+    },
+    {
+      type: "multiple-choice",
+      question: "An welchen Arduino-Pin ist im BW-Skript der Enable-Pin ENA (Drehzahl) angeschlossen?",
+      options: [
+        "Pin 9",
+        "Pin 10",
+        "Pin 8",
+        "Pin 13",
+      ],
+      correct: 1,
+      explanation:
+        "Laut Anschlusstabelle der Lektion geht ENA an Pin 10 (~ PWM) fuer die Drehzahl. Pin 9 ist IN1 und Pin 8 ist IN2 (beide fuer die Drehrichtung), Pin 13 kommt nicht vor.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Womit wird die Drehzahl (Geschwindigkeit) des Motors gesteuert?",
+      options: [
+        "Mit digitalWrite(IN1, HIGH)",
+        "Mit delay() im loop()",
+        "Mit analogWrite(ENA, ...) und einem Wert von 0 bis 255",
+        "Mit pinMode(ENA, OUTPUT)",
+      ],
+      correct: 2,
+      explanation:
+        "Die Drehzahl regelt analogWrite auf den PWM-Pin ENA mit Werten 0..255 (0=steht, 255=voll). digitalWrite auf IN1/IN2 setzt die Richtung, delay() nur Wartezeit, pinMode legt nur die Pin-Richtung fest.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Pin-Belegung laesst den Motor in EINE Richtung drehen?",
+      options: [
+        "IN1 = LOW und IN2 = LOW",
+        "IN1 = HIGH und IN2 = HIGH",
+        "ENA = 0",
+        "IN1 = HIGH und IN2 = LOW",
+      ],
+      correct: 3,
+      explanation:
+        "IN1 und IN2 muessen unterschiedlich sein, damit der Motor dreht: HIGH/LOW ist eine Richtung. Beide LOW bedeutet Stopp, ENA=0 schaltet den Motor aus; beide HIGH ist in der Lektions-Tabelle keine Drehrichtung.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie stoppt man den Motor laut Lektion am einfachsten?",
+      options: [
+        "IN1 und IN2 beide auf LOW setzen (oder ENA auf 0)",
+        "IN1 auf HIGH und IN2 auf LOW setzen",
+        "Den GND-Pin abziehen",
+        "delay(2000) aufrufen",
+      ],
+      correct: 0,
+      explanation:
+        "Sind beide Eingaenge gleich (beide LOW), steht der Motor; alternativ ENA auf 0. HIGH/LOW lasst ihn drehen, GND abziehen ist kein Programmierschritt, delay() haelt nur das Programm an, stoppt aber nicht den Motor.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Im Beispiel-Sketch steht: analogWrite(pinEn, vmax / 2); digitalWrite(pinIN1, LOW); digitalWrite(pinIN2, HIGH);. Was passiert?",
+      options: [
+        "Der Motor dreht mit voller Drehzahl in Richtung 1",
+        "Der Motor dreht mit halber Drehzahl in die umgekehrte Richtung",
+        "Der Motor steht still",
+        "Der Motor blinkt",
+      ],
+      correct: 1,
+      explanation:
+        "vmax/2 (=128) ist halbe Drehzahl, und IN1=LOW mit IN2=HIGH ist die umgekehrte Richtung. Voll waere vmax (255), Stillstand waere beide IN gleich, und ein Motor blinkt nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum muss der GND des L298N mit dem GND des Arduino verbunden sein?",
+      options: [
+        "Damit der Motor schneller dreht",
+        "Damit der Arduino die Motorbatterie auflaedt",
+        "Damit die Steuersignale einen gemeinsamen Bezugspunkt haben, sonst funktioniert nichts",
+        "Damit die LED am Modul leuchtet",
+      ],
+      correct: 2,
+      explanation:
+        "Ohne gemeinsamen GND haben die kleinen Steuersignale keinen gemeinsamen Bezugspunkt und nichts funktioniert. Mit Drehzahl, Aufladen oder einer LED hat die GND-Verbindung laut Lektion nichts zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was bewirkt analogWrite(10, 0); im Sketch?",
+      options: [
+        "Der Motor laeuft mit voller Drehzahl",
+        "Pin 10 wird als Eingang gesetzt",
+        "Der Motor wechselt die Drehrichtung",
+        "Der Motor steht (ENA aus)",
+      ],
+      correct: 3,
+      explanation:
+        "ENA (Pin 10) auf 0 gibt den Motor nicht frei, also steht er. Voll waere 255, die Richtung legen IN1/IN2 fest, und die Pin-Richtung aendert nur pinMode, nicht analogWrite.",
+    },
+  ],
 };
