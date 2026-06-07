@@ -501,4 +501,518 @@ export const TEST_QUESTIONS = {
         "Laut Lektion ignoriert der Arduino Kommentare mit //; sie sind nur als Erinnerung für dich gedacht.",
     },
   ],
+
+  "digital/wechselblinker": [
+    {
+      type: "multiple-choice",
+      question: "An welchen beiden Pins werden die LEDs beim Wechselblinker angeschlossen?",
+      options: ["Pin 12 und Pin 13", "Pin 1 und Pin 2", "Pin 9 und Pin 10", "Pin 5 und Pin 6"],
+      correct: 0,
+      explanation:
+        "Im Code steht int led1 = 12; und int led2 = 13; — die grüne LED hängt an Pin 12, die rote an Pin 13.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was bedeutet 'Wechselblinker' bei diesen zwei LEDs?",
+      options: [
+        "Beide LEDs leuchten immer gleichzeitig",
+        "Immer eine LED ist an, die andere aus — dann umgekehrt",
+        "Beide LEDs sind die ganze Zeit aus",
+        "Die LEDs wechseln dauernd ihre Farbe",
+      ],
+      correct: 1,
+      explanation:
+        "Beim Wechselblinker ist in jedem Schritt eine LED an und die andere aus, danach tauschen sie — wie ein Polizeiauto.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welcher Befehl wird benutzt, um eine LED ein- oder auszuschalten?",
+      options: ["pinMode()", "digitalWrite()", "delay()", "setup()"],
+      correct: 1,
+      explanation:
+        "Mit digitalWrite(pin, HIGH) wird die LED eingeschaltet und mit digitalWrite(pin, LOW) ausgeschaltet.",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Was bewirken die beiden Zeilen digitalWrite(led1, HIGH); und digitalWrite(led2, LOW); zusammen?",
+      options: [
+        "Beide LEDs gehen an",
+        "Beide LEDs gehen aus",
+        "LED 1 geht an, LED 2 geht aus",
+        "LED 1 geht aus, LED 2 geht an",
+      ],
+      correct: 2,
+      explanation:
+        "HIGH schaltet LED 1 ein, LOW schaltet LED 2 aus — so leuchtet genau eine der beiden LEDs.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wofür wird der Befehl delay(1000) im Code gebraucht?",
+      options: [
+        "Er schaltet eine LED dauerhaft aus",
+        "Er lässt den Arduino 1 Sekunde (1000 Millisekunden) warten",
+        "Er macht die LED heller",
+        "Er verbindet die LED mit Pin 1000",
+      ],
+      correct: 1,
+      explanation:
+        "delay(1000) bedeutet 1000 Millisekunden = 1 Sekunde warten, bevor der nächste Schritt kommt.",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Du willst, dass die LEDs schneller im Wechsel blinken. Was musst du im Code ändern?",
+      options: [
+        "Den delay()-Wert kleiner machen, z.B. delay(500)",
+        "Den delay()-Wert größer machen, z.B. delay(2000)",
+        "HIGH und LOW vertauschen",
+        "Die Pin-Nummern erhöhen",
+      ],
+      correct: 0,
+      explanation:
+        "Ein kleinerer delay()-Wert bedeutet kürzere Pausen, dadurch wechseln die LEDs schneller — z.B. delay(500) für einen Warnblinker.",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Warum sieht es für unsere Augen so aus, als würden beide digitalWrite-Befehle gleichzeitig passieren, obwohl sie untereinander stehen?",
+      options: [
+        "Weil der Arduino beide Zeilen wirklich exakt gleichzeitig ausführt",
+        "Weil der Arduino sie in winzigen Mikrosekunden nacheinander ausführt",
+        "Weil eine LED kaputt ist",
+        "Weil delay() die Befehle zusammenfasst",
+      ],
+      correct: 1,
+      explanation:
+        "Der Arduino führt die Befehle in Mikrosekunden nacheinander aus — das ist so schnell, dass es für unsere Augen gleichzeitig wirkt.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Aufgabe haben die beiden pinMode()-Befehle im setup()?",
+      options: [
+        "Sie schalten die LEDs sofort an",
+        "Sie legen fest, dass Pin 12 und Pin 13 als Ausgang (OUTPUT) arbeiten",
+        "Sie bestimmen, wie lange die LEDs leuchten",
+        "Sie verbinden die LEDs mit der GND-Schiene",
+      ],
+      correct: 1,
+      explanation:
+        "Mit pinMode(led1, OUTPUT); und pinMode(led2, OUTPUT); wird im setup() festgelegt, dass beide Pins als Ausgang arbeiten und LEDs steuern können.",
+    },
+  ],
+
+  "digital/led-lauflicht": [
+    {
+      type: "multiple-choice",
+      question: "An welche Pins werden die 5 LEDs beim Lauflicht angeschlossen?",
+      options: [
+        "Pin 1, 2, 3, 4 und 5",
+        "Pin 8, 9, 10, 11 und 12",
+        "Pin 0, 5, 10, 15 und 20",
+        "Pin A0, A1, A2, A3 und A4",
+      ],
+      correct: 1,
+      explanation:
+        "Laut Lektion werden die 5 LEDs an die digitalen Pins 8, 9, 10, 11 und 12 angeschlossen.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welches Bauteil braucht jede einzelne LED zusätzlich, damit sie nicht kaputtgeht?",
+      options: [
+        "Einen Kondensator",
+        "Einen zweiten Arduino",
+        "Einen 220-Ohm-Widerstand",
+        "Einen Taster",
+      ],
+      correct: 2,
+      explanation:
+        "Jede LED bekommt einen eigenen 220-Ohm-Widerstand, fünf insgesamt.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie ist jede LED in der Schaltung aufgebaut?",
+      options: [
+        "220Ω → GND → LED → Pin",
+        "GND → LED → Pin",
+        "Pin → LED → Pin",
+        "Pin → 220Ω → LED → GND",
+      ],
+      correct: 3,
+      explanation:
+        "Für alle 5 LEDs derselbe Weg: vom Pin über den 220-Ohm-Widerstand zur LED und dann zu GND (Masse).",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welcher Befehl schaltet eine LED ein (zum Leuchten)?",
+      options: [
+        "digitalWrite(led1, HIGH);",
+        "digitalWrite(led1, LOW);",
+        "pinMode(led1, OUTPUT);",
+        "delay(led1);",
+      ],
+      correct: 0,
+      explanation:
+        "digitalWrite(led1, HIGH) setzt den Pin auf HIGH und die LED leuchtet; LOW würde sie ausschalten.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wozu dient der Befehl delay(wartezeit); im Code?",
+      options: [
+        "Er schaltet die LED dauerhaft aus",
+        "Er macht eine kurze Pause, damit die LED eine Weile sichtbar leuchtet",
+        "Er legt fest, an welchem Pin die LED hängt",
+        "Er macht die LED heller",
+      ],
+      correct: 1,
+      explanation:
+        "delay(wartezeit) hält das Programm kurz an, sodass jede LED eine Weile leuchtet, bevor die nächste drankommt.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was muss im setup für jede LED festgelegt werden?",
+      options: [
+        "digitalWrite(ledX, HIGH); — die LED wird eingeschaltet",
+        "pinMode(ledX, INPUT); — der Pin wird als Eingang gesetzt",
+        "pinMode(ledX, OUTPUT); — der Pin wird als Ausgang gesetzt",
+        "delay(ledX); — eine Pause wird gesetzt",
+      ],
+      correct: 2,
+      explanation:
+        "Im setup wird jeder LED-Pin mit pinMode(..., OUTPUT) als Ausgang festgelegt, damit der Arduino Strom an die LED schicken kann.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Beim Knight Rider (hin und zurück) — welche LEDs werden auf dem Rückweg ausgelassen?",
+      options: [
+        "Es wird keine ausgelassen",
+        "LED 2 und LED 3",
+        "LED 3 und LED 4",
+        "LED 5 und LED 1",
+      ],
+      correct: 3,
+      explanation:
+        "Der Rückweg geht nur 4 → 3 → 2. LED 5 und LED 1 werden ausgelassen, damit die Bewegung flüssig bleibt.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was passiert, wenn du wartezeit von 200 auf 50 verkleinerst?",
+      options: [
+        "Das Lauflicht läuft schneller",
+        "Das Lauflicht läuft langsamer",
+        "Die LEDs leuchten heller",
+        "Es leuchten mehr LEDs gleichzeitig",
+      ],
+      correct: 0,
+      explanation:
+        "wartezeit ist die Pause in Millisekunden. Eine kleinere Zahl bedeutet kürzere Pausen, also läuft das Lauflicht schneller.",
+    },
+  ],
+
+  "digital/taster-als-eingabe": [
+    {
+      type: "multiple-choice",
+      question:
+        "Welcher Befehl liest den Zustand eines Pins ein, also ob am Pin ein Signal anliegt?",
+      options: [
+        "digitalWrite(pin, HIGH)",
+        "digitalRead(pin)",
+        "pinMode(pin, OUTPUT)",
+        "Serial.begin(9600)",
+      ],
+      correct: 1,
+      explanation:
+        "Mit digitalRead(pin) liest der Arduino den Zustand eines Pins aus und erkennt so, ob ein Taster gedrückt ist.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was bedeutet es, wenn digitalRead() den Wert HIGH zurückgibt?",
+      options: [
+        "Der Pin ist kaputt",
+        "Am Pin liegen 0 Volt an",
+        "Am Pin liegen 5 Volt an",
+        "Der Arduino sendet gerade Daten",
+      ],
+      correct: 2,
+      explanation: "HIGH bedeutet, dass am Pin 5 Volt anliegen, LOW bedeutet 0 Volt.",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Du nutzt INPUT_PULLUP. Welchen Wert misst der Arduino, wenn der Taster gedrückt wird?",
+      options: ["5 Volt", "HIGH", "Mal HIGH, mal LOW", "LOW"],
+      correct: 3,
+      explanation:
+        "Bei INPUT_PULLUP ist die Logik umgekehrt: gedrückt ergibt LOW, nicht gedrückt ergibt HIGH.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum gibt ein schwebender (floating) Pin zufällige Werte aus?",
+      options: [
+        "Weil der Pin mit nichts verbunden ist und der Arduino nicht weiß, ob er HIGH oder LOW messen soll",
+        "Weil der Taster zu schnell gedrückt wird",
+        "Weil 5 Volt zu viel Strom sind",
+        "Weil der Serial Monitor nicht geöffnet ist",
+      ],
+      correct: 0,
+      explanation:
+        "Ohne feste Verbindung hängt der Pin in der Luft, daher misst der Arduino zufällig mal HIGH und mal LOW.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wozu dient ein Pull-up-Widerstand bei einem Taster?",
+      options: [
+        "Er zieht den Pin auf LOW (0V), solange der Taster nicht gedrückt ist",
+        "Er zieht den Pin auf HIGH (5V), solange der Taster nicht gedrückt ist",
+        "Er macht die LED heller",
+        "Er erhöht die Spannung auf 9 Volt",
+      ],
+      correct: 1,
+      explanation:
+        "Der Pull-up-Widerstand zieht den Pin auf HIGH und sorgt für eine sichere Grundstellung, wenn der Taster nicht gedrückt ist.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welchem Befehl aktivierst du den eingebauten Pull-up-Widerstand des Arduino?",
+      options: [
+        "pinMode(pin, INPUT)",
+        "pinMode(pin, OUTPUT)",
+        "pinMode(pin, INPUT_PULLUP)",
+        "digitalRead(pin, PULLUP)",
+      ],
+      correct: 2,
+      explanation:
+        "Mit pinMode(pin, INPUT_PULLUP) schaltet der Arduino seinen eingebauten Pull-up-Widerstand ein, ein externer Widerstand ist dann nicht nötig.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie wird der Taster bei der INPUT_PULLUP-Methode angeschlossen?",
+      options: [
+        "Zwischen zwei verschiedenen GND-Anschlüssen",
+        "Zwischen Pin und 5V, mit externem Widerstand",
+        "Nur an 5V",
+        "Zwischen Pin und GND, ohne externen Widerstand",
+      ],
+      correct: 3,
+      explanation:
+        "Bei INPUT_PULLUP wird der Taster einfach zwischen Pin und GND angeschlossen, ein externer Widerstand ist nicht erforderlich.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was versteht man unter dem Prellen (Bouncing) eines Tasters?",
+      options: [
+        "Der Kontakt springt beim Drücken kurz hin und her, sodass ein Druck mehrfach erkannt wird",
+        "Der Taster wird zu heiß und schaltet ab",
+        "Die LED blinkt unkontrolliert",
+        "Der Pin liefert dauerhaft 5 Volt",
+      ],
+      correct: 0,
+      explanation:
+        "Beim Prellen springt der Kontakt für wenige Millisekunden hin und her, dagegen hilft im Code ein delay(50).",
+    },
+  ],
+
+  "digital/led-mit-taster-steuern": [
+    {
+      type: "multiple-choice",
+      question:
+        "Welche Programmstruktur sorgt dafür, dass der Arduino eine Entscheidung treffen kann (Taster gedrückt oder nicht)?",
+      options: [
+        "Die pinMode-Funktion",
+        "Die if/else-Struktur",
+        "Die delay-Funktion",
+        "Die digitalWrite-Funktion",
+      ],
+      correct: 1,
+      explanation:
+        "Mit if und else trifft der Arduino Entscheidungen: Ist die Bedingung wahr, läuft der if-Teil, sonst der else-Teil.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welchem Befehl liest der Arduino ein, ob der Taster gerade gedrückt ist?",
+      options: [
+        "pinMode(tasterPin, OUTPUT)",
+        "digitalWrite(tasterPin, HIGH)",
+        "digitalRead(tasterPin)",
+        "delay(tasterPin)",
+      ],
+      correct: 2,
+      explanation:
+        "digitalRead(tasterPin) liest den Zustand des Eingangs-Pins ein und gibt zurück, ob dort HIGH oder LOW anliegt.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum bedeutet bei dieser Schaltung LOW, dass der Taster gedrückt ist?",
+      options: [
+        "Weil die LED den Pin auf LOW zieht, sobald sie leuchtet",
+        "Weil ein gedrückter Taster immer Strom liefert und HIGH erzeugt",
+        "Weil digitalRead beim Drücken automatisch HIGH zurückgibt",
+        "Weil INPUT_PULLUP den Pin auf HIGH zieht und der Druck ihn mit GND auf LOW verbindet",
+      ],
+      correct: 3,
+      explanation:
+        "INPUT_PULLUP zieht den Pin im Ruhezustand auf HIGH. Erst beim Drücken wird der Pin mit GND verbunden und damit LOW.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was passiert in Version 1, wenn die Bedingung if (zustand == LOW) wahr ist?",
+      options: [
+        "digitalWrite(ledPin, HIGH) schaltet die LED an",
+        "digitalWrite(ledPin, LOW) schaltet die LED aus",
+        "Der Taster wird auf OUTPUT gestellt",
+        "Das Programm startet neu von vorne",
+      ],
+      correct: 0,
+      explanation:
+        "Ist zustand == LOW (Taster gedrückt), wird der if-Teil ausgeführt und digitalWrite(ledPin, HIGH) schaltet die LED an.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was ist der häufigste Anfänger-Fehler, vor dem die Lektion warnt?",
+      options: [
+        "HIGH mit LOW zu verwechseln",
+        "= (Zuweisung) mit == (Vergleich) zu verwechseln",
+        "setup mit loop zu verwechseln",
+        "int mit bool zu verwechseln",
+      ],
+      correct: 1,
+      explanation:
+        "== vergleicht zwei Werte, = setzt einen Wert. Schreibt man if (zustand = LOW), wird der Wert gesetzt und die Bedingung ist immer wahr.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche zwei Werte kann ein Datentyp bool annehmen?",
+      options: ["0 bis 255", "HIGH oder LOW", "true oder false", "an, aus oder unbekannt"],
+      correct: 2,
+      explanation: "bool kann nur true (wahr) oder false (falsch) sein, also genau zwei Werte.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was bewirkt das Ausrufezeichen ! bei einem bool-Wert, z.B. in ledAn = !ledAn?",
+      options: [
+        "Es macht aus dem bool eine Zahl",
+        "Es verdoppelt den Wert",
+        "Es löscht die Variable komplett",
+        "Es dreht den Wert um: aus true wird false und umgekehrt",
+      ],
+      correct: 3,
+      explanation:
+        "Das ! kehrt den bool-Wert um. War ledAn vorher false, wird es true und umgekehrt — so entsteht der Toggle-Effekt.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wozu dient die Variable letzterDruck im Toggle-Programm?",
+      options: [
+        "Sie merkt sich, ob der Taster im letzten Durchlauf schon gedrückt war, damit nur bei einem NEUEN Druck umgeschaltet wird",
+        "Sie zählt, wie oft die LED insgesamt geleuchtet hat",
+        "Sie speichert, an welchem Pin der Taster angeschlossen ist",
+        "Sie misst, wie lange der Taster gedrückt gehalten wird",
+      ],
+      correct: 0,
+      explanation:
+        "letzterDruck speichert den Tasterzustand vom vorherigen Durchlauf. So wird nur einmal umgeschaltet, auch wenn man den Taster gedrückt hält.",
+    },
+  ],
+
+  "digital/einfache-ampelschaltung": [
+    {
+      type: "multiple-choice",
+      question: "An welche Pins werden die drei LEDs der Ampelschaltung angeschlossen?",
+      options: [
+        "Rot an Pin 2, Gelb an Pin 3, Grün an Pin 4",
+        "Rot an Pin 1, Gelb an Pin 2, Grün an Pin 3",
+        "Alle drei LEDs an Pin 13",
+        "Rot an Pin 4, Gelb an Pin 3, Grün an Pin 2",
+      ],
+      correct: 0,
+      explanation:
+        "Laut Lektion liegt die rote LED an Pin 2, die gelbe an Pin 3 und die grüne an Pin 4.",
+    },
+    {
+      type: "multiple-choice",
+      question: "In welcher Reihenfolge durchläuft die deutsche Ampel ihre vier Phasen?",
+      options: [
+        "Rot → Grün → Gelb → Rot-Gelb",
+        "Rot → Rot-Gelb → Grün → Gelb",
+        "Grün → Gelb → Rot → Rot-Gelb",
+        "Rot → Gelb → Grün → Rot-Gelb",
+      ],
+      correct: 1,
+      explanation:
+        "Die deutsche Ampel folgt dem Ablauf Rot, dann Rot-Gelb, dann Grün und schließlich Gelb, bevor es wieder von vorne beginnt.",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Welche Ampelphase gibt es laut Lektion vor allem in Deutschland und nur in wenigen anderen Ländern?",
+      options: [
+        "Die Phase Rot-Gelb",
+        "Die Phase nur Gelb",
+        "Die Phase nur Grün",
+        "Die Phase nur Rot",
+      ],
+      correct: 0,
+      explanation:
+        "In vielen Ländern springt die Ampel direkt von Rot auf Grün. Die Phase Rot-Gelb ist eine deutsche Besonderheit.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie lange dauert die Grün-Phase in der Ampelschaltung der Lektion?",
+      options: ["1 Sekunde", "2 Sekunden", "5 Sekunden", "10 Sekunden"],
+      correct: 2,
+      explanation: "Laut Phasentabelle und Code (delay(5000)) leuchtet Grün 5 Sekunden lang.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welchem Befehl schaltest du eine bestimmte LED an einem Pin ein?",
+      options: [
+        "pinMode(rotPin, OUTPUT)",
+        "delay(rotPin)",
+        "digitalWrite(rotPin, HIGH)",
+        "digitalWrite(rotPin, LOW)",
+      ],
+      correct: 2,
+      explanation:
+        "digitalWrite(pin, HIGH) schaltet den Pin auf AN. Mit LOW würde die LED ausgeschaltet.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wofür sorgt der Befehl delay(1000) im Ampel-Code?",
+      options: [
+        "Der Arduino wartet 1 Sekunde",
+        "Der Arduino wartet 1000 Sekunden",
+        "Der Arduino schaltet alle LEDs auf einmal an",
+        "Der Arduino startet das Programm neu",
+      ],
+      correct: 0,
+      explanation:
+        "delay(millisekunden) hält das Programm an. 1000 Millisekunden sind genau 1 Sekunde.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was ist laut Lektion der Nachteil von delay()?",
+      options: [
+        "delay() macht die LEDs dunkler",
+        "Während delay() läuft, kann der Arduino nichts anderes tun",
+        "delay() funktioniert nur mit roten LEDs",
+        "delay() verbraucht zu viel Strom",
+      ],
+      correct: 1,
+      explanation:
+        "Während delay() läuft, ist der Arduino sozusagen eingefroren und kann nichts anderes erledigen. Für komplexere Projekte lernt man später millis().",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum lohnt es sich, eine eigene Funktion wie ampelSchalten() zu verwenden?",
+      options: [
+        "Damit die LEDs heller leuchten",
+        "Damit der Arduino schneller hochfährt",
+        "Weil man dann keine Widerstände mehr braucht",
+        "Weil der Code kürzer und übersichtlicher wird und Änderungen nur an einer Stelle nötig sind",
+      ],
+      correct: 3,
+      explanation:
+        "Die Hilfsfunktion fasst die wiederkehrenden Befehle zusammen. Der Code wird kürzer und lesbarer, und Änderungen muss man nur an einer Stelle vornehmen.",
+    },
+  ],
 };

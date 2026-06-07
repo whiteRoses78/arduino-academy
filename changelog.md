@@ -291,3 +291,12 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 - **Kein neuer Code:** Das Frontend zeigt den Test-Block automatisch, sobald `has_test(lesson_id)` true ist. Reiner Content: Fragen in `db/test-questions-data.mjs` (re-seed-feste Quelle, Key `<modul>/<slug>`) + neuer Generator `db/gen-test-sql.mjs` (idempotentes delete+insert je Lektion) → via MCP `execute_sql` in die Prod-DB. Da der Test-UI-Code schon deployed war, sind die Tests mit dem DB-Insert **sofort live** (kein Deploy dazwischen) — darum erst Marco-Freigabe, dann Einspielen.
 - **Erstellung:** 5 parallele Subagenten (1/Lektion) entwarfen die Fragen aus dem Supabase-Lektionsinhalt → Review-Doc `docs/review-test-grundlagen.md` → Fakten-Check (Claude) → Marco-Freigabe („sind alle richtig").
 - **Verifiziert:** je Lektion 6 Fragen + `has_test=true`; **alle 30 `correct`-Indizes zeigen exakt auf die richtige Antwort** (nach bewusster Umverteilung der Antwort-Positionen, damit der Test nicht durch „immer die erste Option" lösbar ist — 3–4 verschiedene Positionen je Lektion); Live-Check (Anon sieht Block + Anmelde-Hinweis, **kein** „Test starten", kein Lösungs-Leak — test-exklusive Strings nicht im Anon-HTML). Spec `docs/superpowers/specs/2026-06-07-test-rollout-grundlagen-design.md`.
+
+---
+
+## 2026-06-07 — Kompetenztest-Ausbau: Modul 2 (Digital) ✅ LIVE
+
+- **Was:** Die 5 noch offenen Digital-Lektionen haben jetzt einen Kompetenztest (je **8 Fragen**, Policy ab Modul 2 ≥ 8): Wechselblinker, LED-Lauflicht, Taster als Eingabe, LED mit Taster steuern, Einfache Ampelschaltung. Zusammen mit dem LEDs-Durchstich (8 Fragen) ist Modul 2 damit testseitig komplett — **40 neue Fragen**.
+- **Wie:** Gleiche Mechanik wie Modul 1 — Fragen in `db/test-questions-data.mjs`, via `db/gen-test-sql.mjs digital` erzeugt und per MCP `execute_sql` (idempotentes delete+insert) eingespielt. Kein neuer Code. Der bereits live laufende LEDs-Test wurde NICHT angefasst (nur die 5 neuen Lektionen geseedet).
+- **Erstellung:** 5 parallele Subagenten aus dem Lektionsinhalt → Review-Doc `docs/review-test-digital.md` → Fakten-Check (Pin-Belegungen, `digitalRead`/INPUT_PULLUP gedrückt=LOW, Ampel-Ablauf Rot→Rot-Gelb→Grün→Gelb, `==` vs `=`, Toggle/`!`) → Marco-Freigabe.
+- **Verifiziert:** je Lektion 8 Fragen + `has_test=true`; **alle 40 `correct`-Indizes zeigen exakt auf die richtige Antwort** (bei 3 Lektionen Antwort-Positionen verteilt — vorher alle oben; Umlaut-Korrektur beim Wechselblinker ae/oe/ue → ä/ö/ü); Live-Check (Anon: Block + Anmelde-Hinweis, kein „Test starten", kein Leak).
