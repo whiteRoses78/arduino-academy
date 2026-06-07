@@ -10,6 +10,7 @@ import { createClient } from "@/lib/supabase/server";
 import { LessonContentView } from "@/components/lesson-content";
 import { ExerciseSection } from "@/components/exercises/exercise-section";
 import { PartsList } from "@/components/parts-list";
+import { PraxisSection } from "@/components/praxis-section";
 import { getLessonParts } from "@/lib/parts";
 import { getCurrentUserRole } from "@/lib/auth/role";
 import { canViewSolutions } from "@/lib/roles";
@@ -66,6 +67,7 @@ export default async function LessonPage({ params }: Props) {
         lessonId={lesson.id}
         isLoggedIn={!!user}
       />
+      {content.praxis && <PraxisSection praxis={content.praxis} />}
       {solution && <TeacherSolution solution={solution} />}
     </main>
   );

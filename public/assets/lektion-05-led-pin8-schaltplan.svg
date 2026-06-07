@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" width="100%" style="max-width: 760px; height: auto; font-family: 'Helvetica Neue', Arial, sans-serif;">
+
+  <!-- ============= HINTERGRUND ============= -->
+  <rect width="760" height="220" fill="#fdfcf6"/>
+
+  <!-- ============= PIN 8 (links) ============= -->
+  <text x="50" y="118" font-size="20" font-weight="bold" fill="#222">Pin 8</text>
+  <text x="50" y="138" font-size="11" fill="#888">(Arduino)</text>
+
+  <!-- Anschlusspunkt -->
+  <circle cx="125" cy="115" r="5" fill="#222"/>
+
+  <!-- Linie Pin 8 → Widerstand -->
+  <line x1="125" y1="115" x2="240" y2="115" stroke="#222" stroke-width="2.5"/>
+
+  <!-- ============= WIDERSTAND 220 Ω ============= -->
+  <g id="widerstand">
+    <rect x="240" y="100" width="90" height="30" fill="white" stroke="#222" stroke-width="2.5"/>
+    <text x="285" y="120" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">220 Ω</text>
+    <text x="285" y="150" text-anchor="middle" font-size="11" fill="#888">rot-rot-braun-gold</text>
+  </g>
+
+  <!-- Linie Widerstand → LED -->
+  <line x1="330" y1="115" x2="420" y2="115" stroke="#222" stroke-width="2.5"/>
+
+  <!-- ============= LED (Diode mit Pfeilen) ============= -->
+  <g id="led">
+    <!-- Anschluss-Linie links bis Anode (Dreieck-Boden) -->
+    <line x1="420" y1="115" x2="430" y2="115" stroke="#222" stroke-width="2.5"/>
+    <!-- Dreieck (Anode → Pfeil-Spitze nach rechts) -->
+    <polygon points="430,95 430,135 470,115" fill="white" stroke="#222" stroke-width="2.5"/>
+    <!-- Kathode-Linie (vertikaler Strich rechts vom Dreieck) -->
+    <line x1="470" y1="95" x2="470" y2="135" stroke="#222" stroke-width="3"/>
+    <!-- Anschluss-Linie nach rechts -->
+    <line x1="470" y1="115" x2="480" y2="115" stroke="#222" stroke-width="2.5"/>
+
+    <!-- Lichtpfeile (zwei schräge Pfeile nach rechts oben) -->
+    <line x1="445" y1="88" x2="465" y2="68" stroke="#222" stroke-width="1.8"/>
+    <polygon points="462,65 470,68 467,73" fill="#222"/>
+    <line x1="453" y1="85" x2="473" y2="65" stroke="#222" stroke-width="1.8"/>
+    <polygon points="470,62 478,65 475,70" fill="#222"/>
+
+    <!-- Polaritäts-Beschriftung -->
+    <text x="412" y="155" font-size="11" fill="#1976d2" font-weight="bold">+</text>
+    <text x="412" y="170" font-size="9" fill="#888">Anode</text>
+    <text x="478" y="155" font-size="11" fill="#444" font-weight="bold">−</text>
+    <text x="478" y="170" font-size="9" fill="#888">Kathode</text>
+
+    <!-- "LED rot" Beschriftung über LED -->
+    <text x="450" y="50" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b">LED rot</text>
+  </g>
+
+  <!-- Linie LED → GND -->
+  <line x1="480" y1="115" x2="610" y2="115" stroke="#222" stroke-width="2.5"/>
+
+  <!-- ============= GND-SYMBOL ============= -->
+  <g id="gnd">
+    <!-- Anschlusspunkt -->
+    <circle cx="610" cy="115" r="5" fill="#222"/>
+    <!-- Vertikale Verbindungslinie zur Erde -->
+    <line x1="610" y1="115" x2="610" y2="138" stroke="#222" stroke-width="2.5"/>
+    <!-- Drei kürzer werdende horizontale Striche -->
+    <line x1="592" y1="142" x2="628" y2="142" stroke="#222" stroke-width="3"/>
+    <line x1="598" y1="152" x2="622" y2="152" stroke="#222" stroke-width="2.5"/>
+    <line x1="604" y1="162" x2="616" y2="162" stroke="#222" stroke-width="2"/>
+
+    <!-- Beschriftung -->
+    <text x="650" y="120" font-size="20" font-weight="bold" fill="#222">GND</text>
+    <text x="650" y="140" font-size="11" fill="#888">(Masse)</text>
+  </g>
+
+  <!-- ============= STROMRICHTUNGS-PFEIL (kleine Info) ============= -->
+  <g id="stromrichtung" opacity="0.75">
+    <text x="180" y="92" font-size="10" fill="#d32f2f" font-weight="bold">Strom fließt →</text>
+    <line x1="155" y1="98" x2="200" y2="98" stroke="#d32f2f" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <polygon points="200,95 207,98 200,101" fill="#d32f2f"/>
+  </g>
+
+</svg>

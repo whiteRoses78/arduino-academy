@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 360" font-family="system-ui, -apple-system, sans-serif">
+  <title>Schaltplan: NTC-Spannungsteiler an Arduino A0</title>
+
+  <rect x="0" y="0" width="460" height="360" rx="8" fill="#fdfdfd" stroke="#dee2e6" stroke-width="1"/>
+
+  <!-- Titel -->
+  <text x="230" y="26" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Schaltplan: NTC als Temperatursensor an Pin A0</text>
+
+  <!-- +5V-Anschluss -->
+  <line x1="170" y1="50" x2="170" y2="85" stroke="#222" stroke-width="2"/>
+  <circle cx="170" cy="50" r="4" fill="#C0392B"/>
+  <text x="155" y="55" text-anchor="end" font-size="13" font-weight="bold" fill="#C0392B">+5 V</text>
+
+  <!-- R1 (Festwiderstand, Rechteck nach IEC) -->
+  <rect x="150" y="85" width="40" height="60" fill="white" stroke="#222" stroke-width="2"/>
+  <text x="210" y="115" font-size="14" font-weight="bold" fill="#222">R<tspan font-size="10" baseline-shift="sub">1</tspan> = 10 k&#937;</text>
+  <text x="210" y="132" font-size="11" fill="#666">(fester Widerstand)</text>
+
+  <!-- Verbindung R1 zu Mittelpunkt M zu NTC-Top (durchgezogen, keine Luecke) -->
+  <line x1="170" y1="145" x2="170" y2="200" stroke="#222" stroke-width="2"/>
+
+  <!-- Mittelpunkt M (Knoten) -->
+  <circle cx="170" cy="180" r="4" fill="#2980B9"/>
+  <text x="155" y="185" text-anchor="end" font-size="13" font-weight="bold" fill="#2980B9">M</text>
+
+  <!-- Abgriff: Mittelpunkt -> A0 -->
+  <line x1="170" y1="180" x2="320" y2="180" stroke="#2980B9" stroke-width="2"/>
+  <line x1="320" y1="180" x2="380" y2="180" stroke="#27AE60" stroke-width="2.5"/>
+  <polygon points="380,180 372,176 372,184" fill="#27AE60"/>
+  <text x="330" y="170" font-size="13" font-weight="bold" fill="#27AE60">A0</text>
+  <text x="330" y="200" font-size="10" fill="#666">Analog-Pin Arduino</text>
+
+  <!-- NTC-Symbol: Rechteck mit Schraegstrich + "t&#176;" Label -->
+  <rect x="150" y="200" width="40" height="60" fill="white" stroke="#222" stroke-width="2"/>
+  <line x1="146" y1="260" x2="194" y2="200" stroke="#E67E22" stroke-width="2"/>
+  <text x="200" y="232" font-size="13" font-weight="bold" fill="#E67E22">NTC</text>
+  <text x="200" y="248" font-size="11" fill="#666">10 k&#937; bei 25 &#8451;</text>
+  <text x="200" y="262" font-size="10" font-style="italic" fill="#E67E22">t&#176; senkt R</text>
+
+  <!-- Verbindung NTC zu GND -->
+  <line x1="170" y1="260" x2="170" y2="295" stroke="#222" stroke-width="2"/>
+
+  <!-- GND-Symbol -->
+  <line x1="150" y1="295" x2="190" y2="295" stroke="#222" stroke-width="2.5"/>
+  <line x1="156" y1="302" x2="184" y2="302" stroke="#222" stroke-width="2"/>
+  <line x1="162" y1="309" x2="178" y2="309" stroke="#222" stroke-width="2"/>
+  <text x="125" y="300" text-anchor="end" font-size="13" font-weight="bold" fill="#222">GND</text>
+
+  <!-- Uges-Markierung links -->
+  <line x1="80" y1="85" x2="80" y2="295" stroke="#888" stroke-width="1"/>
+  <line x1="75" y1="85" x2="85" y2="85" stroke="#888" stroke-width="1"/>
+  <line x1="75" y1="295" x2="85" y2="295" stroke="#888" stroke-width="1"/>
+  <text x="50" y="195" font-size="13" font-weight="bold" fill="#888">U<tspan font-size="10" baseline-shift="sub">ges</tspan></text>
+  <text x="50" y="220" font-size="11" fill="#888">= 5 V</text>
+
+  <!-- Hinweis-Text unten -->
+  <text x="230" y="340" text-anchor="middle" font-size="11" fill="#666" font-style="italic">heiss &#8594; NTC-Widerstand sinkt &#8594; U&#8322; sinkt &#8594; analogRead sinkt</text>
+</svg>

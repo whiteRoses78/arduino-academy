@@ -8,10 +8,23 @@ export type ExerciseRow = Database["public"]["Tables"]["exercises"]["Row"];
 export type LessonSolution =
   Database["public"]["Tables"]["lesson_solutions"]["Row"];
 
+// Praxis-Teil einer Lektion (Hands-on-Aufbau). Faithful zur Vanilla-Struktur,
+// ABER bewusst OHNE das migrierte Feld `loesung`: Die Lehrer-Lösung kommt
+// ausschliesslich aus der separaten Tabelle `lesson_solutions` (eine gepflegte
+// Quelle). `content.praxis.loesung` bleibt ungenutzt in der DB und absichtlich
+// untypisiert, damit es niemand versehentlich rendert.
+export type LessonPraxis = {
+  aufgabe?: { titel?: string; auftrag?: string; lernziel?: string };
+  bauteile?: { name: string; anzahl?: number; hinweis?: string }[];
+  anschluss?: { svg?: string; schritte?: string[] };
+  code_hinweise?: { geruest?: string; tipps?: string[] };
+};
+
 // Form des content-JSONB (faithful zur Vanilla-Struktur lessons-grundlagen.js).
 export type LessonContent = {
   explanation?: { html?: string };
   example?: { title?: string; steps?: { label: string; html: string }[] };
+  praxis?: LessonPraxis;
 };
 
 // Modul (= Kurs) + seine Lektionen, sortiert nach position. null = nicht gefunden.
