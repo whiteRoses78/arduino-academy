@@ -1015,4 +1015,645 @@ export const TEST_QUESTIONS = {
         "Die Hilfsfunktion fasst die wiederkehrenden Befehle zusammen. Der Code wird kürzer und lesbarer, und Änderungen muss man nur an einer Stelle vornehmen.",
     },
   ],
+  "analog/spannungsteiler-verstehen": [
+    {
+      type: "multiple-choice",
+      question: "Was macht ein Spannungsteiler aus zwei Widerstaenden, die in Reihe zwischen +5 V und GND liegen?",
+      options: [
+        "Er teilt die Versorgungsspannung auf, sodass am Abgriff in der Mitte eine kleinere Spannung U2 anliegt.",
+        "Er verdoppelt die 5 V auf 10 V am Abgriff.",
+        "Er macht aus Gleichspannung eine Wechselspannung.",
+        "Er liefert am Abgriff immer genau 5 V, egal welche Widerstaende man nimmt.",
+      ],
+      correct: 0,
+      explanation:
+        "Am Abgriff in der Mitte liegt eine Teilspannung U2 an, die kleiner als 5 V ist. Ein Teiler kann nicht verdoppeln (kein 10 V), erzeugt keine Wechselspannung und liefert nicht immer 5 V - U2 haengt vom Widerstandsverhaeltnis ab.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welcher Formel berechnet man die abgegriffene Spannung U2?",
+      options: [
+        "U2 = Uges · R1 / (R1 + R2)",
+        "U2 = Uges · R2 / (R1 + R2)",
+        "U2 = Uges · (R1 + R2) / R2",
+        "U2 = Uges · R2 / R1",
+      ],
+      correct: 1,
+      explanation:
+        "Im Zaehler steht der untere Widerstand R2 (an dem U2 abgegriffen wird), im Nenner die Summe beider Widerstaende. Mit R1 im Zaehler bekaeme man die Spannung an R1, die anderen beiden Brueche sind keine gueltige Teilerformel.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du baust einen Spannungsteiler mit zwei gleich grossen 10-kΩ-Widerstaenden an 5 V. Welche Spannung misst das Multimeter am Abgriff?",
+      options: [
+        "5 V, weil beide Widerstaende gleich sind",
+        "0 V, weil sich die Widerstaende aufheben",
+        "2,5 V, weil die Spannung genau halbiert wird",
+        "1,25 V, weil ein Viertel uebrig bleibt",
+      ],
+      correct: 2,
+      explanation:
+        "Bei zwei gleichen Widerstaenden wird die Spannung genau halbiert: 5 V · 10/(10+10) = 2,5 V. Gleiche Widerstaende heben sich nicht auf (nicht 0 V) und liefern auch nicht die volle Spannung (nicht 5 V).",
+    },
+    {
+      type: "multiple-choice",
+      question: "R1 = 10 kΩ und R2 = 20 kΩ liegen an 5 V. Wie gross ist U2?",
+      options: [
+        "1,67 V",
+        "2,50 V",
+        "3,33 V",
+        "5,00 V",
+      ],
+      correct: 2,
+      explanation:
+        "U2 = 5 V · 20/(10+20) = 5 V · 2/3 ≈ 3,33 V - der groessere untere Widerstand bekommt das groessere Stueck. 1,67 V ergaebe sich, wenn man R1 und R2 vertauscht; 2,50 V nur bei gleichen Widerstaenden.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Eselsbruecke beschreibt richtig, wie sich U2 verhaelt?",
+      options: [
+        "Unten waechst, U2 waechst - je groesser R2, desto groesser U2.",
+        "Oben waechst, U2 waechst - je groesser R1, desto groesser U2.",
+        "U2 bleibt immer gleich, egal wie gross die Widerstaende sind.",
+        "Je kleiner beide Widerstaende, desto groesser U2.",
+      ],
+      correct: 0,
+      explanation:
+        "Je groesser der untere Widerstand R2 im Verhaeltnis, desto mehr Spannung bleibt fuer U2 - daher unten waechst, U2 waechst. Ein groesseres R1 (oben) macht U2 dagegen kleiner, und U2 ist keineswegs konstant.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum steckt ein Spannungsteiler in fast jedem analogen Sensor (z. B. NTC oder LDR)?",
+      options: [
+        "Weil der Sensor seinen Widerstand aendert und sich dadurch U2 aendert.",
+        "Weil der Sensor die 5 V auf 12 V hochsetzt.",
+        "Weil der Sensor die Spannung in Strom umwandelt, den der Arduino zaehlt.",
+        "Weil der Sensor das Programm direkt steuert, ohne dass sich eine Spannung aendert.",
+      ],
+      correct: 0,
+      explanation:
+        "Ein NTC oder LDR ist ein veraenderlicher Widerstand: aendert er sich, aendert sich auch U2 - genau dieses Spannungssignal liest der Arduino ein. Ein Sensor setzt die Spannung nicht hoch und wandelt sie nicht in einen gezaehlten Strom um.",
+    },
+    {
+      type: "multiple-choice",
+      question: "In einem Teiler ist R1 = 10 kΩ fest, R2 ist ein NTC. Bei Hitze sinkt der NTC von 10 kΩ auf 4 kΩ. Was passiert mit U2 (Versorgung 5 V)?",
+      options: [
+        "U2 steigt von 2,5 V auf etwa 3,5 V.",
+        "U2 bleibt unveraendert bei 2,5 V.",
+        "U2 sinkt von 2,5 V auf etwa 1,43 V.",
+        "U2 springt sofort auf 5 V.",
+      ],
+      correct: 2,
+      explanation:
+        "Wird der untere Widerstand kleiner, wird auch U2 kleiner: 5 V · 4/(10+4) ≈ 1,43 V. Da R2 sinkt, kann U2 nicht steigen oder gleich bleiben, und auf die volle Versorgungsspannung springt es nur, wenn der obere Widerstand verschwindet.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welchem Befehl liest der Arduino die Spannung U2 am Abgriff spaeter als Zahl ein?",
+      options: [
+        "digitalWrite(pin, HIGH)",
+        "analogRead(pin)",
+        "delay(1000)",
+        "pinMode(pin, OUTPUT)",
+      ],
+      correct: 1,
+      explanation:
+        "analogRead(pin) wandelt die anliegende Spannung in eine Zahl von 0 bis 1023 um - so wird aus U2 ein verarbeitbarer Wert. digitalWrite schaltet nur an/aus, delay wartet, und pinMode legt nur die Pin-Richtung fest.",
+    },
+  ],
+
+  "analog/analoge-eingaenge": [
+    {
+      type: "multiple-choice",
+      question: "Was ist der wichtigste Unterschied zwischen einem digitalen und einem analogen Eingang am Arduino?",
+      options: [
+        "Ein digitaler Eingang kennt nur die Werte 0 oder 1, ein analoger Eingang erkennt viele Werte dazwischen",
+        "Ein analoger Eingang ist schneller als ein digitaler Eingang",
+        "Ein digitaler Eingang funktioniert nur mit 5V, ein analoger nur mit 3V",
+        "Ein analoger Eingang kann nur an oder aus erkennen, ein digitaler alle Stufen",
+      ],
+      correct: 0,
+      explanation:
+        "Digital ist wie ein Lichtschalter (nur an/aus = LOW/HIGH), analog wie ein Dimmer mit allen Werten dazwischen. Die letzte Option vertauscht genau diese beiden Begriffe.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welchen Wertebereich liefert der Befehl analogRead() zurück?",
+      options: [
+        "0 bis 100",
+        "0 bis 255",
+        "0 bis 1023",
+        "0 bis 5",
+      ],
+      correct: 2,
+      explanation:
+        "analogRead() liefert immer Werte von 0 bis 1023, weil der Arduino einen 10-Bit-Wandler mit 1024 Stufen hat. 0 bis 255 wäre 8 Bit, 0 bis 5 ist die Spannung in Volt, nicht der Messwert.",
+    },
+    {
+      type: "multiple-choice",
+      question: "An welche Pins schliesst du ein Potentiometer an, um es mit analogRead() auszulesen?",
+      options: [
+        "An die digitalen Pins 0 bis 13",
+        "An die analogen Pins A0 bis A5",
+        "Nur an Pin 13 (LED-Pin)",
+        "An den USB-Anschluss",
+      ],
+      correct: 1,
+      explanation:
+        "Analoge Eingänge liegen an den Pins A0 bis A5. Die Pins 0 bis 13 sind die digitalen Pins (für digitalRead/digitalWrite), nicht für analogRead gedacht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du drehst das Potentiometer genau in die Mittelstellung. Welchen Wert zeigt der Serial Monitor ungefähr an?",
+      options: [
+        "0",
+        "ungefähr 512",
+        "1023",
+        "2,5",
+      ],
+      correct: 1,
+      explanation:
+        "In der Mitte liegt etwa die halbe Spannung an, also etwa die Hälfte von 1023, das ergibt rund 512. 0 ist ganz links, 1023 ganz rechts, und 2,5 wäre die Spannung in Volt.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum reicht der analogRead()-Wert genau bis 1023 und nicht weiter?",
+      options: [
+        "Weil der Arduino nur bis 1023 zählen kann",
+        "Weil 1023 die höchste gerade Zahl ist",
+        "Weil der 10-Bit-Wandler die Spannung in 1024 Stufen (0 bis 1023) aufteilt",
+        "Weil das Potentiometer maximal 1023 Ohm hat",
+      ],
+      correct: 2,
+      explanation:
+        "Der 10-Bit-Analog-Digital-Wandler teilt 0V bis 5V in 1024 Stufen auf, gezählt von 0 bis 1023. Mit dem Widerstand des Potentiometers in Ohm oder der Zählgrenze des Arduino hat diese Zahl nichts zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welcher Befehl muss im setup() stehen, damit du die Werte im Serial Monitor sehen kannst?",
+      options: [
+        "Serial.begin(9600);",
+        "pinMode(A0, INPUT);",
+        "analogRead(A0);",
+        "Serial.println(9600);",
+      ],
+      correct: 0,
+      explanation:
+        "Serial.begin(9600) startet die Verbindung zum Serial Monitor und gehört ins setup(). pinMode brauchst du für analoge Pins gar nicht, analogRead und Serial.println gehören in den loop().",
+    },
+    {
+      type: "multiple-choice",
+      question: "Ein Mitschüler schreibt im setup() den Befehl pinMode(A0, INPUT);, bevor er analogRead(A0) nutzt. Was stimmt?",
+      options: [
+        "Ohne diese Zeile funktioniert analogRead() gar nicht",
+        "Diese Zeile ist nötig, damit der Pin Spannung liefert",
+        "Diese Zeile ist nicht nötig, weil analoge Pins automatisch Eingänge sind",
+        "Diese Zeile macht aus dem analogen Pin einen digitalen Pin",
+      ],
+      correct: 2,
+      explanation:
+        "Für analogRead() braucht man keinen pinMode-Befehl, die analogen Pins sind automatisch als Eingang konfiguriert. Die Zeile schadet zwar nicht, ist aber überflüssig und ändert die Pin-Art nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du willst den Messwert in Volt umrechnen. Welche Schreibweise liefert ein genaues Ergebnis mit Nachkommastellen?",
+      options: [
+        "float volt = wert * 5 / 1023;",
+        "float volt = wert * 5.0 / 1023;",
+        "float volt = wert / 1023 * 5;",
+        "float volt = wert * 1023 / 5;",
+      ],
+      correct: 1,
+      explanation:
+        "Nur mit dem Punkt bei 5.0 rechnet der Arduino mit Kommazahlen, sonst schneidet er die Nachkommastellen ab. Bei wert/1023 ohne Punkt käme zuerst 0 heraus, und wert*1023/5 ist die falsche Formel.",
+    },
+  ],
+
+  "analog/pwm-dimmen-statt-schalten": [
+    {
+      type: "multiple-choice",
+      question: "Wofuer steht die Abkuerzung PWM?",
+      options: [
+        "Power-Watt-Messung",
+        "Puls-Weiten-Modulation",
+        "Pin-Wechsel-Methode",
+        "Programm-Wert-Modus",
+      ],
+      correct: 1,
+      explanation:
+        "PWM steht fuer Puls-Weiten-Modulation: Der Pin wird sehr schnell ein- und ausgeschaltet, sodass eine Durchschnittshelligkeit entsteht. Die anderen Begriffe klingen aehnlich technisch, kommen aber in der Lektion nicht vor und sind erfunden.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welchen Befehl brauchst du, um eine LED zu dimmen (stufenlos heller und dunkler machen)?",
+      options: [
+        "analogWrite()",
+        "digitalWrite()",
+        "analogRead()",
+        "pinMode()",
+      ],
+      correct: 0,
+      explanation:
+        "Zum Dimmen nutzt man analogWrite(), das viele Helligkeitsstufen ausgeben kann. digitalWrite() kennt nur an/aus, analogRead() liest einen Eingang und pinMode() legt nur die Richtung des Pins fest.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welchen Wertebereich erwartet analogWrite()?",
+      options: [
+        "0 bis 100",
+        "0 bis 1023",
+        "0 bis 255",
+        "0 bis 490",
+      ],
+      correct: 2,
+      explanation:
+        "analogWrite() arbeitet mit Werten von 0 bis 255 (255 = volle Helligkeit). 0 bis 1023 gehoert zu analogRead (Eingang), 100 waere Prozent und 490 ist die PWM-Frequenz pro Sekunde.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du moechtest eine LED per analogWrite() dimmen. An welchen Pin musst du sie anschliessen?",
+      options: [
+        "An jeden beliebigen digitalen Pin",
+        "An einen Pin mit Tilde, z.B. ~9",
+        "An einen Analog-Pin wie A0",
+        "An Pin 8",
+      ],
+      correct: 1,
+      explanation:
+        "analogWrite() funktioniert nur an PWM-Pins, die auf dem Board mit einer Tilde (~) markiert sind, z.B. ~9. Ein normaler Pin wie 8 schaltet nur ganz an/aus, und A0-Pins sind Eingaenge zum Auslesen.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was ist der Hauptunterschied zwischen analogRead() und analogWrite()?",
+      options: [
+        "analogRead() schreibt Werte raus, analogWrite() liest Werte ein",
+        "analogRead() liest einen Eingang (0-1023), analogWrite() schreibt einen Ausgang (0-255)",
+        "Beide lesen Werte ein, nur mit anderem Bereich",
+        "analogRead() ist fuer LEDs, analogWrite() fuer Sensoren",
+      ],
+      correct: 1,
+      explanation:
+        "analogRead() ist ein Eingang und liefert Werte von 0 bis 1023 (z.B. vom Sensor), analogWrite() ist ein Ausgang und schreibt Werte von 0 bis 255 (z.B. zur LED). Die anderen Optionen vertauschen Richtung oder Aufgabe der beiden Befehle.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welchem Befehl rechnest du den Poti-Wert (0 bis 1023) in einen passenden Wert fuer analogWrite() (0 bis 255) um?",
+      options: [
+        "delay()",
+        "Serial.print()",
+        "pinMode()",
+        "map()",
+      ],
+      correct: 3,
+      explanation:
+        "map() rechnet einen Wertebereich in einen anderen um, z.B. map(potiWert, 0, 1023, 0, 255). delay() wartet nur, Serial.print() zeigt Werte an und pinMode() stellt die Pin-Richtung ein.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Ungefaehr wie hell leuchtet eine LED bei analogWrite(9, 127)?",
+      options: [
+        "Etwa halb so hell (rund 50%)",
+        "Gar nicht, die LED bleibt aus",
+        "Voll an (100%)",
+        "Nur ganz kurz an, dann aus",
+      ],
+      correct: 0,
+      explanation:
+        "127 liegt etwa in der Mitte zwischen 0 und 255, daher leuchtet die LED rund 50 Prozent hell. 0 waere aus, 255 waere voll an, und ein kurzes Aufblitzen passt zu keinem festen analogWrite-Wert.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du schliesst die LED versehentlich an Pin 8 an (kein PWM-Pin) und nutzt analogWrite(8, 127). Was passiert?",
+      options: [
+        "Die LED leuchtet trotzdem genau halb hell",
+        "Der Arduino geht kaputt",
+        "Die LED leuchtet nicht halb hell, sondern wird nur ganz an oder ganz aus geschaltet",
+        "Pin 8 wird automatisch zu einem PWM-Pin",
+      ],
+      correct: 2,
+      explanation:
+        "An einem Pin ohne Tilde funktioniert echtes Dimmen nicht: Statt halber Helligkeit wird die LED nur ganz an oder ganz aus geschaltet. Der Arduino nimmt dabei keinen Schaden und ein Pin kann nicht von selbst zum PWM-Pin werden.",
+    },
+  ],
+
+  "analog/lichtsensor-ldr": [
+    {
+      type: "multiple-choice",
+      question: "Wofuer steht die Abkuerzung LDR und was macht dieses Bauteil?",
+      options: [
+        "Es ist ein lichtabhaengiger Widerstand: Er aendert seinen Widerstand je nachdem, wie hell es ist.",
+        "Es ist eine besonders helle LED, die man zum Beleuchten benutzt.",
+        "Es ist ein Sensor, der die Temperatur in der Umgebung misst.",
+        "Es ist ein fester Widerstand, der immer genau 10 kOhm hat.",
+      ],
+      correct: 0,
+      explanation:
+        "LDR heisst Light Dependent Resistor, also lichtabhaengiger Widerstand. Eine LED leuchtet, misst aber nichts; Temperatur misst ein anderer Sensor; und der feste 10-kOhm-Widerstand ist in der Schaltung das Gegenstueck zum LDR, nicht der LDR selbst.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie veraendert sich der Widerstand des LDR, wenn es HELLER wird?",
+      options: [
+        "Der Widerstand bleibt gleich, nur die Spannung aendert sich.",
+        "Der Widerstand wird groesser (z.B. von 1 kOhm auf 100 kOhm).",
+        "Der Widerstand wird kleiner (z.B. von 100 kOhm auf 1 kOhm).",
+        "Der LDR wird heiss und schaltet sich ab.",
+      ],
+      correct: 2,
+      explanation:
+        "Bei Helligkeit sinkt der LDR-Widerstand (hell ~1 kOhm, dunkel ~100 kOhm) - wie die Pupille, die bei Licht klein wird. Dass der Widerstand steigt, ist genau der umgekehrte Denkfehler; gleich bleibt er nicht, und mit Hitze hat das nichts zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum braucht man fuer den LDR ueberhaupt einen Spannungsteiler mit einem 10-kOhm-Widerstand?",
+      options: [
+        "Damit der LDR nicht zu heiss wird und kaputtgeht.",
+        "Weil der Arduino keinen Widerstand direkt messen kann, sondern nur Spannung.",
+        "Weil der LDR sonst zu wenig Strom bekommt, um zu leuchten.",
+        "Damit man zwei LDR gleichzeitig anschliessen kann.",
+      ],
+      correct: 1,
+      explanation:
+        "Der Arduino kann nur eine Spannung messen, keinen Widerstand. Der Spannungsteiler wandelt die Widerstandsaenderung des LDR in eine messbare Spannung um. Ein LDR leuchtet nicht, und mit Ueberhitzung oder zwei Sensoren hat der Spannungsteiler nichts zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "In welcher Reihenfolge ist die Schaltung in dieser Lektion aufgebaut?",
+      options: [
+        "GND -> LDR -> A0 -> 10-kOhm-Widerstand -> 5V",
+        "A0 -> 5V -> LDR -> 10-kOhm-Widerstand -> GND",
+        "5V -> 10-kOhm-Widerstand -> A0 -> LDR -> GND",
+        "5V -> LDR -> Knotenpunkt (A0) -> 10-kOhm-Widerstand -> GND",
+      ],
+      correct: 3,
+      explanation:
+        "In dieser Schaltung liegt der LDR oben an 5V, dann folgt der Knotenpunkt mit A0 und darunter der 10-kOhm-Widerstand zu GND. Die anderen Reihenfolgen vertauschen Plus und Minus oder setzen LDR und Festwiderstand falsch herum - dann wuerde die Messung nicht zur Lektion passen.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Es ist HELL. Welchen Wert zeigt analogRead(A0) bei dieser Schaltung ungefaehr an?",
+      options: [
+        "Einen hohen Wert (etwa 920).",
+        "Einen niedrigen Wert (etwa 100).",
+        "Immer genau 512, egal wie hell es ist.",
+        "Gar keinen Wert, weil der LDR bei Licht den Strom sperrt.",
+      ],
+      correct: 0,
+      explanation:
+        "Bei Helligkeit wird der LDR-Widerstand klein, fast die ganze Spannung faellt ueber dem unteren 10-kOhm-Widerstand ab, und genau die misst A0 - daher ein hoher Wert (~920). Der niedrige Wert gilt fuer Dunkelheit; 512 waere nur Zufall, und der LDR sperrt nichts.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du deckst den LDR mit der Hand ab (es wird dunkel). Was passiert mit dem analogRead-Wert?",
+      options: [
+        "Er bleibt unveraendert, weil A0 nur die 5V misst.",
+        "Er steigt auf etwa 1000.",
+        "Er sinkt auf einen niedrigen Wert (etwa 100).",
+        "Er springt auf negative Werte.",
+      ],
+      correct: 2,
+      explanation:
+        "Dunkel bedeutet hoher LDR-Widerstand, dadurch faellt nur noch wenig Spannung ueber dem 10-kOhm-Widerstand ab, und A0 misst einen niedrigen Wert (~100). Ein Anstieg waere der umgekehrte Fall (hell), unveraendert bleibt der Wert nicht, und negativ kann analogRead nie werden (0 bis 1023).",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Code-Zeile liest den Lichtwert des LDR vom Pin A0 ein?",
+      options: [
+        "digitalWrite(A0, HIGH);",
+        "ldrWert = analogRead(ldrPin);",
+        "Serial.begin(9600);",
+        "pinMode(A0, OUTPUT);",
+      ],
+      correct: 1,
+      explanation:
+        "analogRead(ldrPin) liest die Spannung an A0 als Zahl von 0 bis 1023 ein - genau das brauchen wir fuer den LDR. digitalWrite schaltet einen Pin nur ein/aus, Serial.begin startet nur den Serial Monitor, und pinMode auf OUTPUT wuerde den Pin zum Ausgang machen statt zum Messeingang.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du willst aus dem LDR ein Nachtlicht bauen: Die LED soll angehen, wenn es DUNKEL wird. Worauf muss dein Programm bei dieser Schaltung achten?",
+      options: [
+        "Es schaltet die LED ein, wenn der analogRead-Wert UNTER einen Schwellwert faellt.",
+        "Es schaltet die LED ein, wenn der analogRead-Wert UEBER einen Schwellwert steigt.",
+        "Es schaltet die LED ein, sobald 5V am LDR anliegen.",
+        "Es schaltet die LED nur ein, wenn der Wert genau 512 betraegt.",
+      ],
+      correct: 0,
+      explanation:
+        "Dunkel ergibt bei dieser Schaltung einen niedrigen Wert, also muss die LED angehen, wenn der Wert UNTER den Schwellwert faellt. Ueber dem Schwellwert waere es ja hell. Die 5V liegen dauerhaft an, und ein fester Wert wie 512 wuerde fast nie exakt getroffen.",
+    },
+  ],
+
+  "analog/ntc-temperatursensor": [
+    {
+      type: "multiple-choice",
+      question: "Wofuer steht die Abkuerzung NTC?",
+      options: [
+        "Negative Temperature Coefficient (negativer Temperaturkoeffizient)",
+        "Normale Temperatur-Charakteristik",
+        "New Temperature Control",
+        "Niedrige Temperatur-Comparison",
+      ],
+      correct: 0,
+      explanation:
+        "NTC heisst Negative Temperature Coefficient: der Widerstand sinkt, wenn die Temperatur steigt. Die anderen Begriffe gibt es so nicht; das Wort negativ beschreibt den gegenlaeufigen Zusammenhang.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was passiert mit dem Widerstand eines NTC, wenn er waermer wird?",
+      options: [
+        "Der Widerstand bleibt immer gleich",
+        "Der Widerstand steigt",
+        "Der Widerstand sinkt",
+        "Der Widerstand wird zu Spannung",
+      ],
+      correct: 2,
+      explanation:
+        "Bei einem NTC gilt: warm = kleiner Widerstand (heiss haut ab). Steigen wuerde er nur bei einem PTC; gleich bleibt nur ein normaler Festwiderstand.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Ein 10-kOhm-NTC hat seinen Nennwiderstand von 10 kOhm bei welcher Temperatur?",
+      options: [
+        "bei 0 Grad C",
+        "bei 25 Grad C (Zimmertemperatur)",
+        "bei 50 Grad C",
+        "bei 100 Grad C",
+      ],
+      correct: 1,
+      explanation:
+        "Der Nennwert eines 10-kOhm-NTC gilt bei 25 Grad C, also Zimmertemperatur. Bei 0 Grad C waeren es ca. 33 kOhm, bei 50 Grad C nur ca. 3,6 kOhm.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum braucht man bei einem NTC ueberhaupt einen Spannungsteiler mit festem Widerstand?",
+      options: [
+        "Damit der NTC nicht zu heiss wird",
+        "Weil der Arduino keinen Widerstand messen kann, sondern nur Spannung",
+        "Damit der Wert immer genau 511 ist",
+        "Weil der NTC sonst kaputtgeht",
+      ],
+      correct: 1,
+      explanation:
+        "Der Arduino kann nur Spannung am Pin messen, keinen Widerstand. Der feste Widerstand wandelt die Widerstandsaenderung in eine messbare Spannung um. Der Wert 511 gilt nur bei Zimmertemperatur, nicht immer.",
+    },
+    {
+      type: "multiple-choice",
+      question: "In dieser Lektion sitzt der NTC unten (an GND) und der feste 10-kOhm-Widerstand oben (an 5V), A0 greift den Mittelpunkt ab. Was misst der Arduino, wenn der NTC heiss wird?",
+      options: [
+        "Der analogRead-Wert wird groesser",
+        "Der analogRead-Wert bleibt bei 1023",
+        "Der analogRead-Wert wird kleiner",
+        "Der analogRead-Wert springt auf 0",
+      ],
+      correct: 2,
+      explanation:
+        "Heiss bedeutet kleiner NTC-Widerstand, dadurch faellt am NTC (unten) weniger Spannung ab, also wird auch der Wert an A0 kleiner. Merksatz: heisser Sensor, kleiner Zahlenwert. Auf 0 oder 1023 springt der Wert nur bei einem Verdrahtungsfehler.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Bei Zimmertemperatur (25 Grad C) sind R1 = 10 kOhm und der NTC = 10 kOhm gleich gross. Welche Sensorspannung U2 ergibt sich und welcher analogRead-Wert ungefaehr?",
+      options: [
+        "5 V und etwa 1023",
+        "2,5 V und etwa 511",
+        "0 V und etwa 0",
+        "1,32 V und etwa 270",
+      ],
+      correct: 1,
+      explanation:
+        "Bei zwei gleichen Widerstaenden teilt sich die Spannung genau in der Mitte: U2 = 5 V mal 10/(10+10) = 2,5 V, das ergibt analogRead etwa 511. 1,32 V und 270 gilt erst bei 50 Grad C, wenn der NTC kleiner geworden ist.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Du legst den Finger auf den NTC und siehst im Serial Monitor zuerst 511, dann 421. Was bedeutet das?",
+      options: [
+        "Der NTC ist kaputt, denn der Wert darf nicht sinken",
+        "Der NTC wurde durch den Finger waermer, deshalb sinkt der Wert",
+        "Der Finger hat den NTC abgekuehlt",
+        "Der Arduino misst jetzt Volt statt einer Zahl",
+      ],
+      correct: 1,
+      explanation:
+        "Der Finger (ca. 35 Grad C) erwaermt den NTC, sein Widerstand sinkt und damit auch der Zahlenwert von 511 auf etwa 421 - genau das erwartete Verhalten, kein Defekt. Abkuehlen wuerde den Wert steigen lassen.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Im Code steht int wert = analogRead(NTC_PIN);. Welchen Zahlenbereich kann die Variable wert annehmen?",
+      options: [
+        "0 bis 1023",
+        "0 bis 255",
+        "0 bis 5",
+        "minus 100 bis plus 100",
+      ],
+      correct: 0,
+      explanation:
+        "Der AD-Wandler des Arduino liefert immer Werte von 0 bis 1023. 0 bis 255 waere ein 8-Bit-Wert (z.B. bei analogWrite), 0 bis 5 verwechselt den Zahlenwert mit der Spannung in Volt.",
+    },
+  ],
+
+  "analog/entscheidungen-mit-sensorwerten": [
+    {
+      type: "multiple-choice",
+      question: "Warum ist es nuetzlich, dass der Arduino mit if/else auf Sensorwerte reagiert?",
+      options: [
+        "Damit der Arduino nur noch HIGH und LOW unterscheiden muss",
+        "Damit man die LED gar nicht mehr an einen Pin anschliessen muss",
+        "Damit der Arduino selbst entscheidet und automatisch reagiert, z.B. eine LED ein- oder ausschaltet",
+        "Damit der Sensor mehr Strom verbraucht und heller leuchtet",
+      ],
+      correct: 2,
+      explanation:
+        "Mit if/else trifft der Arduino selbst eine Entscheidung anhand des Sensorwerts und reagiert automatisch (wie eine Strassenlaterne). Die anderen Optionen beschreiben gerade das Gegenteil oder technischen Unsinn: analoge Werte sind ja Zahlen, nicht nur HIGH/LOW.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was ist mit dem Begriff Schwellenwert (z.B. 300) gemeint?",
+      options: [
+        "Die Grenze, ab der der Arduino seine Entscheidung trifft",
+        "Der hoechstmoegliche Wert, den analogRead() liefern kann",
+        "Die Anzahl der LEDs, die man anschliessen darf",
+        "Die Zeit in Millisekunden, die delay() wartet",
+      ],
+      correct: 0,
+      explanation:
+        "Der Schwellenwert ist die selbst festgelegte Grenze zwischen hell und dunkel, an der die Entscheidung kippt. Der Maximalwert von analogRead (1023), die LED-Anzahl oder eine delay-Zeit haben nichts mit dieser Grenze zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Im Nachtlicht-Code steht: if (helligkeit < schwelleAn). Was passiert, wenn helligkeit kleiner als schwelleAn ist?",
+      options: [
+        "Die LED wird ausgeschaltet, weil es zu hell ist",
+        "Die LED wird eingeschaltet, weil es dunkel ist",
+        "Der Arduino startet komplett neu",
+        "Der Schwellenwert wird automatisch erhoeht",
+      ],
+      correct: 1,
+      explanation:
+        "Ein kleiner LDR-Wert bedeutet wenig Licht, also dunkel, deshalb geht die LED an (digitalWrite HIGH). Aus geht sie im else if, wenn der Wert ueber schwelleAus liegt, also bei hell.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Dein LDR zeigt bei Raumlicht ca. 600 und bei abgedecktem Sensor ca. 100. Welcher Schwellenwert ist sinnvoll?",
+      options: [
+        "Etwa 1023, also der hoechste Wert",
+        "Etwa 50, also unter dem Dunkelwert",
+        "Etwa 300, also ungefaehr in der Mitte",
+        "Etwa 700, also ueber dem Hellwert",
+      ],
+      correct: 2,
+      explanation:
+        "Der Schwellenwert sollte zwischen hell (600) und dunkel (100) liegen, damit beide Zustaende sicher erkannt werden, z.B. 300. Werte ausserhalb dieser Spanne (50, 700, 1023) wuerden nie oder immer ausloesen.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie nennt man das Problem, wenn die LED an einem einzelnen Schwellenwert staendig an und aus geht, weil der Sensorwert leicht schwankt?",
+      options: [
+        "Flackern",
+        "Spannungsteilung",
+        "Dimmen",
+        "Pulsweitenmodulation",
+      ],
+      correct: 0,
+      explanation:
+        "Wenn der Wert um den Schwellenwert herum schwankt (z.B. 298 bis 302), schaltet die LED staendig um, das nennt man Flackern. Dimmen und Pulsweitenmodulation betreffen das Helligkeit-Regeln, Spannungsteilung ist die LDR-Schaltung.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie verhindert die Hysterese das Flackern?",
+      options: [
+        "Sie erhoeht die Geschwindigkeit, mit der analogRead() liest",
+        "Sie verwendet zwei verschiedene Schwellenwerte mit einer Puffer-Zone dazwischen",
+        "Sie schaltet den Serial Monitor aus, damit nichts mehr stoert",
+        "Sie ersetzt die LED durch einen staerkeren Widerstand",
+      ],
+      correct: 1,
+      explanation:
+        "Hysterese nutzt eine Einschalt- und eine Ausschaltschwelle (z.B. 250 und 350); im Bereich dazwischen aendert sich nichts, dieser Puffer stoppt das Flackern. Lesegeschwindigkeit, Serial Monitor oder ein Widerstand-Tausch loesen das Problem nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Im Nachtlicht ist schwelleAn = 250 und schwelleAus = 350. Was passiert, wenn der gemessene Wert genau 300 betraegt?",
+      options: [
+        "Die LED geht an, weil 300 ueber 250 liegt",
+        "Die LED geht aus, weil 300 unter 350 liegt",
+        "Es aendert sich nichts, der Wert liegt in der Puffer-Zone",
+        "Der Arduino zeigt eine Fehlermeldung an",
+      ],
+      correct: 2,
+      explanation:
+        "300 ist weder kleiner als schwelleAn (250) noch groesser als schwelleAus (350), also greift der else-Zweig: die LED behaelt ihren Zustand, der Wert liegt im Puffer. Eine Fehlermeldung gibt es nicht, das ist genau der gewuenschte stabile Bereich.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Mit welcher Struktur kann man mehrere Helligkeitsstufen (z.B. sehr dunkel, Daemmerung, hell) unterscheiden?",
+      options: [
+        "Mit einem einzigen if ganz ohne else",
+        "Mit map(), das die Stufen automatisch zaehlt",
+        "Mit pinMode() fuer jede Stufe",
+        "Mit if / else if / else und mehreren Schwellenwerten",
+      ],
+      correct: 3,
+      explanation:
+        "Gestaffelte Schwellenwerte prueft man der Reihe nach mit if / else if / else, so wird genau ein passender Zweig ausgefuehrt. map() rechnet nur Wertebereiche um und pinMode() legt nur die Pin-Richtung fest, beide unterscheiden keine Stufen.",
+    },
+  ],
 };
