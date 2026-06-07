@@ -11,6 +11,7 @@ import { LessonContentView } from "@/components/lesson-content";
 import { ExerciseSection } from "@/components/exercises/exercise-section";
 import { PartsList } from "@/components/parts-list";
 import { PraxisSection } from "@/components/praxis-section";
+import { StartTest } from "@/components/test/start-test";
 import { getLessonParts } from "@/lib/parts";
 import { getCurrentUserRole } from "@/lib/auth/role";
 import { canViewSolutions } from "@/lib/roles";
@@ -44,6 +45,11 @@ export default async function LessonPage({ params }: Props) {
     ? await getLessonSolution(lesson.id)
     : null;
 
+  // Test-Block nur zeigen, wenn die Lektion Testfragen hat (RPC gibt nur true/false).
+  const { data: hasTest } = await supabase.rpc("has_test", {
+    p_lesson_id: lesson.id,
+  });
+
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
       <Link
@@ -68,6 +74,7 @@ export default async function LessonPage({ params }: Props) {
         isLoggedIn={!!user}
       />
       {content.praxis && <PraxisSection praxis={content.praxis} />}
+      {hasTest && <StartTest lessonId={lesson.id} isLoggedIn={!!user} />}
       {solution && <TeacherSolution solution={solution} />}
     </main>
   );

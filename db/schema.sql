@@ -212,3 +212,136 @@ revoke execute on function public.set_teacher_role(text, boolean) from public, a
 revoke execute on function public.list_teachers() from public, anon;
 grant execute on function public.set_teacher_role(text, boolean) to authenticated;
 grant execute on function public.list_teachers() to authenticated;
+
+-- =========================================================================
+-- TEST / KOMPETENZNACHWEIS (Spec 2026-06-07) — digitaler MC-Test pro Lektion.
+-- Sicherheitskern: richtige Antworten verlassen die DB NIE vor dem Abschicken.
+-- test_questions ist NICHT public-read; Zugriff nur ueber die DEFINER-RPCs.
+-- =========================================================================
+
+-- ---------- TEST_QUESTIONS (Test-Fragen, Loesung geheim) ----------
+create table if not exists public.test_questions (
+  id         uuid primary key default gen_random_uuid(),
+  lesson_id  uuid not null references public.lessons(id) on delete cascade,
+  position   integer not null,
+  type       text not null default 'multiple-choice',
+  payload    jsonb not null,            -- {question, options[], correct, explanation}
+  created_at timestamptz not null default now()
+);
+create index if not exists test_questions_lesson_idx on public.test_questions (lesson_id, position);
+alter table public.test_questions enable row level security;
+drop policy if exists "teachers read test_questions" on public.test_questions;
+create policy "teachers read test_questions" on public.test_questions
+  for select using (exists (
+    select 1 from public.profiles p where p.id = auth.uid() and p.role in ('teacher','admin')
+  ));
+grant select on public.test_questions to authenticated;  -- RLS schraenkt auf teacher/admin
+
+-- ---------- TEST_ATTEMPTS (Ergebnisse, ein Versuch pro User+Lektion) ----------
+create table if not exists public.test_attempts (
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null references auth.users(id) on delete cascade,
+  lesson_id  uuid not null references public.lessons(id) on delete cascade,
+  score      integer not null,
+  max_score  integer not null,
+  percent    integer not null,
+  answers    jsonb not null,            -- {question_id: selected_index}
+  created_at timestamptz not null default now(),
+  unique (user_id, lesson_id)           -- erzwingt: genau ein Versuch
+);
+create index if not exists test_attempts_lesson_idx on public.test_attempts (lesson_id);
+alter table public.test_attempts enable row level security;
+drop policy if exists "own attempts select" on public.test_attempts;
+drop policy if exists "teachers read attempts" on public.test_attempts;
+create policy "own attempts select" on public.test_attempts
+  for select using (auth.uid() = user_id);
+create policy "teachers read attempts" on public.test_attempts
+  for select using (exists (
+    select 1 from public.profiles p where p.id = auth.uid() and p.role in ('teacher','admin')
+  ));
+grant select on public.test_attempts to authenticated;  -- KEIN insert: nur via submit_test
+
+-- get_test_questions: Fragen OHNE Loesung; sperrt nach dem ersten Versuch.
+create or replace function public.get_test_questions(p_lesson_id uuid)
+returns table (id uuid, "position" integer, type text, question text, options jsonb)
+language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is null then raise exception 'Bitte zuerst anmelden.'; end if;
+  if exists (select 1 from public.test_attempts a
+             where a.user_id = auth.uid() and a.lesson_id = p_lesson_id) then
+    raise exception 'TEST_BEREITS_ABGELEGT';
+  end if;
+  return query
+    select q.id, q.position, q.type,
+           q.payload->>'question' as question,
+           q.payload->'options'   as options          -- OHNE correct/explanation
+    from public.test_questions q
+    where q.lesson_id = p_lesson_id
+    order by q.position;
+end; $$;
+revoke execute on function public.get_test_questions(uuid) from public, anon;
+grant execute on function public.get_test_questions(uuid) to authenticated;
+
+-- submit_test: serverseitige MC-Bewertung + genau ein Versuch.
+create or replace function public.submit_test(p_lesson_id uuid, p_answers jsonb)
+returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare
+  v_uid uuid := auth.uid();
+  v_score integer := 0; v_max integer := 0; v_results jsonb := '[]'::jsonb;
+  v_percent integer; r record; v_selected integer; v_correct integer; v_ok boolean;
+begin
+  if v_uid is null then raise exception 'Bitte zuerst anmelden.'; end if;
+  for r in select id, payload from public.test_questions
+           where lesson_id = p_lesson_id order by position loop
+    v_max := v_max + 1;
+    v_correct  := (r.payload->>'correct')::int;
+    v_selected := nullif(p_answers->>r.id::text, '')::int;
+    v_ok := (v_selected is not null and v_selected = v_correct);
+    if v_ok then v_score := v_score + 1; end if;
+    v_results := v_results || jsonb_build_object(
+      'id', r.id, 'selected', v_selected, 'correct', v_correct,
+      'is_correct', v_ok, 'explanation', r.payload->>'explanation');
+  end loop;
+  if v_max = 0 then raise exception 'Kein Test fuer diese Lektion.'; end if;
+  v_percent := round(100.0 * v_score / v_max);
+  begin
+    insert into public.test_attempts (user_id, lesson_id, score, max_score, percent, answers)
+    values (v_uid, p_lesson_id, v_score, v_max, v_percent, p_answers);
+  exception when unique_violation then raise exception 'TEST_BEREITS_ABGELEGT';
+  end;
+  return jsonb_build_object('score', v_score, 'max_score', v_max,
+                            'percent', v_percent, 'results', v_results);
+end; $$;
+revoke execute on function public.submit_test(uuid, jsonb) from public, anon;
+grant execute on function public.submit_test(uuid, jsonb) to authenticated;
+
+-- list_test_results: Lehrer-/Admin-Uebersicht (Kontoname + Punkte).
+create or replace function public.list_test_results(p_lesson_id uuid)
+returns table (display_name text, email text, score integer, max_score integer,
+               percent integer, created_at timestamptz)
+language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.profiles
+                 where id = auth.uid() and role in ('teacher','admin')) then
+    raise exception 'Nur Lehrer/Admins.';
+  end if;
+  return query
+    select coalesce(p.display_name, split_part(u.email,'@',1)),
+           u.email::text, a.score, a.max_score, a.percent, a.created_at
+    from public.test_attempts a
+    join auth.users u on u.id = a.user_id
+    left join public.profiles p on p.id = a.user_id
+    where a.lesson_id = p_lesson_id
+    order by u.email;
+end; $$;
+revoke execute on function public.list_test_results(uuid) from public, anon;
+grant execute on function public.list_test_results(uuid) to authenticated;
+
+-- has_test: leichter Existenz-Check (nur true/false) fuer die Lektionsseite.
+create or replace function public.has_test(p_lesson_id uuid)
+returns boolean language sql security definer set search_path = public as $$
+  select exists (select 1 from public.test_questions where lesson_id = p_lesson_id);
+$$;
+revoke execute on function public.has_test(uuid) from public;
+grant execute on function public.has_test(uuid) to anon, authenticated;

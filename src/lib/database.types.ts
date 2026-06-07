@@ -179,6 +179,82 @@ export type Database = {
         }
         Relationships: []
       }
+      test_attempts: {
+        Row: {
+          answers: Json
+          created_at: string
+          id: string
+          lesson_id: string
+          max_score: number
+          percent: number
+          score: number
+          user_id: string
+        }
+        Insert: {
+          answers: Json
+          created_at?: string
+          id?: string
+          lesson_id: string
+          max_score: number
+          percent: number
+          score: number
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          id?: string
+          lesson_id?: string
+          max_score?: number
+          percent?: number
+          score?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_attempts_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      test_questions: {
+        Row: {
+          created_at: string
+          id: string
+          lesson_id: string
+          payload: Json
+          position: number
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lesson_id: string
+          payload: Json
+          position: number
+          type?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lesson_id?: string
+          payload?: Json
+          position?: number
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_questions_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_progress: {
         Row: {
           box: number | null
@@ -228,6 +304,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_test_questions: {
+        Args: { p_lesson_id: string }
+        Returns: {
+          id: string
+          options: Json
+          position: number
+          question: string
+          type: string
+        }[]
+      }
+      has_test: { Args: { p_lesson_id: string }; Returns: boolean }
       list_teachers: {
         Args: never
         Returns: {
@@ -236,9 +323,24 @@ export type Database = {
           role: string
         }[]
       }
+      list_test_results: {
+        Args: { p_lesson_id: string }
+        Returns: {
+          created_at: string
+          display_name: string
+          email: string
+          max_score: number
+          percent: number
+          score: number
+        }[]
+      }
       set_teacher_role: {
         Args: { make_teacher: boolean; target_email: string }
         Returns: undefined
+      }
+      submit_test: {
+        Args: { p_answers: Json; p_lesson_id: string }
+        Returns: Json
       }
     }
     Enums: {

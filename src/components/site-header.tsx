@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { signOutAction } from "@/lib/auth/actions";
 import { getCurrentUserRole } from "@/lib/auth/role";
-import { canAdminister } from "@/lib/roles";
+import { canAdminister, canViewSolutions } from "@/lib/roles";
 import { Button } from "@/components/ui/button";
 
 // Globale Kopfzeile. Server Component: liest den Auth-Status serverseitig
@@ -13,8 +13,10 @@ export async function SiteHeader() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  // Rolle nur bei eingeloggtem User holen; steuert die Sichtbarkeit des Links.
-  const isAdmin = user ? canAdminister(await getCurrentUserRole()) : false;
+  // Rolle nur bei eingeloggtem User holen; steuert die Sichtbarkeit der Links.
+  const role = user ? await getCurrentUserRole() : null;
+  const isAdmin = canAdminister(role);
+  const canSeeTests = canViewSolutions(role);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -31,6 +33,11 @@ export async function SiteHeader() {
             <Button asChild variant="ghost" size="sm">
               <Link href="/dashboard">Dashboard</Link>
             </Button>
+            {canSeeTests && (
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/lehrer/tests">Tests</Link>
+              </Button>
+            )}
             {isAdmin && (
               <Button asChild variant="ghost" size="sm">
                 <Link href="/admin">Admin</Link>
