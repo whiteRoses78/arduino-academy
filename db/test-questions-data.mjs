@@ -1976,4 +1976,324 @@ export const TEST_QUESTIONS = {
         "ENA (Pin 10) auf 0 gibt den Motor nicht frei, also steht er. Voll waere 255, die Richtung legen IN1/IN2 fest, und die Pin-Richtung aendert nur pinMode, nicht analogWrite.",
     },
   ],
+  "projekt/ampel-mit-fussgaengerueberweg": [
+    {
+      type: "multiple-choice",
+      question: "An welchem Pin ist in dieser Lektion die gruene LED der Auto-Ampel angeschlossen?",
+      options: [
+        "Pin 4",
+        "Pin 6",
+        "Pin 2",
+        "Pin 7",
+      ],
+      correct: 0,
+      explanation:
+        "Laut Pin-Belegung sitzt die gruene Auto-LED an Pin 4 (autoGruen = 4). Pin 2 ist Auto-Rot, Pin 6 ist die gruene Fussgaenger-LED und Pin 7 der Taster - die sind hier falsch.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie ist der Taster in dieser Schaltung angeschlossen?",
+      options: [
+        "An Pin 7 mit einem externen 220-Ohm-Widerstand",
+        "Zwischen Pin 7 und GND, mit INPUT_PULLUP (kein externer Widerstand)",
+        "An Pin 5 zusammen mit der Fussgaenger-LED",
+        "An Pin 7 und dem Plus-Pol (5V)",
+      ],
+      correct: 1,
+      explanation:
+        "Der Taster liegt zwischen Pin 7 und GND und nutzt INPUT_PULLUP, deshalb braucht er keinen externen Widerstand. Ein 220-Ohm-Widerstand gehoert nur zu den LEDs, und an 5V statt GND wuerde die Pull-Up-Logik nicht funktionieren.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie erkennt der Code mit INPUT_PULLUP, dass der Taster gedrueckt wurde?",
+      options: [
+        "digitalRead(taster) == HIGH",
+        "digitalWrite(taster, HIGH)",
+        "digitalRead(taster) == LOW",
+        "analogRead(taster) > 500",
+      ],
+      correct: 2,
+      explanation:
+        "Bei INPUT_PULLUP gilt: gedrueckt = LOW, nicht gedrueckt = HIGH - deshalb prueft der Code auf == LOW. HIGH waere genau der nicht gedrueckte Zustand, digitalWrite ist zum Schreiben (nicht Lesen) und analogRead passt nicht zu einem digitalen Taster.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was passiert direkt nachdem ein Fussgaenger den Taster drueckt?",
+      options: [
+        "Die Fussgaenger-Ampel wird sofort gruen",
+        "Alle LEDs gehen kurz aus",
+        "Die Auto-Ampel springt sofort von Gruen auf Rot",
+        "Die Auto-Ampel wechselt zuerst auf Gelb (2 Sekunden), dann auf Rot",
+      ],
+      correct: 3,
+      explanation:
+        "Phase 1 schaltet Auto-Gruen aus und Auto-Gelb fuer 2 Sekunden an, erst danach Rot - genau wie an einer echten Ampel. Sofort gruen oder ein direkter Sprung auf Rot ueberspringt die noetige Gelb-Phase.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie lange leuchtet die Fussgaenger-Ampel gruen, bevor sie zu blinken beginnt?",
+      options: [
+        "5 Sekunden",
+        "1 Sekunde",
+        "2 Sekunden",
+        "400 Millisekunden",
+      ],
+      correct: 0,
+      explanation:
+        "In Phase 2 steht delay(5000), also 5 Sekunden Gruen. 2 Sekunden ist die Gelb-Phase des Autos, 1 Sekunde die Raeumzeit und 400 ms ist die Blink-Pause - das sind andere Zeiten im Code.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wofuer wird in dieser Lektion die for-Schleife eingesetzt?",
+      options: [
+        "Um die Auto-Ampel dauerhaft gruen zu halten",
+        "Um die gruene Fussgaenger-LED 3-mal blinken zu lassen (Warnung)",
+        "Um den Taster zu entprellen",
+        "Um alle Pins im setup als OUTPUT zu definieren",
+      ],
+      correct: 1,
+      explanation:
+        "Die for-Schleife (i = 0; i < 3; i++) laesst die Fussgaenger-Gruen-LED 3-mal blinken, als Warnung vor Rot. Das Entprellen macht ein einzelnes delay(200), und die pinMode-Befehle stehen ohne Schleife im setup.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Wie wechselt die Auto-Ampel am Ende von Rot zurueck auf Gruen?",
+      options: [
+        "Direkt von Rot auf Gruen ohne Zwischenschritt",
+        "Erst Gelb allein, dann Gruen",
+        "Rot und Gelb leuchten gleichzeitig (1 Sekunde), dann Gruen",
+        "Erst aus, dann blinkt sie 3-mal, dann Gruen",
+      ],
+      correct: 2,
+      explanation:
+        "In Phase 4 bleibt Rot an und Gelb wird dazugeschaltet (Rot-Gelb fuer 1 Sekunde), danach Gruen - so wie eine echte deutsche Ampel. Ein direkter Sprung oder nur Gelb allein entspricht nicht dem Code; das Blinken gehoert zur Fussgaenger-LED.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum gibt es zwischen Auto-Rot und Fussgaenger-Gruen eine Pause von etwa 1 Sekunde (delay(1000))?",
+      options: [
+        "Damit der Arduino Zeit zum Neustarten hat",
+        "Damit die rote LED nicht ueberhitzt",
+        "Weil der Taster sonst doppelt ausloest",
+        "Als Raeumzeit, damit fahrende Autos die Kreuzung noch verlassen koennen",
+      ],
+      correct: 3,
+      explanation:
+        "Die 1 Sekunde ist die Raeumzeit: Autos, die noch unterwegs sind, sollen die Kreuzung verlassen, bevor Fussgaenger gruen bekommen. Mit Neustart, Tastenprellen oder Ueberhitzung hat dieses delay nichts zu tun.",
+    },
+  ],
+
+  "projekt/nachtabschaltung-mit-lichtsensor": [
+    {
+      type: "multiple-choice",
+      question: "Wie ist der LDR in dieser Lektion als Spannungsteiler geschaltet?",
+      options: [
+        "5V -> LDR -> Pin A0 -> 10-kOhm-Widerstand -> GND",
+        "GND -> LDR -> Pin A0 -> 10-kOhm-Widerstand -> 5V",
+        "5V -> 10-kOhm-Widerstand -> Pin A0 -> LDR -> 5V",
+        "Pin A0 -> LDR -> 5V, ohne weiteren Widerstand",
+      ],
+      correct: 0,
+      explanation:
+        "In der Lektion sitzt der LDR oben an 5V, danach kommt der Abgriff an A0 und ein 10-kOhm-Widerstand nach GND. Die anderen Varianten vertauschen 5V/GND oder lassen den Festwiderstand weg, dann funktioniert der Spannungsteiler nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Es ist sehr hell. Welchen analogRead(A0)-Wert misst der Arduino laut Lektion ungefaehr?",
+      options: [
+        "Einen niedrigen Wert (z.B. 50-200)",
+        "Einen hohen Wert (z.B. 800-1000)",
+        "Genau 0, weil der LDR den Strom sperrt",
+        "Immer genau 300, den Schwellenwert",
+      ],
+      correct: 1,
+      explanation:
+        "In dieser Schaltung gilt: hell = hoher Wert. Bei viel Licht hat der LDR wenig Widerstand, deshalb misst A0 einen hohen Wert (800-1000). Niedrige Werte gehoeren zur Dunkelheit, 0 oder 300 sind erfundene Festwerte.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was macht die Nachtabschaltung in dieser Lektion genau?",
+      options: [
+        "Sie schaltet die Ampel bei Helligkeit EIN und bei Dunkelheit AUS",
+        "Sie dimmt die LEDs je nach Helligkeit stufenlos",
+        "Sie laesst die Ampel nur bei Dunkelheit laufen und schaltet bei Helligkeit alle LEDs aus",
+        "Sie schaltet bei Dunkelheit ein zusaetzliches Nachtlicht ein",
+      ],
+      correct: 2,
+      explanation:
+        "Laut Lektion ist die Ampel nur aktiv, wenn es dunkel genug ist; bei Helligkeit schlaeft sie und alle LEDs gehen aus. Das ist genau umgekehrt zur Strassenlaterne und hat nichts mit Dimmen oder einem extra Nachtlicht zu tun.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Im Code steht: if (lichtWert <= SCHWELLE) { ... }. Wann wird dieser Block ausgefuehrt?",
+      options: [
+        "Wenn es hell ist, dann schlaeft die Ampel",
+        "Wenn lichtWert genau 1023 betraegt",
+        "Wenn der Taster gedrueckt wird",
+        "Wenn es dunkel ist, dann ist die Ampel aktiv",
+      ],
+      correct: 3,
+      explanation:
+        "Ein kleiner Lichtwert bedeutet Dunkelheit; lichtWert <= SCHWELLE ist also der Dunkel-Fall, in dem die Ampel normal laeuft. Der else-Zweig gehoert zu hell, 1023 waere sehr hell, und der Taster wird erst innerhalb des Dunkel-Blocks geprueft.",
+    },
+    {
+      type: "multiple-choice",
+      question: "In der Kalibrierung misst du: Raumlicht 750, Hand drueber (dunkel) 80. Welcher Schwellenwert ist laut Lektion sinnvoll?",
+      options: [
+        "300, also zwischen beiden Werten",
+        "1000, also ueber beiden Werten",
+        "50, also unter beiden Werten",
+        "Der Schwellenwert ist egal, jeder Wert funktioniert",
+      ],
+      correct: 0,
+      explanation:
+        "Ein guter Schwellenwert liegt zwischen Hell- und Dunkelwert, in der Lektion 300. Liegt er ueber oder unter beiden Werten, kann die Schaltung Hell und Dunkel nicht mehr unterscheiden; egal ist er also nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "An welchem Pin wird der LDR ausgelesen und warum gerade dort?",
+      options: [
+        "An Pin 13, weil dort die eingebaute LED sitzt",
+        "An Pin A0, weil das ein analoger Eingang ist und Werte von 0 bis 1023 messen kann",
+        "An GND, weil der LDR mit Masse verbunden ist",
+        "An 5V, weil der LDR dort den Strom bekommt",
+      ],
+      correct: 1,
+      explanation:
+        "Der LDR-Abgriff haengt an A0, einem analogen Eingang, der fein abgestufte Werte von 0 bis 1023 liefert. GND und 5V sind nur Versorgungsanschluesse, und Pin 13 ist ein digitaler Pin fuer die Onboard-LED.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Womit liest man die LDR-Werte zum Kalibrieren aus, bevor man den Schwellenwert festlegt?",
+      options: [
+        "Mit einem zweiten Arduino als Messgeraet",
+        "Mit einem Lineal am Steckbrett",
+        "Mit dem Serial Monitor in der Arduino IDE",
+        "Mit der eingebauten LED an Pin 13",
+      ],
+      correct: 2,
+      explanation:
+        "Die Lektion laesst analogRead(A0) per Serial.println ausgeben und im Serial Monitor ablesen, um Hell- und Dunkelwert zu notieren. Die anderen Optionen koennen keine Zahlenwerte des Sensors anzeigen.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum betont die Lektion, dass jeder den Schwellenwert an seinem eigenen Aufbau neu einstellen muss?",
+      options: [
+        "Weil sich der Arduino jeden Tag anders verhaelt",
+        "Weil der Serial Monitor falsche Werte anzeigt",
+        "Weil 300 nur fuer die eingebaute LED gilt",
+        "Weil die LDR-Werte bei jedem Aufbau und Raum etwas anders sind",
+      ],
+      correct: 3,
+      explanation:
+        "Laut Warnhinweis haengen die LDR-Werte von Bauteil und Umgebungslicht ab, deshalb kann der passende Schwellenwert bei dir 200, bei anderen 400 sein. Der Serial Monitor zeigt korrekte Werte, und 300 hat nichts mit der Onboard-LED zu tun.",
+    },
+  ],
+
+  "projekt/pruefungsschaltung-komplett": [
+    {
+      type: "multiple-choice",
+      question: "Welche Anforderung muss eine Schaltung laut Lektion erfuellen, damit sie fuer die Realschulabschlusspruefung Technik (RSAP) zaehlt?",
+      options: [
+        "Mindestens 1 Sensor und 2 Aktoren ODER 2 Sensoren und 1 Aktor, davon mindestens 1 analoger Sensor",
+        "Mindestens 3 Aktoren und kein Sensor",
+        "Genau 5 LEDs und ein Taster",
+        "Nur ein einziger digitaler Sensor reicht aus",
+      ],
+      correct: 0,
+      explanation:
+        "Die Lektion nennt als Pflicht: 1 Sensor + 2 Aktoren ODER 2 Sensoren + 1 Aktor, und mindestens 1 externer Sensor muss analog sein. Ein reines Taster-Setup (nur digital) reicht laut Lektion ausdruecklich nicht.",
+    },
+    {
+      type: "multiple-choice",
+      question: "An welchem Pin haengt in der Pruefungsschaltung der LDR (Lichtsensor)?",
+      options: [
+        "Pin 7",
+        "Pin A0",
+        "Pin 2",
+        "Pin 6",
+      ],
+      correct: 1,
+      explanation:
+        "Der LDR wird laut Schaltplan am analogen Eingang A0 ausgelesen (analogRead(A0)). Pin 7 ist der Taster, Pin 2 die rote Auto-LED, Pin 6 die gruene Fussgaenger-LED.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Warum gilt die Ampel-Schaltung laut Lektion als RSAP-konform?",
+      options: [
+        "Weil sie 3 analoge Sensoren benutzt",
+        "Weil sie nur einen Taster und sonst nichts braucht",
+        "Weil sie 2 Sensoren (LDR analog + Taster digital) und 5 Aktoren (LEDs) mit if/else-Steuerung hat",
+        "Weil sie ganz ohne Code auskommt",
+      ],
+      correct: 2,
+      explanation:
+        "Laut Lektion erfuellt die Ampel die Pflicht durch 2 Sensoren (LDR analog + Taster digital), 5 Aktoren (LEDs) und Steuerung mit if/else plus Zustandsmaschine. Ein analoger Sensor (LDR) ist dabei, deshalb ist sie konform.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Was passiert in der Schaltung, wenn der LDR misst, dass es HELL ist?",
+      options: [
+        "Die komplette Ampel-Sequenz startet sofort",
+        "Der Taster wird dauerhaft gesperrt",
+        "Nur die Fussgaenger-Ampel leuchtet gruen",
+        "Alle LEDs werden ausgeschaltet, die Ampel schlaeft",
+      ],
+      correct: 3,
+      explanation:
+        "Im else-Zweig (hell) werden alle fuenf LEDs auf LOW gesetzt, die Ampel schlaeft. Erst wenn der LDR dunkel meldet (Wert unter der SCHWELLE), wird die Ampel aktiv und prueft den Taster.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Der Taster ist als INPUT_PULLUP konfiguriert. Wann erkennt der Code, dass er gedrueckt wurde?",
+      options: [
+        "Wenn digitalRead(taster) den Wert LOW liefert",
+        "Wenn analogRead(taster) ueber 300 liegt",
+        "Wenn digitalRead(taster) den Wert HIGH liefert",
+        "Wenn der LDR gleichzeitig hell misst",
+      ],
+      correct: 0,
+      explanation:
+        "Bei INPUT_PULLUP ist der Eingang normalerweise HIGH und wird beim Druecken auf LOW gezogen; der Code prueft genau digitalRead(taster) == LOW. analogRead passt nicht, weil der Taster ein digitaler Eingang an Pin 7 ist.",
+    },
+    {
+      type: "multiple-choice",
+      question: "In welcher Reihenfolge empfiehlt die Lektion, die Pruefungsschaltung aufzubauen?",
+      options: [
+        "Zuerst den LDR, dann den Taster, dann alle LEDs auf einmal",
+        "Erst die Auto-Ampel (3 LEDs), dann die Fussgaenger-Ampel, dann den Taster, zum Schluss den LDR",
+        "Alles gleichzeitig zusammenstecken und am Ende einmal testen",
+        "Erst den Code komplett schreiben, dann gar nichts mehr testen",
+      ],
+      correct: 1,
+      explanation:
+        "Die Lektion raet, systematisch aufzubauen: erst Auto-Ampel, dann Fussgaenger-Ampel, dann Taster, zuletzt LDR, und nach jedem Bauteil zu testen. Alles auf einmal aufzubauen macht die Fehlersuche schwerer.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welche Aussage ueber die Variable SCHWELLE = 300 im Code ist richtig?",
+      options: [
+        "Sie legt fest, wie viele Sekunden Gelb leuchtet",
+        "Sie bestimmt, an welchem Pin der LDR haengt",
+        "Sie ist der Lichtgrenzwert: Werte unter 300 bedeuten dunkel; sie muss mit dem Serial Monitor kalibriert werden",
+        "Sie gibt an, wie viele LEDs angeschlossen sind",
+      ],
+      correct: 2,
+      explanation:
+        "Im Code steht SCHWELLE = 300 als Tag/Nacht-Grenzwert (unter 300 = dunkel), und der Kommentar sagt ausdruecklich, dass man ihn mit dem Serial Monitor kalibrieren muss, weil die LDR-Werte je nach Raum schwanken.",
+    },
+    {
+      type: "multiple-choice",
+      question: "Welcher der genannten Fehler gehoert laut Lektion zu den haeufigen Pruefungsfehlern?",
+      options: [
+        "Den Arduino zu schnell programmieren",
+        "Den Serial Monitor zum Kalibrieren benutzen",
+        "Zu viele Kommentare in den Code schreiben",
+        "GND (Masse) zu vergessen, sodass keine LED leuchtet",
+      ],
+      correct: 3,
+      explanation:
+        "Die Lektion listet 'GND vergessen' als haeufigen Fehler auf, weil ohne Masse keine LED leuchtet. Kommentare und das Kalibrieren mit dem Serial Monitor empfiehlt die Lektion dagegen ausdruecklich als gutes Vorgehen.",
+    },
+  ],
 };
