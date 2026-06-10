@@ -1,4 +1,4 @@
-// Re-seed-feste Quelle der Kompetenztest-Fragen je Lektion (Marco-geprueft).
+// Re-seed-feste Quelle der Kompetenztest-Fragen je Lektion (Marco-geprüft).
 // Eingespielt wird via MCP execute_sql (test_questions erlaubt keinen anon-Insert).
 // Format pro Frage = Vanilla-MC-Payload: {type, question, options[], correct, explanation}.
 // Schluessel = "<modul>/<slug>" der Lektion.
@@ -1018,16 +1018,16 @@ export const TEST_QUESTIONS = {
   "analog/spannungsteiler-verstehen": [
     {
       type: "multiple-choice",
-      question: "Was macht ein Spannungsteiler aus zwei Widerstaenden, die in Reihe zwischen +5 V und GND liegen?",
+      question: "Was macht ein Spannungsteiler aus zwei Widerständen, die in Reihe zwischen +5 V und GND liegen?",
       options: [
         "Er teilt die Versorgungsspannung auf, sodass am Abgriff in der Mitte eine kleinere Spannung U2 anliegt.",
         "Er verdoppelt die 5 V auf 10 V am Abgriff.",
         "Er macht aus Gleichspannung eine Wechselspannung.",
-        "Er liefert am Abgriff immer genau 5 V, egal welche Widerstaende man nimmt.",
+        "Er liefert am Abgriff immer genau 5 V, egal welche Widerstände man nimmt.",
       ],
       correct: 0,
       explanation:
-        "Am Abgriff in der Mitte liegt eine Teilspannung U2 an, die kleiner als 5 V ist. Ein Teiler kann nicht verdoppeln (kein 10 V), erzeugt keine Wechselspannung und liefert nicht immer 5 V - U2 haengt vom Widerstandsverhaeltnis ab.",
+        "Am Abgriff in der Mitte liegt eine Teilspannung U2 an, die kleiner als 5 V ist. Ein Teiler kann nicht verdoppeln (kein 10 V), erzeugt keine Wechselspannung und liefert nicht immer 5 V - U2 hängt vom Widerstandsverhältnis ab.",
     },
     {
       type: "multiple-choice",
@@ -1040,24 +1040,24 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Im Zaehler steht der untere Widerstand R2 (an dem U2 abgegriffen wird), im Nenner die Summe beider Widerstaende. Mit R1 im Zaehler bekaeme man die Spannung an R1, die anderen beiden Brueche sind keine gueltige Teilerformel.",
+        "Im Zähler steht der untere Widerstand R2 (an dem U2 abgegriffen wird), im Nenner die Summe beider Widerstände. Mit R1 im Zähler bekäme man die Spannung an R1, die anderen beiden Brüche sind keine gültige Teilerformel.",
     },
     {
       type: "multiple-choice",
-      question: "Du baust einen Spannungsteiler mit zwei gleich grossen 10-kΩ-Widerstaenden an 5 V. Welche Spannung misst das Multimeter am Abgriff?",
+      question: "Du baust einen Spannungsteiler mit zwei gleich großen 10-kΩ-Widerständen an 5 V. Welche Spannung misst das Multimeter am Abgriff?",
       options: [
-        "5 V, weil beide Widerstaende gleich sind",
-        "0 V, weil sich die Widerstaende aufheben",
+        "5 V, weil beide Widerstände gleich sind",
+        "0 V, weil sich die Widerstände aufheben",
         "2,5 V, weil die Spannung genau halbiert wird",
-        "1,25 V, weil ein Viertel uebrig bleibt",
+        "1,25 V, weil ein Viertel übrig bleibt",
       ],
       correct: 2,
       explanation:
-        "Bei zwei gleichen Widerstaenden wird die Spannung genau halbiert: 5 V · 10/(10+10) = 2,5 V. Gleiche Widerstaende heben sich nicht auf (nicht 0 V) und liefern auch nicht die volle Spannung (nicht 5 V).",
+        "Bei zwei gleichen Widerständen wird die Spannung genau halbiert: 5 V · 10/(10+10) = 2,5 V. Gleiche Widerstände heben sich nicht auf (nicht 0 V) und liefern auch nicht die volle Spannung (nicht 5 V).",
     },
     {
       type: "multiple-choice",
-      question: "R1 = 10 kΩ und R2 = 20 kΩ liegen an 5 V. Wie gross ist U2?",
+      question: "R1 = 10 kΩ und R2 = 20 kΩ liegen an 5 V. Wie groß ist U2?",
       options: [
         "1,67 V",
         "2,50 V",
@@ -1066,40 +1066,40 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "U2 = 5 V · 20/(10+20) = 5 V · 2/3 ≈ 3,33 V - der groessere untere Widerstand bekommt das groessere Stueck. 1,67 V ergaebe sich, wenn man R1 und R2 vertauscht; 2,50 V nur bei gleichen Widerstaenden.",
+        "U2 = 5 V · 20/(10+20) = 5 V · 2/3 ≈ 3,33 V - der größere untere Widerstand bekommt das größere Stück. 1,67 V ergäbe sich, wenn man R1 und R2 vertauscht; 2,50 V nur bei gleichen Widerständen.",
     },
     {
       type: "multiple-choice",
-      question: "Welche Eselsbruecke beschreibt richtig, wie sich U2 verhaelt?",
+      question: "Welche Eselsbrücke beschreibt richtig, wie sich U2 verhält?",
       options: [
-        "Unten waechst, U2 waechst - je groesser R2, desto groesser U2.",
-        "Oben waechst, U2 waechst - je groesser R1, desto groesser U2.",
-        "U2 bleibt immer gleich, egal wie gross die Widerstaende sind.",
-        "Je kleiner beide Widerstaende, desto groesser U2.",
+        "Unten wächst, U2 wächst - je größer R2, desto größer U2.",
+        "Oben wächst, U2 wächst - je größer R1, desto größer U2.",
+        "U2 bleibt immer gleich, egal wie groß die Widerstände sind.",
+        "Je kleiner beide Widerstände, desto größer U2.",
       ],
       correct: 0,
       explanation:
-        "Je groesser der untere Widerstand R2 im Verhaeltnis, desto mehr Spannung bleibt fuer U2 - daher unten waechst, U2 waechst. Ein groesseres R1 (oben) macht U2 dagegen kleiner, und U2 ist keineswegs konstant.",
+        "Je größer der untere Widerstand R2 im Verhältnis, desto mehr Spannung bleibt für U2 - daher unten wächst, U2 wächst. Ein größeres R1 (oben) macht U2 dagegen kleiner, und U2 ist keineswegs konstant.",
     },
     {
       type: "multiple-choice",
       question: "Warum steckt ein Spannungsteiler in fast jedem analogen Sensor (z. B. NTC oder LDR)?",
       options: [
-        "Weil der Sensor seinen Widerstand aendert und sich dadurch U2 aendert.",
+        "Weil der Sensor seinen Widerstand ändert und sich dadurch U2 ändert.",
         "Weil der Sensor die 5 V auf 12 V hochsetzt.",
-        "Weil der Sensor die Spannung in Strom umwandelt, den der Arduino zaehlt.",
-        "Weil der Sensor das Programm direkt steuert, ohne dass sich eine Spannung aendert.",
+        "Weil der Sensor die Spannung in Strom umwandelt, den der Arduino zählt.",
+        "Weil der Sensor das Programm direkt steuert, ohne dass sich eine Spannung ändert.",
       ],
       correct: 0,
       explanation:
-        "Ein NTC oder LDR ist ein veraenderlicher Widerstand: aendert er sich, aendert sich auch U2 - genau dieses Spannungssignal liest der Arduino ein. Ein Sensor setzt die Spannung nicht hoch und wandelt sie nicht in einen gezaehlten Strom um.",
+        "Ein NTC oder LDR ist ein veränderlicher Widerstand: ändert er sich, ändert sich auch U2 - genau dieses Spannungssignal liest der Arduino ein. Ein Sensor setzt die Spannung nicht hoch und wandelt sie nicht in einen gezählten Strom um.",
     },
     {
       type: "multiple-choice",
       question: "In einem Teiler ist R1 = 10 kΩ fest, R2 ist ein NTC. Bei Hitze sinkt der NTC von 10 kΩ auf 4 kΩ. Was passiert mit U2 (Versorgung 5 V)?",
       options: [
         "U2 steigt von 2,5 V auf etwa 3,5 V.",
-        "U2 bleibt unveraendert bei 2,5 V.",
+        "U2 bleibt unverändert bei 2,5 V.",
         "U2 sinkt von 2,5 V auf etwa 1,43 V.",
         "U2 springt sofort auf 5 V.",
       ],
@@ -1109,7 +1109,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Mit welchem Befehl liest der Arduino die Spannung U2 am Abgriff spaeter als Zahl ein?",
+      question: "Mit welchem Befehl liest der Arduino die Spannung U2 am Abgriff später als Zahl ein?",
       options: [
         "digitalWrite(pin, HIGH)",
         "analogRead(pin)",
@@ -1151,7 +1151,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "An welche Pins schliesst du ein Potentiometer an, um es mit analogRead() auszulesen?",
+      question: "An welche Pins schließt du ein Potentiometer an, um es mit analogRead() auszulesen?",
       options: [
         "An die digitalen Pins 0 bis 13",
         "An die analogen Pins A0 bis A5",
@@ -1232,7 +1232,7 @@ export const TEST_QUESTIONS = {
   "analog/pwm-dimmen-statt-schalten": [
     {
       type: "multiple-choice",
-      question: "Wofuer steht die Abkuerzung PWM?",
+      question: "Wofür steht die Abkürzung PWM?",
       options: [
         "Power-Watt-Messung",
         "Puls-Weiten-Modulation",
@@ -1241,7 +1241,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "PWM steht fuer Puls-Weiten-Modulation: Der Pin wird sehr schnell ein- und ausgeschaltet, sodass eine Durchschnittshelligkeit entsteht. Die anderen Begriffe klingen aehnlich technisch, kommen aber in der Lektion nicht vor und sind erfunden.",
+        "PWM steht für Puls-Weiten-Modulation: Der Pin wird sehr schnell ein- und ausgeschaltet, sodass eine Durchschnittshelligkeit entsteht. Die anderen Begriffe klingen ähnlich technisch, kommen aber in der Lektion nicht vor und sind erfunden.",
     },
     {
       type: "multiple-choice",
@@ -1267,11 +1267,11 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "analogWrite() arbeitet mit Werten von 0 bis 255 (255 = volle Helligkeit). 0 bis 1023 gehoert zu analogRead (Eingang), 100 waere Prozent und 490 ist die PWM-Frequenz pro Sekunde.",
+        "analogWrite() arbeitet mit Werten von 0 bis 255 (255 = volle Helligkeit). 0 bis 1023 gehört zu analogRead (Eingang), 100 wäre Prozent und 490 ist die PWM-Frequenz pro Sekunde.",
     },
     {
       type: "multiple-choice",
-      question: "Du moechtest eine LED per analogWrite() dimmen. An welchen Pin musst du sie anschliessen?",
+      question: "Du möchtest eine LED per analogWrite() dimmen. An welchen Pin musst du sie anschließen?",
       options: [
         "An jeden beliebigen digitalen Pin",
         "An einen Pin mit Tilde, z.B. ~9",
@@ -1280,7 +1280,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "analogWrite() funktioniert nur an PWM-Pins, die auf dem Board mit einer Tilde (~) markiert sind, z.B. ~9. Ein normaler Pin wie 8 schaltet nur ganz an/aus, und A0-Pins sind Eingaenge zum Auslesen.",
+        "analogWrite() funktioniert nur an PWM-Pins, die auf dem Board mit einer Tilde (~) markiert sind, z.B. ~9. Ein normaler Pin wie 8 schaltet nur ganz an/aus, und A0-Pins sind Eingänge zum Auslesen.",
     },
     {
       type: "multiple-choice",
@@ -1289,7 +1289,7 @@ export const TEST_QUESTIONS = {
         "analogRead() schreibt Werte raus, analogWrite() liest Werte ein",
         "analogRead() liest einen Eingang (0-1023), analogWrite() schreibt einen Ausgang (0-255)",
         "Beide lesen Werte ein, nur mit anderem Bereich",
-        "analogRead() ist fuer LEDs, analogWrite() fuer Sensoren",
+        "analogRead() ist für LEDs, analogWrite() für Sensoren",
       ],
       correct: 1,
       explanation:
@@ -1297,7 +1297,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Mit welchem Befehl rechnest du den Poti-Wert (0 bis 1023) in einen passenden Wert fuer analogWrite() (0 bis 255) um?",
+      question: "Mit welchem Befehl rechnest du den Poti-Wert (0 bis 1023) in einen passenden Wert für analogWrite() (0 bis 255) um?",
       options: [
         "delay()",
         "Serial.print()",
@@ -1310,7 +1310,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Ungefaehr wie hell leuchtet eine LED bei analogWrite(9, 127)?",
+      question: "Ungefähr wie hell leuchtet eine LED bei analogWrite(9, 127)?",
       options: [
         "Etwa halb so hell (rund 50%)",
         "Gar nicht, die LED bleibt aus",
@@ -1319,11 +1319,11 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "127 liegt etwa in der Mitte zwischen 0 und 255, daher leuchtet die LED rund 50 Prozent hell. 0 waere aus, 255 waere voll an, und ein kurzes Aufblitzen passt zu keinem festen analogWrite-Wert.",
+        "127 liegt etwa in der Mitte zwischen 0 und 255, daher leuchtet die LED rund 50 Prozent hell. 0 wäre aus, 255 wäre voll an, und ein kurzes Aufblitzen passt zu keinem festen analogWrite-Wert.",
     },
     {
       type: "multiple-choice",
-      question: "Du schliesst die LED versehentlich an Pin 8 an (kein PWM-Pin) und nutzt analogWrite(8, 127). Was passiert?",
+      question: "Du schließt die LED versehentlich an Pin 8 an (kein PWM-Pin) und nutzt analogWrite(8, 127). Was passiert?",
       options: [
         "Die LED leuchtet trotzdem genau halb hell",
         "Der Arduino geht kaputt",
@@ -1339,25 +1339,25 @@ export const TEST_QUESTIONS = {
   "analog/lichtsensor-ldr": [
     {
       type: "multiple-choice",
-      question: "Wofuer steht die Abkuerzung LDR und was macht dieses Bauteil?",
+      question: "Wofür steht die Abkürzung LDR und was macht dieses Bauteil?",
       options: [
-        "Es ist ein lichtabhaengiger Widerstand: Er aendert seinen Widerstand je nachdem, wie hell es ist.",
+        "Es ist ein lichtabhängiger Widerstand: Er ändert seinen Widerstand je nachdem, wie hell es ist.",
         "Es ist eine besonders helle LED, die man zum Beleuchten benutzt.",
         "Es ist ein Sensor, der die Temperatur in der Umgebung misst.",
         "Es ist ein fester Widerstand, der immer genau 10 kOhm hat.",
       ],
       correct: 0,
       explanation:
-        "LDR heisst Light Dependent Resistor, also lichtabhaengiger Widerstand. Eine LED leuchtet, misst aber nichts; Temperatur misst ein anderer Sensor; und der feste 10-kOhm-Widerstand ist in der Schaltung das Gegenstueck zum LDR, nicht der LDR selbst.",
+        "LDR heißt Light Dependent Resistor, also lichtabhängiger Widerstand. Eine LED leuchtet, misst aber nichts; Temperatur misst ein anderer Sensor; und der feste 10-kOhm-Widerstand ist in der Schaltung das Gegenstück zum LDR, nicht der LDR selbst.",
     },
     {
       type: "multiple-choice",
-      question: "Wie veraendert sich der Widerstand des LDR, wenn es HELLER wird?",
+      question: "Wie verändert sich der Widerstand des LDR, wenn es HELLER wird?",
       options: [
-        "Der Widerstand bleibt gleich, nur die Spannung aendert sich.",
-        "Der Widerstand wird groesser (z.B. von 1 kOhm auf 100 kOhm).",
+        "Der Widerstand bleibt gleich, nur die Spannung ändert sich.",
+        "Der Widerstand wird größer (z.B. von 1 kOhm auf 100 kOhm).",
         "Der Widerstand wird kleiner (z.B. von 100 kOhm auf 1 kOhm).",
-        "Der LDR wird heiss und schaltet sich ab.",
+        "Der LDR wird heiß und schaltet sich ab.",
       ],
       correct: 2,
       explanation:
@@ -1365,16 +1365,16 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Warum braucht man fuer den LDR ueberhaupt einen Spannungsteiler mit einem 10-kOhm-Widerstand?",
+      question: "Warum braucht man für den LDR überhaupt einen Spannungsteiler mit einem 10-kOhm-Widerstand?",
       options: [
-        "Damit der LDR nicht zu heiss wird und kaputtgeht.",
+        "Damit der LDR nicht zu heiß wird und kaputtgeht.",
         "Weil der Arduino keinen Widerstand direkt messen kann, sondern nur Spannung.",
         "Weil der LDR sonst zu wenig Strom bekommt, um zu leuchten.",
-        "Damit man zwei LDR gleichzeitig anschliessen kann.",
+        "Damit man zwei LDR gleichzeitig anschließen kann.",
       ],
       correct: 1,
       explanation:
-        "Der Arduino kann nur eine Spannung messen, keinen Widerstand. Der Spannungsteiler wandelt die Widerstandsaenderung des LDR in eine messbare Spannung um. Ein LDR leuchtet nicht, und mit Ueberhitzung oder zwei Sensoren hat der Spannungsteiler nichts zu tun.",
+        "Der Arduino kann nur eine Spannung messen, keinen Widerstand. Der Spannungsteiler wandelt die Widerstandsänderung des LDR in eine messbare Spannung um. Ein LDR leuchtet nicht, und mit Überhitzung oder zwei Sensoren hat der Spannungsteiler nichts zu tun.",
     },
     {
       type: "multiple-choice",
@@ -1387,11 +1387,11 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "In dieser Schaltung liegt der LDR oben an 5V, dann folgt der Knotenpunkt mit A0 und darunter der 10-kOhm-Widerstand zu GND. Die anderen Reihenfolgen vertauschen Plus und Minus oder setzen LDR und Festwiderstand falsch herum - dann wuerde die Messung nicht zur Lektion passen.",
+        "In dieser Schaltung liegt der LDR oben an 5V, dann folgt der Knotenpunkt mit A0 und darunter der 10-kOhm-Widerstand zu GND. Die anderen Reihenfolgen vertauschen Plus und Minus oder setzen LDR und Festwiderstand falsch herum - dann würde die Messung nicht zur Lektion passen.",
     },
     {
       type: "multiple-choice",
-      question: "Es ist HELL. Welchen Wert zeigt analogRead(A0) bei dieser Schaltung ungefaehr an?",
+      question: "Es ist HELL. Welchen Wert zeigt analogRead(A0) bei dieser Schaltung ungefähr an?",
       options: [
         "Einen hohen Wert (etwa 920).",
         "Einen niedrigen Wert (etwa 100).",
@@ -1400,20 +1400,20 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Bei Helligkeit wird der LDR-Widerstand klein, fast die ganze Spannung faellt ueber dem unteren 10-kOhm-Widerstand ab, und genau die misst A0 - daher ein hoher Wert (~920). Der niedrige Wert gilt fuer Dunkelheit; 512 waere nur Zufall, und der LDR sperrt nichts.",
+        "Bei Helligkeit wird der LDR-Widerstand klein, fast die ganze Spannung fällt über dem unteren 10-kOhm-Widerstand ab, und genau die misst A0 - daher ein hoher Wert (~920). Der niedrige Wert gilt für Dunkelheit; 512 wäre nur Zufall, und der LDR sperrt nichts.",
     },
     {
       type: "multiple-choice",
       question: "Du deckst den LDR mit der Hand ab (es wird dunkel). Was passiert mit dem analogRead-Wert?",
       options: [
-        "Er bleibt unveraendert, weil A0 nur die 5V misst.",
+        "Er bleibt unverändert, weil A0 nur die 5V misst.",
         "Er steigt auf etwa 1000.",
         "Er sinkt auf einen niedrigen Wert (etwa 100).",
         "Er springt auf negative Werte.",
       ],
       correct: 2,
       explanation:
-        "Dunkel bedeutet hoher LDR-Widerstand, dadurch faellt nur noch wenig Spannung ueber dem 10-kOhm-Widerstand ab, und A0 misst einen niedrigen Wert (~100). Ein Anstieg waere der umgekehrte Fall (hell), unveraendert bleibt der Wert nicht, und negativ kann analogRead nie werden (0 bis 1023).",
+        "Dunkel bedeutet hoher LDR-Widerstand, dadurch fällt nur noch wenig Spannung über dem 10-kOhm-Widerstand ab, und A0 misst einen niedrigen Wert (~100). Ein Anstieg wäre der umgekehrte Fall (hell), unverändert bleibt der Wert nicht, und negativ kann analogRead nie werden (0 bis 1023).",
     },
     {
       type: "multiple-choice",
@@ -1426,27 +1426,27 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "analogRead(ldrPin) liest die Spannung an A0 als Zahl von 0 bis 1023 ein - genau das brauchen wir fuer den LDR. digitalWrite schaltet einen Pin nur ein/aus, Serial.begin startet nur den Serial Monitor, und pinMode auf OUTPUT wuerde den Pin zum Ausgang machen statt zum Messeingang.",
+        "analogRead(ldrPin) liest die Spannung an A0 als Zahl von 0 bis 1023 ein - genau das brauchen wir für den LDR. digitalWrite schaltet einen Pin nur ein/aus, Serial.begin startet nur den Serial Monitor, und pinMode auf OUTPUT würde den Pin zum Ausgang machen statt zum Messeingang.",
     },
     {
       type: "multiple-choice",
       question: "Du willst aus dem LDR ein Nachtlicht bauen: Die LED soll angehen, wenn es DUNKEL wird. Worauf muss dein Programm bei dieser Schaltung achten?",
       options: [
-        "Es schaltet die LED ein, wenn der analogRead-Wert UNTER einen Schwellwert faellt.",
-        "Es schaltet die LED ein, wenn der analogRead-Wert UEBER einen Schwellwert steigt.",
+        "Es schaltet die LED ein, wenn der analogRead-Wert UNTER einen Schwellwert fällt.",
+        "Es schaltet die LED ein, wenn der analogRead-Wert ÜBER einen Schwellwert steigt.",
         "Es schaltet die LED ein, sobald 5V am LDR anliegen.",
-        "Es schaltet die LED nur ein, wenn der Wert genau 512 betraegt.",
+        "Es schaltet die LED nur ein, wenn der Wert genau 512 beträgt.",
       ],
       correct: 0,
       explanation:
-        "Dunkel ergibt bei dieser Schaltung einen niedrigen Wert, also muss die LED angehen, wenn der Wert UNTER den Schwellwert faellt. Ueber dem Schwellwert waere es ja hell. Die 5V liegen dauerhaft an, und ein fester Wert wie 512 wuerde fast nie exakt getroffen.",
+        "Dunkel ergibt bei dieser Schaltung einen niedrigen Wert, also muss die LED angehen, wenn der Wert UNTER den Schwellwert fällt. Über dem Schwellwert wäre es ja hell. Die 5V liegen dauerhaft an, und ein fester Wert wie 512 würde fast nie exakt getroffen.",
     },
   ],
 
   "analog/ntc-temperatursensor": [
     {
       type: "multiple-choice",
-      question: "Wofuer steht die Abkuerzung NTC?",
+      question: "Wofür steht die Abkürzung NTC?",
       options: [
         "Negative Temperature Coefficient (negativer Temperaturkoeffizient)",
         "Normale Temperatur-Charakteristik",
@@ -1455,11 +1455,11 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "NTC heisst Negative Temperature Coefficient: der Widerstand sinkt, wenn die Temperatur steigt. Die anderen Begriffe gibt es so nicht; das Wort negativ beschreibt den gegenlaeufigen Zusammenhang.",
+        "NTC heißt Negative Temperature Coefficient: der Widerstand sinkt, wenn die Temperatur steigt. Die anderen Begriffe gibt es so nicht; das Wort negativ beschreibt den gegenläufigen Zusammenhang.",
     },
     {
       type: "multiple-choice",
-      question: "Was passiert mit dem Widerstand eines NTC, wenn er waermer wird?",
+      question: "Was passiert mit dem Widerstand eines NTC, wenn er wärmer wird?",
       options: [
         "Der Widerstand bleibt immer gleich",
         "Der Widerstand steigt",
@@ -1468,7 +1468,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Bei einem NTC gilt: warm = kleiner Widerstand (heiss haut ab). Steigen wuerde er nur bei einem PTC; gleich bleibt nur ein normaler Festwiderstand.",
+        "Bei einem NTC gilt: warm = kleiner Widerstand (heiß haut ab). Steigen würde er nur bei einem PTC; gleich bleibt nur ein normaler Festwiderstand.",
     },
     {
       type: "multiple-choice",
@@ -1481,37 +1481,37 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Der Nennwert eines 10-kOhm-NTC gilt bei 25 Grad C, also Zimmertemperatur. Bei 0 Grad C waeren es ca. 33 kOhm, bei 50 Grad C nur ca. 3,6 kOhm.",
+        "Der Nennwert eines 10-kOhm-NTC gilt bei 25 Grad C, also Zimmertemperatur. Bei 0 Grad C wären es ca. 33 kOhm, bei 50 Grad C nur ca. 3,6 kOhm.",
     },
     {
       type: "multiple-choice",
-      question: "Warum braucht man bei einem NTC ueberhaupt einen Spannungsteiler mit festem Widerstand?",
+      question: "Warum braucht man bei einem NTC überhaupt einen Spannungsteiler mit festem Widerstand?",
       options: [
-        "Damit der NTC nicht zu heiss wird",
+        "Damit der NTC nicht zu heiß wird",
         "Weil der Arduino keinen Widerstand messen kann, sondern nur Spannung",
         "Damit der Wert immer genau 511 ist",
         "Weil der NTC sonst kaputtgeht",
       ],
       correct: 1,
       explanation:
-        "Der Arduino kann nur Spannung am Pin messen, keinen Widerstand. Der feste Widerstand wandelt die Widerstandsaenderung in eine messbare Spannung um. Der Wert 511 gilt nur bei Zimmertemperatur, nicht immer.",
+        "Der Arduino kann nur Spannung am Pin messen, keinen Widerstand. Der feste Widerstand wandelt die Widerstandsänderung in eine messbare Spannung um. Der Wert 511 gilt nur bei Zimmertemperatur, nicht immer.",
     },
     {
       type: "multiple-choice",
-      question: "In dieser Lektion sitzt der NTC unten (an GND) und der feste 10-kOhm-Widerstand oben (an 5V), A0 greift den Mittelpunkt ab. Was misst der Arduino, wenn der NTC heiss wird?",
+      question: "In dieser Lektion sitzt der NTC unten (an GND) und der feste 10-kOhm-Widerstand oben (an 5V), A0 greift den Mittelpunkt ab. Was misst der Arduino, wenn der NTC heiß wird?",
       options: [
-        "Der analogRead-Wert wird groesser",
+        "Der analogRead-Wert wird größer",
         "Der analogRead-Wert bleibt bei 1023",
         "Der analogRead-Wert wird kleiner",
         "Der analogRead-Wert springt auf 0",
       ],
       correct: 2,
       explanation:
-        "Heiss bedeutet kleiner NTC-Widerstand, dadurch faellt am NTC (unten) weniger Spannung ab, also wird auch der Wert an A0 kleiner. Merksatz: heisser Sensor, kleiner Zahlenwert. Auf 0 oder 1023 springt der Wert nur bei einem Verdrahtungsfehler.",
+        "Heiß bedeutet kleiner NTC-Widerstand, dadurch fällt am NTC (unten) weniger Spannung ab, also wird auch der Wert an A0 kleiner. Merksatz: heißer Sensor, kleiner Zahlenwert. Auf 0 oder 1023 springt der Wert nur bei einem Verdrahtungsfehler.",
     },
     {
       type: "multiple-choice",
-      question: "Bei Zimmertemperatur (25 Grad C) sind R1 = 10 kOhm und der NTC = 10 kOhm gleich gross. Welche Sensorspannung U2 ergibt sich und welcher analogRead-Wert ungefaehr?",
+      question: "Bei Zimmertemperatur (25 Grad C) sind R1 = 10 kOhm und der NTC = 10 kOhm gleich groß. Welche Sensorspannung U2 ergibt sich und welcher analogRead-Wert ungefähr?",
       options: [
         "5 V und etwa 1023",
         "2,5 V und etwa 511",
@@ -1520,20 +1520,20 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Bei zwei gleichen Widerstaenden teilt sich die Spannung genau in der Mitte: U2 = 5 V mal 10/(10+10) = 2,5 V, das ergibt analogRead etwa 511. 1,32 V und 270 gilt erst bei 50 Grad C, wenn der NTC kleiner geworden ist.",
+        "Bei zwei gleichen Widerständen teilt sich die Spannung genau in der Mitte: U2 = 5 V mal 10/(10+10) = 2,5 V, das ergibt analogRead etwa 511. 1,32 V und 270 gilt erst bei 50 Grad C, wenn der NTC kleiner geworden ist.",
     },
     {
       type: "multiple-choice",
       question: "Du legst den Finger auf den NTC und siehst im Serial Monitor zuerst 511, dann 421. Was bedeutet das?",
       options: [
         "Der NTC ist kaputt, denn der Wert darf nicht sinken",
-        "Der NTC wurde durch den Finger waermer, deshalb sinkt der Wert",
-        "Der Finger hat den NTC abgekuehlt",
+        "Der NTC wurde durch den Finger wärmer, deshalb sinkt der Wert",
+        "Der Finger hat den NTC abgekühlt",
         "Der Arduino misst jetzt Volt statt einer Zahl",
       ],
       correct: 1,
       explanation:
-        "Der Finger (ca. 35 Grad C) erwaermt den NTC, sein Widerstand sinkt und damit auch der Zahlenwert von 511 auf etwa 421 - genau das erwartete Verhalten, kein Defekt. Abkuehlen wuerde den Wert steigen lassen.",
+        "Der Finger (ca. 35 Grad C) erwärmt den NTC, sein Widerstand sinkt und damit auch der Zahlenwert von 511 auf etwa 421 - genau das erwartete Verhalten, kein Defekt. Abkühlen würde den Wert steigen lassen.",
     },
     {
       type: "multiple-choice",
@@ -1546,31 +1546,31 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Der AD-Wandler des Arduino liefert immer Werte von 0 bis 1023. 0 bis 255 waere ein 8-Bit-Wert (z.B. bei analogWrite), 0 bis 5 verwechselt den Zahlenwert mit der Spannung in Volt.",
+        "Der AD-Wandler des Arduino liefert immer Werte von 0 bis 1023. 0 bis 255 wäre ein 8-Bit-Wert (z.B. bei analogWrite), 0 bis 5 verwechselt den Zahlenwert mit der Spannung in Volt.",
     },
   ],
 
   "analog/entscheidungen-mit-sensorwerten": [
     {
       type: "multiple-choice",
-      question: "Warum ist es nuetzlich, dass der Arduino mit if/else auf Sensorwerte reagiert?",
+      question: "Warum ist es nützlich, dass der Arduino mit if/else auf Sensorwerte reagiert?",
       options: [
         "Damit der Arduino nur noch HIGH und LOW unterscheiden muss",
-        "Damit man die LED gar nicht mehr an einen Pin anschliessen muss",
+        "Damit man die LED gar nicht mehr an einen Pin anschließen muss",
         "Damit der Arduino selbst entscheidet und automatisch reagiert, z.B. eine LED ein- oder ausschaltet",
         "Damit der Sensor mehr Strom verbraucht und heller leuchtet",
       ],
       correct: 2,
       explanation:
-        "Mit if/else trifft der Arduino selbst eine Entscheidung anhand des Sensorwerts und reagiert automatisch (wie eine Strassenlaterne). Die anderen Optionen beschreiben gerade das Gegenteil oder technischen Unsinn: analoge Werte sind ja Zahlen, nicht nur HIGH/LOW.",
+        "Mit if/else trifft der Arduino selbst eine Entscheidung anhand des Sensorwerts und reagiert automatisch (wie eine Straßenlaterne). Die anderen Optionen beschreiben gerade das Gegenteil oder technischen Unsinn: analoge Werte sind ja Zahlen, nicht nur HIGH/LOW.",
     },
     {
       type: "multiple-choice",
       question: "Was ist mit dem Begriff Schwellenwert (z.B. 300) gemeint?",
       options: [
         "Die Grenze, ab der der Arduino seine Entscheidung trifft",
-        "Der hoechstmoegliche Wert, den analogRead() liefern kann",
-        "Die Anzahl der LEDs, die man anschliessen darf",
+        "Der höchstmögliche Wert, den analogRead() liefern kann",
+        "Die Anzahl der LEDs, die man anschließen darf",
         "Die Zeit in Millisekunden, die delay() wartet",
       ],
       correct: 0,
@@ -1584,28 +1584,28 @@ export const TEST_QUESTIONS = {
         "Die LED wird ausgeschaltet, weil es zu hell ist",
         "Die LED wird eingeschaltet, weil es dunkel ist",
         "Der Arduino startet komplett neu",
-        "Der Schwellenwert wird automatisch erhoeht",
+        "Der Schwellenwert wird automatisch erhöht",
       ],
       correct: 1,
       explanation:
-        "Ein kleiner LDR-Wert bedeutet wenig Licht, also dunkel, deshalb geht die LED an (digitalWrite HIGH). Aus geht sie im else if, wenn der Wert ueber schwelleAus liegt, also bei hell.",
+        "Ein kleiner LDR-Wert bedeutet wenig Licht, also dunkel, deshalb geht die LED an (digitalWrite HIGH). Aus geht sie im else if, wenn der Wert über schwelleAus liegt, also bei hell.",
     },
     {
       type: "multiple-choice",
       question: "Dein LDR zeigt bei Raumlicht ca. 600 und bei abgedecktem Sensor ca. 100. Welcher Schwellenwert ist sinnvoll?",
       options: [
-        "Etwa 1023, also der hoechste Wert",
+        "Etwa 1023, also der höchste Wert",
         "Etwa 50, also unter dem Dunkelwert",
-        "Etwa 300, also ungefaehr in der Mitte",
-        "Etwa 700, also ueber dem Hellwert",
+        "Etwa 300, also ungefähr in der Mitte",
+        "Etwa 700, also über dem Hellwert",
       ],
       correct: 2,
       explanation:
-        "Der Schwellenwert sollte zwischen hell (600) und dunkel (100) liegen, damit beide Zustaende sicher erkannt werden, z.B. 300. Werte ausserhalb dieser Spanne (50, 700, 1023) wuerden nie oder immer ausloesen.",
+        "Der Schwellenwert sollte zwischen hell (600) und dunkel (100) liegen, damit beide Zustände sicher erkannt werden, z.B. 300. Werte außerhalb dieser Spanne (50, 700, 1023) würden nie oder immer auslösen.",
     },
     {
       type: "multiple-choice",
-      question: "Wie nennt man das Problem, wenn die LED an einem einzelnen Schwellenwert staendig an und aus geht, weil der Sensorwert leicht schwankt?",
+      question: "Wie nennt man das Problem, wenn die LED an einem einzelnen Schwellenwert ständig an und aus geht, weil der Sensorwert leicht schwankt?",
       options: [
         "Flackern",
         "Spannungsteilung",
@@ -1614,52 +1614,52 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Wenn der Wert um den Schwellenwert herum schwankt (z.B. 298 bis 302), schaltet die LED staendig um, das nennt man Flackern. Dimmen und Pulsweitenmodulation betreffen das Helligkeit-Regeln, Spannungsteilung ist die LDR-Schaltung.",
+        "Wenn der Wert um den Schwellenwert herum schwankt (z.B. 298 bis 302), schaltet die LED ständig um, das nennt man Flackern. Dimmen und Pulsweitenmodulation betreffen das Helligkeit-Regeln, Spannungsteilung ist die LDR-Schaltung.",
     },
     {
       type: "multiple-choice",
       question: "Wie verhindert die Hysterese das Flackern?",
       options: [
-        "Sie erhoeht die Geschwindigkeit, mit der analogRead() liest",
+        "Sie erhöht die Geschwindigkeit, mit der analogRead() liest",
         "Sie verwendet zwei verschiedene Schwellenwerte mit einer Puffer-Zone dazwischen",
-        "Sie schaltet den Serial Monitor aus, damit nichts mehr stoert",
-        "Sie ersetzt die LED durch einen staerkeren Widerstand",
+        "Sie schaltet den Serial Monitor aus, damit nichts mehr stört",
+        "Sie ersetzt die LED durch einen stärkeren Widerstand",
       ],
       correct: 1,
       explanation:
-        "Hysterese nutzt eine Einschalt- und eine Ausschaltschwelle (z.B. 250 und 350); im Bereich dazwischen aendert sich nichts, dieser Puffer stoppt das Flackern. Lesegeschwindigkeit, Serial Monitor oder ein Widerstand-Tausch loesen das Problem nicht.",
+        "Hysterese nutzt eine Einschalt- und eine Ausschaltschwelle (z.B. 250 und 350); im Bereich dazwischen ändert sich nichts, dieser Puffer stoppt das Flackern. Lesegeschwindigkeit, Serial Monitor oder ein Widerstand-Tausch lösen das Problem nicht.",
     },
     {
       type: "multiple-choice",
-      question: "Im Nachtlicht ist schwelleAn = 250 und schwelleAus = 350. Was passiert, wenn der gemessene Wert genau 300 betraegt?",
+      question: "Im Nachtlicht ist schwelleAn = 250 und schwelleAus = 350. Was passiert, wenn der gemessene Wert genau 300 beträgt?",
       options: [
-        "Die LED geht an, weil 300 ueber 250 liegt",
+        "Die LED geht an, weil 300 über 250 liegt",
         "Die LED geht aus, weil 300 unter 350 liegt",
-        "Es aendert sich nichts, der Wert liegt in der Puffer-Zone",
+        "Es ändert sich nichts, der Wert liegt in der Puffer-Zone",
         "Der Arduino zeigt eine Fehlermeldung an",
       ],
       correct: 2,
       explanation:
-        "300 ist weder kleiner als schwelleAn (250) noch groesser als schwelleAus (350), also greift der else-Zweig: die LED behaelt ihren Zustand, der Wert liegt im Puffer. Eine Fehlermeldung gibt es nicht, das ist genau der gewuenschte stabile Bereich.",
+        "300 ist weder kleiner als schwelleAn (250) noch größer als schwelleAus (350), also greift der else-Zweig: die LED behält ihren Zustand, der Wert liegt im Puffer. Eine Fehlermeldung gibt es nicht, das ist genau der gewünschte stabile Bereich.",
     },
     {
       type: "multiple-choice",
-      question: "Mit welcher Struktur kann man mehrere Helligkeitsstufen (z.B. sehr dunkel, Daemmerung, hell) unterscheiden?",
+      question: "Mit welcher Struktur kann man mehrere Helligkeitsstufen (z.B. sehr dunkel, Dämmerung, hell) unterscheiden?",
       options: [
         "Mit einem einzigen if ganz ohne else",
-        "Mit map(), das die Stufen automatisch zaehlt",
-        "Mit pinMode() fuer jede Stufe",
+        "Mit map(), das die Stufen automatisch zählt",
+        "Mit pinMode() für jede Stufe",
         "Mit if / else if / else und mehreren Schwellenwerten",
       ],
       correct: 3,
       explanation:
-        "Gestaffelte Schwellenwerte prueft man der Reihe nach mit if / else if / else, so wird genau ein passender Zweig ausgefuehrt. map() rechnet nur Wertebereiche um und pinMode() legt nur die Pin-Richtung fest, beide unterscheiden keine Stufen.",
+        "Gestaffelte Schwellenwerte prüft man der Reihe nach mit if / else if / else, so wird genau ein passender Zweig ausgeführt. map() rechnet nur Wertebereiche um und pinMode() legt nur die Pin-Richtung fest, beide unterscheiden keine Stufen.",
     },
   ],
   "aktoren/servomotor-ansteuern": [
     {
       type: "multiple-choice",
-      question: "Welche Zeile muss ganz oben im Programm stehen, damit der Arduino den Befehl Servo ueberhaupt kennt?",
+      question: "Welche Zeile muss ganz oben im Programm stehen, damit der Arduino den Befehl Servo überhaupt kennt?",
       options: [
         "#include <Servo.h>",
         "import Servo;",
@@ -1668,7 +1668,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Richtig ist #include <Servo.h> - damit wird die Servo-Library eingebunden, sonst gibt es den Compiler-Fehler 'Servo was not declared'. import gibt es in Arduino-C nicht, begin() ist fuer andere Bauteile, und #define legt nur eine Ersatz-Zahl fest.",
+        "Richtig ist #include <Servo.h> - damit wird die Servo-Library eingebunden, sonst gibt es den Compiler-Fehler 'Servo was not declared'. import gibt es in Arduino-C nicht, begin() ist für andere Bauteile, und #define legt nur eine Ersatz-Zahl fest.",
     },
     {
       type: "multiple-choice",
@@ -1681,7 +1681,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "attach(9) haengt den Servo einmalig im setup() an Pin 9 - genau so steht es in der Lektion. write(9) wuerde dagegen den Servo auf 9 Grad fahren, pin() gibt es nicht und pinMode() ist fuer LEDs, nicht fuer Servos.",
+        "attach(9) hängt den Servo einmalig im setup() an Pin 9 - genau so steht es in der Lektion. write(9) würde dagegen den Servo auf 9 Grad fahren, pin() gibt es nicht und pinMode() ist für LEDs, nicht für Servos.",
     },
     {
       type: "multiple-choice",
@@ -1694,11 +1694,11 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Laut Lektion ist 90 die Mittelstellung (Arm zeigt nach oben), 0 ist ganz links und 180 ganz rechts. 45 liegt zwischen links und Mitte, und 1 waere fast ganz links - beides ist nicht die Mitte.",
+        "Laut Lektion ist 90 die Mittelstellung (Arm zeigt nach oben), 0 ist ganz links und 180 ganz rechts. 45 liegt zwischen links und Mitte, und 1 wäre fast ganz links - beides ist nicht die Mitte.",
     },
     {
       type: "multiple-choice",
-      question: "An welchen Anschluss am Arduino gehoert das rote Servo-Kabel?",
+      question: "An welchen Anschluss am Arduino gehört das rote Servo-Kabel?",
       options: [
         "an einen GND-Pin",
         "an Pin 13",
@@ -1707,11 +1707,11 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "Rot ist die Plus-/Versorgungsspannung und gehoert an +5V. GND ist fuer das braune/schwarze Kabel, das orange/gelbe Signal-Kabel kommt an Pin 9, und Pin 13 wird laut Lektion vermieden (dort sitzt die Onboard-LED).",
+        "Rot ist die Plus-/Versorgungsspannung und gehört an +5V. GND ist für das braune/schwarze Kabel, das orange/gelbe Signal-Kabel kommt an Pin 9, und Pin 13 wird laut Lektion vermieden (dort sitzt die Onboard-LED).",
     },
     {
       type: "multiple-choice",
-      question: "Welche Servo-Kabelfarbe ist das Steuer-Signal und gehoert an einen digitalen Pin wie Pin 9?",
+      question: "Welche Servo-Kabelfarbe ist das Steuer-Signal und gehört an einen digitalen Pin wie Pin 9?",
       options: [
         "orange (oder gelb)",
         "rot",
@@ -1726,14 +1726,14 @@ export const TEST_QUESTIONS = {
       type: "multiple-choice",
       question: "Warum steht im Beispiel nach jedem write() ein delay(1000)?",
       options: [
-        "Damit der Arduino nicht ueberhitzt",
-        "Damit der Servo Zeit hat, die Position zu erreichen, bevor der naechste Befehl kommt",
+        "Damit der Arduino nicht überhitzt",
+        "Damit der Servo Zeit hat, die Position zu erreichen, bevor der nächste Befehl kommt",
         "Weil der Servo sonst kaputtgeht",
         "Damit die Library geladen wird",
       ],
       correct: 1,
       explanation:
-        "Ohne das delay() bekaeme der Servo sofort den naechsten Befehl und koennte sich nicht sichtbar bewegen - mechanisch braucht er etwas Zeit. Ueberhitzen oder Kaputtgehen durch fehlendes delay nennt die Lektion nicht, und die Library wird durch #include geladen, nicht durch delay.",
+        "Ohne das delay() bekäme der Servo sofort den nächsten Befehl und könnte sich nicht sichtbar bewegen - mechanisch braucht er etwas Zeit. Überhitzen oder Kaputtgehen durch fehlendes delay nennt die Lektion nicht, und die Library wird durch #include geladen, nicht durch delay.",
     },
     {
       type: "multiple-choice",
@@ -1741,37 +1741,37 @@ export const TEST_QUESTIONS = {
       options: [
         "Der Servo springt sofort von 0 auf 180 Grad",
         "Der Servo bleibt bei 0 Grad stehen",
-        "Der Servo faehrt Grad fuer Grad langsam von 0 bis 180 Grad",
+        "Der Servo fährt Grad für Grad langsam von 0 bis 180 Grad",
         "Der Servo dreht sich endlos im Kreis",
       ],
       correct: 2,
       explanation:
-        "Die for-Schleife zaehlt winkel von 0 in Einer-Schritten bis 180 hoch und faehrt bei jedem Schritt einen Grad weiter - das kurze delay(15) macht die Bewegung fluessig (sanfter Sweep). Ein hartes Springen waere ohne Schleife, stehenbleiben passt nicht zum Hochzaehlen, und ein normaler Servo dreht maximal 180 Grad, nicht endlos.",
+        "Die for-Schleife zählt winkel von 0 in Einer-Schritten bis 180 hoch und fährt bei jedem Schritt einen Grad weiter - das kurze delay(15) macht die Bewegung flüssig (sanfter Sweep). Ein hartes Springen wäre ohne Schleife, stehenbleiben passt nicht zum Hochzählen, und ein normaler Servo dreht maximal 180 Grad, nicht endlos.",
     },
     {
       type: "multiple-choice",
-      question: "Ein Schueler laedt sein Programm hoch, aber der Servo brummt nur und bewegt sich nicht. Was ist laut Lektion die wahrscheinlichste Ursache?",
+      question: "Ein Schüler lädt sein Programm hoch, aber der Servo brummt nur und bewegt sich nicht. Was ist laut Lektion die wahrscheinlichste Ursache?",
       options: [
         "Das delay() ist zu lang eingestellt",
         "Die Library wurde doppelt eingebunden",
-        "Der Wert in write() ist groesser als 90",
+        "Der Wert in write() ist größer als 90",
         "Das Signal-Kabel ist nicht angeschlossen oder steckt am falschen Pin",
       ],
       correct: 3,
       explanation:
-        "Brummen ohne Bewegung heisst laut Lektion: das orange/gelbe Signal-Kabel haengt nicht an Pin 9 oder steckt falsch - pruefen, ob attach(9) zum Anschluss passt. Ein langes delay laesst den Servo nur warten, write()-Werte bis 180 sind erlaubt, und ein doppeltes #include erzeugt einen anderen Fehler.",
+        "Brummen ohne Bewegung heißt laut Lektion: das orange/gelbe Signal-Kabel hängt nicht an Pin 9 oder steckt falsch - prüfen, ob attach(9) zum Anschluss passt. Ein langes delay lässt den Servo nur warten, write()-Werte bis 180 sind erlaubt, und ein doppeltes #include erzeugt einen anderen Fehler.",
     },
   ],
 
   "aktoren/transistor-als-schalter-grundlagen": [
     {
       type: "multiple-choice",
-      question: "Warum darf man einen kleinen DC-Motor nicht direkt an einen Arduino-Pin anschliessen, sondern braucht einen Transistor?",
+      question: "Warum darf man einen kleinen DC-Motor nicht direkt an einen Arduino-Pin anschließen, sondern braucht einen Transistor?",
       options: [
         "Weil der Arduino-Pin nur etwa 20 mA liefert, der Motor aber 50-100 mA zieht und der Pin sonst durchbrennt",
         "Weil der Arduino-Pin nur Wechselstrom liefert, der Motor aber Gleichstrom braucht",
-        "Weil der Motor sonst rueckwaerts laufen wuerde",
-        "Weil der Arduino-Pin zu viel Strom liefert und den Motor sofort zerstoert",
+        "Weil der Motor sonst rückwärts laufen würde",
+        "Weil der Arduino-Pin zu viel Strom liefert und den Motor sofort zerstört",
       ],
       correct: 0,
       explanation:
@@ -1779,7 +1779,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Du haeltst einen BC547 so, dass die flache Seite mit dem Aufdruck dich anschaut und die Beine nach unten zeigen. Wie heissen die Beine von links nach rechts?",
+      question: "Du hältst einen BC547 so, dass die flache Seite mit dem Aufdruck dich anschaut und die Beine nach unten zeigen. Wie heißen die Beine von links nach rechts?",
       options: [
         "Emitter - Basis - Collector",
         "Collector - Basis - Emitter",
@@ -1788,33 +1788,33 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Beim BC547 gilt mit flacher Seite zum Betrachter von links: C - B - E (Merksatz 'Chef Befiehlt Ende'). Die anderen Reihenfolgen wuerden Collector und Emitter vertauschen - dann laeuft der Motor staendig oder gar nicht.",
+        "Beim BC547 gilt mit flacher Seite zum Betrachter von links: C - B - E (Merksatz 'Chef Befiehlt Ende'). Die anderen Reihenfolgen würden Collector und Emitter vertauschen - dann läuft der Motor ständig oder gar nicht.",
     },
     {
       type: "multiple-choice",
       question: "Welche Aufgabe hat der 1 kOhm-Widerstand zwischen Arduino-Pin und Basis des Transistors?",
       options: [
-        "Er sorgt dafuer, dass der Motor langsamer dreht",
-        "Er erhoeht die Spannung am Motor auf 9 V",
-        "Er begrenzt den Basis-Strom auf ca. 4 mA, damit der Arduino-Pin nicht zerstoert wird",
-        "Er glaettet das PWM-Signal, damit der Motor ruhig laeuft",
+        "Er sorgt dafür, dass der Motor langsamer dreht",
+        "Er erhöht die Spannung am Motor auf 9 V",
+        "Er begrenzt den Basis-Strom auf ca. 4 mA, damit der Arduino-Pin nicht zerstört wird",
+        "Er glättet das PWM-Signal, damit der Motor ruhig läuft",
       ],
       correct: 2,
       explanation:
-        "Die Basis-Emitter-Strecke wirkt wie eine Diode; ohne Widerstand wuerde der Strom den Pin grillen. 1 kOhm begrenzt den Basis-Strom auf ca. 4 mA. Mit der Drehzahl, der Motorspannung oder PWM-Glaettung hat der Basiswiderstand nichts zu tun.",
+        "Die Basis-Emitter-Strecke wirkt wie eine Diode; ohne Widerstand würde der Strom den Pin grillen. 1 kOhm begrenzt den Basis-Strom auf ca. 4 mA. Mit der Drehzahl, der Motorspannung oder PWM-Glättung hat der Basiswiderstand nichts zu tun.",
     },
     {
       type: "multiple-choice",
       question: "Wozu dient die Freilaufdiode (1N4148) parallel zum Motor?",
       options: [
-        "Sie verstaerkt das Signal vom Arduino-Pin",
+        "Sie verstärkt das Signal vom Arduino-Pin",
         "Sie begrenzt den Strom durch den Motor auf 20 mA",
-        "Sie macht aus Gleichstrom Wechselstrom fuer den Motor",
-        "Sie faengt die hohe Spannungsspitze ab, die beim Abschalten des Motors entsteht, und schuetzt so den Transistor",
+        "Sie macht aus Gleichstrom Wechselstrom für den Motor",
+        "Sie fängt die hohe Spannungsspitze ab, die beim Abschalten des Motors entsteht, und schützt so den Transistor",
       ],
       correct: 3,
       explanation:
-        "Der Motor ist eine Spule: Beim Abschalten entsteht eine sehr hohe Spannungsspitze in umgekehrter Richtung, die den Transistor zerstoeren wuerde. Die Diode fuehrt diese Spitze sicher ab. Verstaerken tut der Transistor, nicht die Diode; eine Strombegrenzung leistet sie nicht.",
+        "Der Motor ist eine Spule: Beim Abschalten entsteht eine sehr hohe Spannungsspitze in umgekehrter Richtung, die den Transistor zerstören würde. Die Diode führt diese Spitze sicher ab. Verstärken tut der Transistor, nicht die Diode; eine Strombegrenzung leistet sie nicht.",
     },
     {
       type: "multiple-choice",
@@ -1827,62 +1827,62 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Der Ring (Kathode) muss zur +5V-Seite zeigen; so sperrt die Diode im Normalbetrieb und leitet nur die Spannungsspitze ab. Falsch herum eingebaut schliesst sie die Versorgung kurz - der Motor laeuft nicht und es kann rauchen.",
+        "Der Ring (Kathode) muss zur +5V-Seite zeigen; so sperrt die Diode im Normalbetrieb und leitet nur die Spannungsspitze ab. Falsch herum eingebaut schließt sie die Versorgung kurz - der Motor läuft nicht und es kann rauchen.",
     },
     {
       type: "multiple-choice",
       question: "Was bewirkt die Code-Zeile digitalWrite(motorPin, HIGH); in diesem Programm?",
       options: [
         "Pin 9 liefert 0 V, der Transistor sperrt und der Motor stoppt",
-        "Pin 9 liefert 5 V, Strom fliesst in die Basis, der Transistor leitet und der Motor laeuft",
+        "Pin 9 liefert 5 V, Strom fließt in die Basis, der Transistor leitet und der Motor läuft",
         "Pin 9 liest den Zustand des Motors ein",
         "Pin 9 dreht den Motor in die andere Richtung",
       ],
       correct: 1,
       explanation:
-        "HIGH bedeutet 5 V am Pin: Strom fliesst ueber den Basiswiderstand in die Basis, der Transistor macht auf und der Motor laeuft. LOW (0 V) wuerde ihn stoppen; digitalWrite sendet aus, liest nichts ein, und die Drehrichtung aendert sich dabei nicht.",
+        "HIGH bedeutet 5 V am Pin: Strom fließt über den Basiswiderstand in die Basis, der Transistor macht auf und der Motor läuft. LOW (0 V) würde ihn stoppen; digitalWrite sendet aus, liest nichts ein, und die Drehrichtung ändert sich dabei nicht.",
     },
     {
       type: "multiple-choice",
       question: "Im setup() steht pinMode(motorPin, OUTPUT);. Warum genau OUTPUT und nicht INPUT?",
       options: [
         "Weil nur OUTPUT-Pins eine Freilaufdiode brauchen",
-        "Weil OUTPUT den Motor vor Ueberhitzung schuetzt",
+        "Weil OUTPUT den Motor vor Überhitzung schützt",
         "Weil Pin 9 ein Signal aussenden soll (Transistor steuern), nicht etwas einlesen",
-        "Weil INPUT nur fuer Servomotoren funktioniert",
+        "Weil INPUT nur für Servomotoren funktioniert",
       ],
       correct: 2,
       explanation:
-        "Pin 9 soll etwas aussenden (den Transistor schalten), deshalb OUTPUT - INPUT waere zum Einlesen, z.B. eines Tasters. OUTPUT hat nichts mit Ueberhitzungsschutz, Diode oder Servos zu tun.",
+        "Pin 9 soll etwas aussenden (den Transistor schalten), deshalb OUTPUT - INPUT wäre zum Einlesen, z.B. eines Tasters. OUTPUT hat nichts mit Überhitzungsschutz, Diode oder Servos zu tun.",
     },
     {
       type: "multiple-choice",
-      question: "Ein Schueler baut alles auf, aber der Motor laeuft staendig - auch wenn der Pin auf LOW steht. Was ist laut Lektion die wahrscheinliche Ursache?",
+      question: "Ein Schüler baut alles auf, aber der Motor läuft ständig - auch wenn der Pin auf LOW steht. Was ist laut Lektion die wahrscheinliche Ursache?",
       options: [
-        "Der Basiswiderstand ist zu gross gewaehlt",
+        "Der Basiswiderstand ist zu groß gewählt",
         "Die Freilaufdiode fehlt",
-        "Pin 9 ist nicht PWM-faehig",
+        "Pin 9 ist nicht PWM-fähig",
         "Collector und Emitter des BC547 wurden vertauscht",
       ],
       correct: 3,
       explanation:
-        "Laut Lektion bedeutet 'Motor laeuft staendig, auch bei LOW', dass Collector und Emitter vertauscht sind (beim BC547: C-B-E von links). Eine fehlende Diode macht ruckeligen Lauf, ein zu grosser Widerstand schwaches Schalten, und Pin 9 ist sehr wohl PWM-faehig.",
+        "Laut Lektion bedeutet 'Motor läuft ständig, auch bei LOW', dass Collector und Emitter vertauscht sind (beim BC547: C-B-E von links). Eine fehlende Diode macht ruckeligen Lauf, ein zu großer Widerstand schwaches Schalten, und Pin 9 ist sehr wohl PWM-fähig.",
     },
   ],
 
   "aktoren/dc-motor-mit-l298n": [
     {
       type: "multiple-choice",
-      question: "Warum wird der DC-Motor in dieser Lektion ueber einen Motortreiber L298N angesteuert und nicht ueber einen einzelnen Transistor?",
+      question: "Warum wird der DC-Motor in dieser Lektion über einen Motortreiber L298N angesteuert und nicht über einen einzelnen Transistor?",
       options: [
-        "Weil der L298N die Drehrichtung umkehren kann (vorwaerts/rueckwaerts) und genug Motorstrom aus einer eigenen Quelle schaltet",
-        "Weil ein Transistor zu teuer fuer die Pruefung ist",
+        "Weil der L298N die Drehrichtung umkehren kann (vorwärts/rückwärts) und genug Motorstrom aus einer eigenen Quelle schaltet",
+        "Weil ein Transistor zu teuer für die Prüfung ist",
         "Weil der Arduino ohne L298N gar keinen Strom liefert",
         "Weil der L298N den Motor leiser macht",
       ],
       correct: 0,
       explanation:
-        "Ein Transistor schaltet den Motor nur an/aus in immer derselben Richtung; der L298N hat eine H-Bruecke und eigene Stromversorgung, daher Vorwaerts/Rueckwaerts und mehr Strom. Preis, Lautstaerke oder gar kein Strom sind keine Gruende aus der Lektion.",
+        "Ein Transistor schaltet den Motor nur an/aus in immer derselben Richtung; der L298N hat eine H-Brücke und eigene Stromversorgung, daher Vorwärts/Rückwärts und mehr Strom. Preis, Lautstärke oder gar kein Strom sind keine Gründe aus der Lektion.",
     },
     {
       type: "multiple-choice",
@@ -1895,7 +1895,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Laut Anschlusstabelle der Lektion geht ENA an Pin 10 (~ PWM) fuer die Drehzahl. Pin 9 ist IN1 und Pin 8 ist IN2 (beide fuer die Drehrichtung), Pin 13 kommt nicht vor.",
+        "Laut Anschlusstabelle der Lektion geht ENA an Pin 10 (~ PWM) für die Drehzahl. Pin 9 ist IN1 und Pin 8 ist IN2 (beide für die Drehrichtung), Pin 13 kommt nicht vor.",
     },
     {
       type: "multiple-choice",
@@ -1912,7 +1912,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Welche Pin-Belegung laesst den Motor in EINE Richtung drehen?",
+      question: "Welche Pin-Belegung lässt den Motor in EINE Richtung drehen?",
       options: [
         "IN1 = LOW und IN2 = LOW",
         "IN1 = HIGH und IN2 = HIGH",
@@ -1921,7 +1921,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "IN1 und IN2 muessen unterschiedlich sein, damit der Motor dreht: HIGH/LOW ist eine Richtung. Beide LOW bedeutet Stopp, ENA=0 schaltet den Motor aus; beide HIGH ist in der Lektions-Tabelle keine Drehrichtung.",
+        "IN1 und IN2 müssen unterschiedlich sein, damit der Motor dreht: HIGH/LOW ist eine Richtung. Beide LOW bedeutet Stopp, ENA=0 schaltet den Motor aus; beide HIGH ist in der Lektions-Tabelle keine Drehrichtung.",
     },
     {
       type: "multiple-choice",
@@ -1934,7 +1934,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Sind beide Eingaenge gleich (beide LOW), steht der Motor; alternativ ENA auf 0. HIGH/LOW lasst ihn drehen, GND abziehen ist kein Programmierschritt, delay() haelt nur das Programm an, stoppt aber nicht den Motor.",
+        "Sind beide Eingänge gleich (beide LOW), steht der Motor; alternativ ENA auf 0. HIGH/LOW lässt ihn drehen, GND abziehen ist kein Programmierschritt, delay() hält nur das Programm an, stoppt aber nicht den Motor.",
     },
     {
       type: "multiple-choice",
@@ -1947,14 +1947,14 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "vmax/2 (=128) ist halbe Drehzahl, und IN1=LOW mit IN2=HIGH ist die umgekehrte Richtung. Voll waere vmax (255), Stillstand waere beide IN gleich, und ein Motor blinkt nicht.",
+        "vmax/2 (=128) ist halbe Drehzahl, und IN1=LOW mit IN2=HIGH ist die umgekehrte Richtung. Voll wäre vmax (255), Stillstand wäre beide IN gleich, und ein Motor blinkt nicht.",
     },
     {
       type: "multiple-choice",
       question: "Warum muss der GND des L298N mit dem GND des Arduino verbunden sein?",
       options: [
         "Damit der Motor schneller dreht",
-        "Damit der Arduino die Motorbatterie auflaedt",
+        "Damit der Arduino die Motorbatterie auflädt",
         "Damit die Steuersignale einen gemeinsamen Bezugspunkt haben, sonst funktioniert nichts",
         "Damit die LED am Modul leuchtet",
       ],
@@ -1966,20 +1966,20 @@ export const TEST_QUESTIONS = {
       type: "multiple-choice",
       question: "Was bewirkt analogWrite(10, 0); im Sketch?",
       options: [
-        "Der Motor laeuft mit voller Drehzahl",
+        "Der Motor läuft mit voller Drehzahl",
         "Pin 10 wird als Eingang gesetzt",
         "Der Motor wechselt die Drehrichtung",
         "Der Motor steht (ENA aus)",
       ],
       correct: 3,
       explanation:
-        "ENA (Pin 10) auf 0 gibt den Motor nicht frei, also steht er. Voll waere 255, die Richtung legen IN1/IN2 fest, und die Pin-Richtung aendert nur pinMode, nicht analogWrite.",
+        "ENA (Pin 10) auf 0 gibt den Motor nicht frei, also steht er. Voll wäre 255, die Richtung legen IN1/IN2 fest, und die Pin-Richtung ändert nur pinMode, nicht analogWrite.",
     },
   ],
   "projekt/ampel-mit-fussgaengerueberweg": [
     {
       type: "multiple-choice",
-      question: "An welchem Pin ist in dieser Lektion die gruene LED der Auto-Ampel angeschlossen?",
+      question: "An welchem Pin ist in dieser Lektion die grüne LED der Auto-Ampel angeschlossen?",
       options: [
         "Pin 4",
         "Pin 6",
@@ -1988,7 +1988,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Laut Pin-Belegung sitzt die gruene Auto-LED an Pin 4 (autoGruen = 4). Pin 2 ist Auto-Rot, Pin 6 ist die gruene Fussgaenger-LED und Pin 7 der Taster - die sind hier falsch.",
+        "Laut Pin-Belegung sitzt die grüne Auto-LED an Pin 4 (autoGruen = 4). Pin 2 ist Auto-Rot, Pin 6 ist die grüne Fußgänger-LED und Pin 7 der Taster - die sind hier falsch.",
     },
     {
       type: "multiple-choice",
@@ -1996,16 +1996,16 @@ export const TEST_QUESTIONS = {
       options: [
         "An Pin 7 mit einem externen 220-Ohm-Widerstand",
         "Zwischen Pin 7 und GND, mit INPUT_PULLUP (kein externer Widerstand)",
-        "An Pin 5 zusammen mit der Fussgaenger-LED",
+        "An Pin 5 zusammen mit der Fußgänger-LED",
         "An Pin 7 und dem Plus-Pol (5V)",
       ],
       correct: 1,
       explanation:
-        "Der Taster liegt zwischen Pin 7 und GND und nutzt INPUT_PULLUP, deshalb braucht er keinen externen Widerstand. Ein 220-Ohm-Widerstand gehoert nur zu den LEDs, und an 5V statt GND wuerde die Pull-Up-Logik nicht funktionieren.",
+        "Der Taster liegt zwischen Pin 7 und GND und nutzt INPUT_PULLUP, deshalb braucht er keinen externen Widerstand. Ein 220-Ohm-Widerstand gehört nur zu den LEDs, und an 5V statt GND würde die Pull-Up-Logik nicht funktionieren.",
     },
     {
       type: "multiple-choice",
-      question: "Wie erkennt der Code mit INPUT_PULLUP, dass der Taster gedrueckt wurde?",
+      question: "Wie erkennt der Code mit INPUT_PULLUP, dass der Taster gedrückt wurde?",
       options: [
         "digitalRead(taster) == HIGH",
         "digitalWrite(taster, HIGH)",
@@ -2014,24 +2014,24 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Bei INPUT_PULLUP gilt: gedrueckt = LOW, nicht gedrueckt = HIGH - deshalb prueft der Code auf == LOW. HIGH waere genau der nicht gedrueckte Zustand, digitalWrite ist zum Schreiben (nicht Lesen) und analogRead passt nicht zu einem digitalen Taster.",
+        "Bei INPUT_PULLUP gilt: gedrückt = LOW, nicht gedrückt = HIGH - deshalb prüft der Code auf == LOW. HIGH wäre genau der nicht gedrückte Zustand, digitalWrite ist zum Schreiben (nicht Lesen) und analogRead passt nicht zu einem digitalen Taster.",
     },
     {
       type: "multiple-choice",
-      question: "Was passiert direkt nachdem ein Fussgaenger den Taster drueckt?",
+      question: "Was passiert direkt nachdem ein Fußgänger den Taster drückt?",
       options: [
-        "Die Fussgaenger-Ampel wird sofort gruen",
+        "Die Fußgänger-Ampel wird sofort grün",
         "Alle LEDs gehen kurz aus",
-        "Die Auto-Ampel springt sofort von Gruen auf Rot",
+        "Die Auto-Ampel springt sofort von Grün auf Rot",
         "Die Auto-Ampel wechselt zuerst auf Gelb (2 Sekunden), dann auf Rot",
       ],
       correct: 3,
       explanation:
-        "Phase 1 schaltet Auto-Gruen aus und Auto-Gelb fuer 2 Sekunden an, erst danach Rot - genau wie an einer echten Ampel. Sofort gruen oder ein direkter Sprung auf Rot ueberspringt die noetige Gelb-Phase.",
+        "Phase 1 schaltet Auto-Grün aus und Auto-Gelb für 2 Sekunden an, erst danach Rot - genau wie an einer echten Ampel. Sofort grün oder ein direkter Sprung auf Rot überspringt die nötige Gelb-Phase.",
     },
     {
       type: "multiple-choice",
-      question: "Wie lange leuchtet die Fussgaenger-Ampel gruen, bevor sie zu blinken beginnt?",
+      question: "Wie lange leuchtet die Fußgänger-Ampel grün, bevor sie zu blinken beginnt?",
       options: [
         "5 Sekunden",
         "1 Sekunde",
@@ -2040,46 +2040,46 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "In Phase 2 steht delay(5000), also 5 Sekunden Gruen. 2 Sekunden ist die Gelb-Phase des Autos, 1 Sekunde die Raeumzeit und 400 ms ist die Blink-Pause - das sind andere Zeiten im Code.",
+        "In Phase 2 steht delay(5000), also 5 Sekunden Grün. 2 Sekunden ist die Gelb-Phase des Autos, 1 Sekunde die Räumzeit und 400 ms ist die Blink-Pause - das sind andere Zeiten im Code.",
     },
     {
       type: "multiple-choice",
-      question: "Wofuer wird in dieser Lektion die for-Schleife eingesetzt?",
+      question: "Wofür wird in dieser Lektion die for-Schleife eingesetzt?",
       options: [
-        "Um die Auto-Ampel dauerhaft gruen zu halten",
-        "Um die gruene Fussgaenger-LED 3-mal blinken zu lassen (Warnung)",
+        "Um die Auto-Ampel dauerhaft grün zu halten",
+        "Um die grüne Fußgänger-LED 3-mal blinken zu lassen (Warnung)",
         "Um den Taster zu entprellen",
         "Um alle Pins im setup als OUTPUT zu definieren",
       ],
       correct: 1,
       explanation:
-        "Die for-Schleife (i = 0; i < 3; i++) laesst die Fussgaenger-Gruen-LED 3-mal blinken, als Warnung vor Rot. Das Entprellen macht ein einzelnes delay(200), und die pinMode-Befehle stehen ohne Schleife im setup.",
+        "Die for-Schleife (i = 0; i < 3; i++) lässt die Fußgänger-Grün-LED 3-mal blinken, als Warnung vor Rot. Das Entprellen macht ein einzelnes delay(200), und die pinMode-Befehle stehen ohne Schleife im setup.",
     },
     {
       type: "multiple-choice",
-      question: "Wie wechselt die Auto-Ampel am Ende von Rot zurueck auf Gruen?",
+      question: "Wie wechselt die Auto-Ampel am Ende von Rot zurück auf Grün?",
       options: [
-        "Direkt von Rot auf Gruen ohne Zwischenschritt",
-        "Erst Gelb allein, dann Gruen",
-        "Rot und Gelb leuchten gleichzeitig (1 Sekunde), dann Gruen",
-        "Erst aus, dann blinkt sie 3-mal, dann Gruen",
+        "Direkt von Rot auf Grün ohne Zwischenschritt",
+        "Erst Gelb allein, dann Grün",
+        "Rot und Gelb leuchten gleichzeitig (1 Sekunde), dann Grün",
+        "Erst aus, dann blinkt sie 3-mal, dann Grün",
       ],
       correct: 2,
       explanation:
-        "In Phase 4 bleibt Rot an und Gelb wird dazugeschaltet (Rot-Gelb fuer 1 Sekunde), danach Gruen - so wie eine echte deutsche Ampel. Ein direkter Sprung oder nur Gelb allein entspricht nicht dem Code; das Blinken gehoert zur Fussgaenger-LED.",
+        "In Phase 4 bleibt Rot an und Gelb wird dazugeschaltet (Rot-Gelb für 1 Sekunde), danach Grün - so wie eine echte deutsche Ampel. Ein direkter Sprung oder nur Gelb allein entspricht nicht dem Code; das Blinken gehört zur Fußgänger-LED.",
     },
     {
       type: "multiple-choice",
-      question: "Warum gibt es zwischen Auto-Rot und Fussgaenger-Gruen eine Pause von etwa 1 Sekunde (delay(1000))?",
+      question: "Warum gibt es zwischen Auto-Rot und Fußgänger-Grün eine Pause von etwa 1 Sekunde (delay(1000))?",
       options: [
         "Damit der Arduino Zeit zum Neustarten hat",
-        "Damit die rote LED nicht ueberhitzt",
-        "Weil der Taster sonst doppelt ausloest",
-        "Als Raeumzeit, damit fahrende Autos die Kreuzung noch verlassen koennen",
+        "Damit die rote LED nicht überhitzt",
+        "Weil der Taster sonst doppelt auslöst",
+        "Als Räumzeit, damit fahrende Autos die Kreuzung noch verlassen können",
       ],
       correct: 3,
       explanation:
-        "Die 1 Sekunde ist die Raeumzeit: Autos, die noch unterwegs sind, sollen die Kreuzung verlassen, bevor Fussgaenger gruen bekommen. Mit Neustart, Tastenprellen oder Ueberhitzung hat dieses delay nichts zu tun.",
+        "Die 1 Sekunde ist die Räumzeit: Autos, die noch unterwegs sind, sollen die Kreuzung verlassen, bevor Fußgänger grün bekommen. Mit Neustart, Tastenprellen oder Überhitzung hat dieses delay nichts zu tun.",
     },
   ],
 
@@ -2099,7 +2099,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Es ist sehr hell. Welchen analogRead(A0)-Wert misst der Arduino laut Lektion ungefaehr?",
+      question: "Es ist sehr hell. Welchen analogRead(A0)-Wert misst der Arduino laut Lektion ungefähr?",
       options: [
         "Einen niedrigen Wert (z.B. 50-200)",
         "Einen hohen Wert (z.B. 800-1000)",
@@ -2108,7 +2108,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "In dieser Schaltung gilt: hell = hoher Wert. Bei viel Licht hat der LDR wenig Widerstand, deshalb misst A0 einen hohen Wert (800-1000). Niedrige Werte gehoeren zur Dunkelheit, 0 oder 300 sind erfundene Festwerte.",
+        "In dieser Schaltung gilt: hell = hoher Wert. Bei viel Licht hat der LDR wenig Widerstand, deshalb misst A0 einen hohen Wert (800-1000). Niedrige Werte gehören zur Dunkelheit, 0 oder 300 sind erfundene Festwerte.",
     },
     {
       type: "multiple-choice",
@@ -2116,38 +2116,38 @@ export const TEST_QUESTIONS = {
       options: [
         "Sie schaltet die Ampel bei Helligkeit EIN und bei Dunkelheit AUS",
         "Sie dimmt die LEDs je nach Helligkeit stufenlos",
-        "Sie laesst die Ampel nur bei Dunkelheit laufen und schaltet bei Helligkeit alle LEDs aus",
-        "Sie schaltet bei Dunkelheit ein zusaetzliches Nachtlicht ein",
+        "Sie lässt die Ampel nur bei Dunkelheit laufen und schaltet bei Helligkeit alle LEDs aus",
+        "Sie schaltet bei Dunkelheit ein zusätzliches Nachtlicht ein",
       ],
       correct: 2,
       explanation:
-        "Laut Lektion ist die Ampel nur aktiv, wenn es dunkel genug ist; bei Helligkeit schlaeft sie und alle LEDs gehen aus. Das ist genau umgekehrt zur Strassenlaterne und hat nichts mit Dimmen oder einem extra Nachtlicht zu tun.",
+        "Laut Lektion ist die Ampel nur aktiv, wenn es dunkel genug ist; bei Helligkeit schläft sie und alle LEDs gehen aus. Das ist genau umgekehrt zur Straßenlaterne und hat nichts mit Dimmen oder einem extra Nachtlicht zu tun.",
     },
     {
       type: "multiple-choice",
-      question: "Im Code steht: if (lichtWert <= SCHWELLE) { ... }. Wann wird dieser Block ausgefuehrt?",
+      question: "Im Code steht: if (lichtWert <= SCHWELLE) { ... }. Wann wird dieser Block ausgeführt?",
       options: [
-        "Wenn es hell ist, dann schlaeft die Ampel",
-        "Wenn lichtWert genau 1023 betraegt",
-        "Wenn der Taster gedrueckt wird",
+        "Wenn es hell ist, dann schläft die Ampel",
+        "Wenn lichtWert genau 1023 beträgt",
+        "Wenn der Taster gedrückt wird",
         "Wenn es dunkel ist, dann ist die Ampel aktiv",
       ],
       correct: 3,
       explanation:
-        "Ein kleiner Lichtwert bedeutet Dunkelheit; lichtWert <= SCHWELLE ist also der Dunkel-Fall, in dem die Ampel normal laeuft. Der else-Zweig gehoert zu hell, 1023 waere sehr hell, und der Taster wird erst innerhalb des Dunkel-Blocks geprueft.",
+        "Ein kleiner Lichtwert bedeutet Dunkelheit; lichtWert <= SCHWELLE ist also der Dunkel-Fall, in dem die Ampel normal läuft. Der else-Zweig gehört zu hell, 1023 wäre sehr hell, und der Taster wird erst innerhalb des Dunkel-Blocks geprüft.",
     },
     {
       type: "multiple-choice",
-      question: "In der Kalibrierung misst du: Raumlicht 750, Hand drueber (dunkel) 80. Welcher Schwellenwert ist laut Lektion sinnvoll?",
+      question: "In der Kalibrierung misst du: Raumlicht 750, Hand drüber (dunkel) 80. Welcher Schwellenwert ist laut Lektion sinnvoll?",
       options: [
         "300, also zwischen beiden Werten",
-        "1000, also ueber beiden Werten",
+        "1000, also über beiden Werten",
         "50, also unter beiden Werten",
         "Der Schwellenwert ist egal, jeder Wert funktioniert",
       ],
       correct: 0,
       explanation:
-        "Ein guter Schwellenwert liegt zwischen Hell- und Dunkelwert, in der Lektion 300. Liegt er ueber oder unter beiden Werten, kann die Schaltung Hell und Dunkel nicht mehr unterscheiden; egal ist er also nicht.",
+        "Ein guter Schwellenwert liegt zwischen Hell- und Dunkelwert, in der Lektion 300. Liegt er über oder unter beiden Werten, kann die Schaltung Hell und Dunkel nicht mehr unterscheiden; egal ist er also nicht.",
     },
     {
       type: "multiple-choice",
@@ -2160,40 +2160,40 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Der LDR-Abgriff haengt an A0, einem analogen Eingang, der fein abgestufte Werte von 0 bis 1023 liefert. GND und 5V sind nur Versorgungsanschluesse, und Pin 13 ist ein digitaler Pin fuer die Onboard-LED.",
+        "Der LDR-Abgriff hängt an A0, einem analogen Eingang, der fein abgestufte Werte von 0 bis 1023 liefert. GND und 5V sind nur Versorgungsanschlüsse, und Pin 13 ist ein digitaler Pin für die Onboard-LED.",
     },
     {
       type: "multiple-choice",
       question: "Womit liest man die LDR-Werte zum Kalibrieren aus, bevor man den Schwellenwert festlegt?",
       options: [
-        "Mit einem zweiten Arduino als Messgeraet",
+        "Mit einem zweiten Arduino als Messgerät",
         "Mit einem Lineal am Steckbrett",
         "Mit dem Serial Monitor in der Arduino IDE",
         "Mit der eingebauten LED an Pin 13",
       ],
       correct: 2,
       explanation:
-        "Die Lektion laesst analogRead(A0) per Serial.println ausgeben und im Serial Monitor ablesen, um Hell- und Dunkelwert zu notieren. Die anderen Optionen koennen keine Zahlenwerte des Sensors anzeigen.",
+        "Die Lektion lässt analogRead(A0) per Serial.println ausgeben und im Serial Monitor ablesen, um Hell- und Dunkelwert zu notieren. Die anderen Optionen können keine Zahlenwerte des Sensors anzeigen.",
     },
     {
       type: "multiple-choice",
       question: "Warum betont die Lektion, dass jeder den Schwellenwert an seinem eigenen Aufbau neu einstellen muss?",
       options: [
-        "Weil sich der Arduino jeden Tag anders verhaelt",
+        "Weil sich der Arduino jeden Tag anders verhält",
         "Weil der Serial Monitor falsche Werte anzeigt",
-        "Weil 300 nur fuer die eingebaute LED gilt",
+        "Weil 300 nur für die eingebaute LED gilt",
         "Weil die LDR-Werte bei jedem Aufbau und Raum etwas anders sind",
       ],
       correct: 3,
       explanation:
-        "Laut Warnhinweis haengen die LDR-Werte von Bauteil und Umgebungslicht ab, deshalb kann der passende Schwellenwert bei dir 200, bei anderen 400 sein. Der Serial Monitor zeigt korrekte Werte, und 300 hat nichts mit der Onboard-LED zu tun.",
+        "Laut Warnhinweis hängen die LDR-Werte von Bauteil und Umgebungslicht ab, deshalb kann der passende Schwellenwert bei dir 200, bei anderen 400 sein. Der Serial Monitor zeigt korrekte Werte, und 300 hat nichts mit der Onboard-LED zu tun.",
     },
   ],
 
   "projekt/pruefungsschaltung-komplett": [
     {
       type: "multiple-choice",
-      question: "Welche Anforderung muss eine Schaltung laut Lektion erfuellen, damit sie fuer die Realschulabschlusspruefung Technik (RSAP) zaehlt?",
+      question: "Welche Anforderung muss eine Schaltung laut Lektion erfüllen, damit sie für die Realschulabschlussprüfung Technik (RSAP) zählt?",
       options: [
         "Mindestens 1 Sensor und 2 Aktoren ODER 2 Sensoren und 1 Aktor, davon mindestens 1 analoger Sensor",
         "Mindestens 3 Aktoren und kein Sensor",
@@ -2202,11 +2202,11 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Die Lektion nennt als Pflicht: 1 Sensor + 2 Aktoren ODER 2 Sensoren + 1 Aktor, und mindestens 1 externer Sensor muss analog sein. Ein reines Taster-Setup (nur digital) reicht laut Lektion ausdruecklich nicht.",
+        "Die Lektion nennt als Pflicht: 1 Sensor + 2 Aktoren ODER 2 Sensoren + 1 Aktor, und mindestens 1 externer Sensor muss analog sein. Ein reines Taster-Setup (nur digital) reicht laut Lektion ausdrücklich nicht.",
     },
     {
       type: "multiple-choice",
-      question: "An welchem Pin haengt in der Pruefungsschaltung der LDR (Lichtsensor)?",
+      question: "An welchem Pin hängt in der Prüfungsschaltung der LDR (Lichtsensor)?",
       options: [
         "Pin 7",
         "Pin A0",
@@ -2215,7 +2215,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Der LDR wird laut Schaltplan am analogen Eingang A0 ausgelesen (analogRead(A0)). Pin 7 ist der Taster, Pin 2 die rote Auto-LED, Pin 6 die gruene Fussgaenger-LED.",
+        "Der LDR wird laut Schaltplan am analogen Eingang A0 ausgelesen (analogRead(A0)). Pin 7 ist der Taster, Pin 2 die rote Auto-LED, Pin 6 die grüne Fußgänger-LED.",
     },
     {
       type: "multiple-choice",
@@ -2228,7 +2228,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Laut Lektion erfuellt die Ampel die Pflicht durch 2 Sensoren (LDR analog + Taster digital), 5 Aktoren (LEDs) und Steuerung mit if/else plus Zustandsmaschine. Ein analoger Sensor (LDR) ist dabei, deshalb ist sie konform.",
+        "Laut Lektion erfüllt die Ampel die Pflicht durch 2 Sensoren (LDR analog + Taster digital), 5 Aktoren (LEDs) und Steuerung mit if/else plus Zustandsmaschine. Ein analoger Sensor (LDR) ist dabei, deshalb ist sie konform.",
     },
     {
       type: "multiple-choice",
@@ -2236,55 +2236,55 @@ export const TEST_QUESTIONS = {
       options: [
         "Die komplette Ampel-Sequenz startet sofort",
         "Der Taster wird dauerhaft gesperrt",
-        "Nur die Fussgaenger-Ampel leuchtet gruen",
-        "Alle LEDs werden ausgeschaltet, die Ampel schlaeft",
+        "Nur die Fußgänger-Ampel leuchtet grün",
+        "Alle LEDs werden ausgeschaltet, die Ampel schläft",
       ],
       correct: 3,
       explanation:
-        "Im else-Zweig (hell) werden alle fuenf LEDs auf LOW gesetzt, die Ampel schlaeft. Erst wenn der LDR dunkel meldet (Wert unter der SCHWELLE), wird die Ampel aktiv und prueft den Taster.",
+        "Im else-Zweig (hell) werden alle fünf LEDs auf LOW gesetzt, die Ampel schläft. Erst wenn der LDR dunkel meldet (Wert unter der SCHWELLE), wird die Ampel aktiv und prüft den Taster.",
     },
     {
       type: "multiple-choice",
-      question: "Der Taster ist als INPUT_PULLUP konfiguriert. Wann erkennt der Code, dass er gedrueckt wurde?",
+      question: "Der Taster ist als INPUT_PULLUP konfiguriert. Wann erkennt der Code, dass er gedrückt wurde?",
       options: [
         "Wenn digitalRead(taster) den Wert LOW liefert",
-        "Wenn analogRead(taster) ueber 300 liegt",
+        "Wenn analogRead(taster) über 300 liegt",
         "Wenn digitalRead(taster) den Wert HIGH liefert",
         "Wenn der LDR gleichzeitig hell misst",
       ],
       correct: 0,
       explanation:
-        "Bei INPUT_PULLUP ist der Eingang normalerweise HIGH und wird beim Druecken auf LOW gezogen; der Code prueft genau digitalRead(taster) == LOW. analogRead passt nicht, weil der Taster ein digitaler Eingang an Pin 7 ist.",
+        "Bei INPUT_PULLUP ist der Eingang normalerweise HIGH und wird beim Drücken auf LOW gezogen; der Code prüft genau digitalRead(taster) == LOW. analogRead passt nicht, weil der Taster ein digitaler Eingang an Pin 7 ist.",
     },
     {
       type: "multiple-choice",
-      question: "In welcher Reihenfolge empfiehlt die Lektion, die Pruefungsschaltung aufzubauen?",
+      question: "In welcher Reihenfolge empfiehlt die Lektion, die Prüfungsschaltung aufzubauen?",
       options: [
         "Zuerst den LDR, dann den Taster, dann alle LEDs auf einmal",
-        "Erst die Auto-Ampel (3 LEDs), dann die Fussgaenger-Ampel, dann den Taster, zum Schluss den LDR",
+        "Erst die Auto-Ampel (3 LEDs), dann die Fußgänger-Ampel, dann den Taster, zum Schluss den LDR",
         "Alles gleichzeitig zusammenstecken und am Ende einmal testen",
         "Erst den Code komplett schreiben, dann gar nichts mehr testen",
       ],
       correct: 1,
       explanation:
-        "Die Lektion raet, systematisch aufzubauen: erst Auto-Ampel, dann Fussgaenger-Ampel, dann Taster, zuletzt LDR, und nach jedem Bauteil zu testen. Alles auf einmal aufzubauen macht die Fehlersuche schwerer.",
+        "Die Lektion rät, systematisch aufzubauen: erst Auto-Ampel, dann Fußgänger-Ampel, dann Taster, zuletzt LDR, und nach jedem Bauteil zu testen. Alles auf einmal aufzubauen macht die Fehlersuche schwerer.",
     },
     {
       type: "multiple-choice",
-      question: "Welche Aussage ueber die Variable SCHWELLE = 300 im Code ist richtig?",
+      question: "Welche Aussage über die Variable SCHWELLE = 300 im Code ist richtig?",
       options: [
         "Sie legt fest, wie viele Sekunden Gelb leuchtet",
-        "Sie bestimmt, an welchem Pin der LDR haengt",
+        "Sie bestimmt, an welchem Pin der LDR hängt",
         "Sie ist der Lichtgrenzwert: Werte unter 300 bedeuten dunkel; sie muss mit dem Serial Monitor kalibriert werden",
         "Sie gibt an, wie viele LEDs angeschlossen sind",
       ],
       correct: 2,
       explanation:
-        "Im Code steht SCHWELLE = 300 als Tag/Nacht-Grenzwert (unter 300 = dunkel), und der Kommentar sagt ausdruecklich, dass man ihn mit dem Serial Monitor kalibrieren muss, weil die LDR-Werte je nach Raum schwanken.",
+        "Im Code steht SCHWELLE = 300 als Tag/Nacht-Grenzwert (unter 300 = dunkel), und der Kommentar sagt ausdrücklich, dass man ihn mit dem Serial Monitor kalibrieren muss, weil die LDR-Werte je nach Raum schwanken.",
     },
     {
       type: "multiple-choice",
-      question: "Welcher der genannten Fehler gehoert laut Lektion zu den haeufigen Pruefungsfehlern?",
+      question: "Welcher der genannten Fehler gehört laut Lektion zu den häufigen Prüfungsfehlern?",
       options: [
         "Den Arduino zu schnell programmieren",
         "Den Serial Monitor zum Kalibrieren benutzen",
@@ -2293,7 +2293,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "Die Lektion listet 'GND vergessen' als haeufigen Fehler auf, weil ohne Masse keine LED leuchtet. Kommentare und das Kalibrieren mit dem Serial Monitor empfiehlt die Lektion dagegen ausdruecklich als gutes Vorgehen.",
+        "Die Lektion listet 'GND vergessen' als häufigen Fehler auf, weil ohne Masse keine LED leuchtet. Kommentare und das Kalibrieren mit dem Serial Monitor empfiehlt die Lektion dagegen ausdrücklich als gutes Vorgehen.",
     },
   ],
 };
