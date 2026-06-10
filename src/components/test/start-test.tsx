@@ -5,9 +5,11 @@ import { TestRunner } from "./test-runner";
 // Zeigt den Test-Runner nur für eingeloggte User; sonst Anmelde-Hinweis.
 export function StartTest({
   lessonId,
+  lessonTitle,
   isLoggedIn,
 }: {
   lessonId: string;
+  lessonTitle: string;
   isLoggedIn: boolean;
 }) {
   return (
@@ -20,7 +22,7 @@ export function StartTest({
         Ein Versuch — das Ergebnis zählt. Am besten im Unterricht bearbeiten.
       </p>
       {isLoggedIn ? (
-        <TestRunner lessonId={lessonId} />
+        <TestRunner lessonId={lessonId} lessonTitle={lessonTitle} />
       ) : (
         <p className="text-sm text-muted-foreground">
           Zum Testen bitte zuerst{" "}

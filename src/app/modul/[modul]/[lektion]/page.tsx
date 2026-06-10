@@ -74,7 +74,13 @@ export default async function LessonPage({ params }: Props) {
         isLoggedIn={!!user}
       />
       {content.praxis && <PraxisSection praxis={content.praxis} />}
-      {hasTest && <StartTest lessonId={lesson.id} isLoggedIn={!!user} />}
+      {hasTest && (
+        <StartTest
+          lessonId={lesson.id}
+          lessonTitle={lesson.title}
+          isLoggedIn={!!user}
+        />
+      )}
       {solution && <TeacherSolution solution={solution} />}
     </main>
   );
