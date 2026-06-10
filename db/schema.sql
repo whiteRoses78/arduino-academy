@@ -338,6 +338,34 @@ end; $$;
 revoke execute on function public.list_test_results(uuid) from public, anon;
 grant execute on function public.list_test_results(uuid) to authenticated;
 
+-- list_all_test_results: komplette Lehrer-/Admin-Uebersicht ueber alle Lektionen.
+-- Eine Zeile pro Versuch + eine Zeile pro Schueler-Konto ohne Versuch
+-- (Lektions-/Score-Felder NULL, fuer die "Noch kein Versuch"-Fussnote).
+create or replace function public.list_all_test_results()
+returns table (email text, display_name text, module text, lesson_slug text,
+               lesson_title text, lesson_position integer, score integer,
+               max_score integer, percent integer, created_at timestamptz)
+language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.profiles
+                 where id = auth.uid() and role in ('teacher','admin')) then
+    raise exception 'Nur Lehrer/Admins.';
+  end if;
+  return query
+    select u.email::text,
+           coalesce(p.display_name, split_part(u.email,'@',1)),
+           l.module, l.slug, l.title, l.position,
+           a.score, a.max_score, a.percent, a.created_at
+    from public.profiles p
+    join auth.users u on u.id = p.id
+    left join public.test_attempts a on a.user_id = p.id
+    left join public.lessons l on l.id = a.lesson_id
+    where p.role = 'student' or a.id is not null
+    order by u.email, l.module, l.position;
+end; $$;
+revoke execute on function public.list_all_test_results() from public, anon;
+grant execute on function public.list_all_test_results() to authenticated;
+
 -- has_test: leichter Existenz-Check (nur true/false) fuer die Lektionsseite.
 create or replace function public.has_test(p_lesson_id uuid)
 returns boolean language sql security definer set search_path = public as $$

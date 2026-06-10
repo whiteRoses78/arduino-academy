@@ -315,6 +315,21 @@ export type Database = {
         }[]
       }
       has_test: { Args: { p_lesson_id: string }; Returns: boolean }
+      list_all_test_results: {
+        Args: never
+        Returns: {
+          created_at: string
+          display_name: string
+          email: string
+          lesson_position: number
+          lesson_slug: string
+          lesson_title: string
+          max_score: number
+          module: string
+          percent: number
+          score: number
+        }[]
+      }
       list_teachers: {
         Args: never
         Returns: {
