@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 // Globale Kopfzeile. Server Component: liest den Auth-Status serverseitig
 // und zeigt entweder die eingeloggte E-Mail + Abmelden oder die Auth-Links.
 // Der Admin-Link erscheint NUR fuer eingeloggte Admins (sonst unsichtbar).
+// Registrieren-Einstieg ist ausgeblendet, solange Supabase-Signups
+// deaktiviert sind (geschlossene Testphase, 2026-06-10).
 export async function SiteHeader() {
   const supabase = await createClient();
   const {
@@ -56,9 +58,6 @@ export async function SiteHeader() {
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" size="sm">
               <Link href="/anmelden">Anmelden</Link>
-            </Button>
-            <Button asChild size="sm" className="hidden sm:inline-flex">
-              <Link href="/registrieren">Registrieren</Link>
             </Button>
           </div>
         )}
