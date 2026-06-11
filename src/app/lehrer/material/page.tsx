@@ -97,7 +97,7 @@ export default async function TeacherMaterialPage() {
                       {href ? (
                         <a
                           href={href}
-                          className="inline-block py-2 font-medium text-primary underline-offset-4 transition-colors hover:underline focus-visible:underline focus-visible:outline-none"
+                          className="inline-block py-3 -my-1 font-medium text-primary underline-offset-4 transition-colors hover:underline focus-visible:underline focus-visible:outline-none"
                         >
                           Herunterladen
                         </a>
