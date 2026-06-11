@@ -22,7 +22,10 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-3 px-6">
+      {/* flex-wrap + min-h-14: Lehrer-Nav (Dashboard/Tests/Material/Abmelden)
+          bricht auf schmalen Screens in eine zweite Zeile um, statt horizontal
+          zu ueberlaufen. Eine Zeile bleibt wie gehabt 56px hoch und zentriert. */}
+      <div className="mx-auto flex min-h-14 w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-6">
         <Link
           href="/"
           className="font-heading text-sm font-semibold tracking-tight transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none"
