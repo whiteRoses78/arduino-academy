@@ -373,3 +373,62 @@ returns boolean language sql security definer set search_path = public as $$
 $$;
 revoke execute on function public.has_test(uuid) from public;
 grant execute on function public.has_test(uuid) to anon, authenticated;
+
+-- ===== Lehrer-Material: privater Bucket + Policies (Spec 2026-06-11) =====
+-- Klassenarbeiten mit Loesungen: lesen nur teacher/admin, schreiben nur
+-- admin (Upload-Script). Bucket privat -> ohne gueltige Policy kommt
+-- niemand ran, egal welche URL er kennt.
+insert into storage.buckets (id, name, public)
+values ('lehrer-material', 'lehrer-material', false)
+on conflict (id) do nothing;
+
+drop policy if exists "teachers read material" on storage.objects;
+create policy "teachers read material" on storage.objects
+  for select to authenticated
+  using (
+    bucket_id = 'lehrer-material'
+    and exists (
+      select 1 from public.profiles p
+      where p.id = auth.uid() and p.role in ('teacher','admin')
+    )
+  );
+
+drop policy if exists "admin inserts material" on storage.objects;
+create policy "admin inserts material" on storage.objects
+  for insert to authenticated
+  with check (
+    bucket_id = 'lehrer-material'
+    and exists (
+      select 1 from public.profiles p
+      where p.id = auth.uid() and p.role = 'admin'
+    )
+  );
+
+drop policy if exists "admin updates material" on storage.objects;
+create policy "admin updates material" on storage.objects
+  for update to authenticated
+  using (
+    bucket_id = 'lehrer-material'
+    and exists (
+      select 1 from public.profiles p
+      where p.id = auth.uid() and p.role = 'admin'
+    )
+  )
+  with check (
+    bucket_id = 'lehrer-material'
+    and exists (
+      select 1 from public.profiles p
+      where p.id = auth.uid() and p.role = 'admin'
+    )
+  );
+
+drop policy if exists "admin deletes material" on storage.objects;
+create policy "admin deletes material" on storage.objects
+  for delete to authenticated
+  using (
+    bucket_id = 'lehrer-material'
+    and exists (
+      select 1 from public.profiles p
+      where p.id = auth.uid() and p.role = 'admin'
+    )
+  );
