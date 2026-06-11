@@ -40,6 +40,11 @@ export async function SiteHeader() {
                 <Link href="/lehrer/tests">Tests</Link>
               </Button>
             )}
+            {canSeeTests && (
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/lehrer/material">Material</Link>
+              </Button>
+            )}
             {isAdmin && (
               <Button asChild variant="ghost" size="sm">
                 <Link href="/admin">Admin</Link>
