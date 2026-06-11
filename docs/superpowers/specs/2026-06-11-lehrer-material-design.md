@@ -1,6 +1,6 @@
 # Spec: Lehrer-Material-Ablage (private Datei-Ablage für Modularbeiten & Co.)
 
-Datum: 2026-06-11 · Status: von Marco freigegebenes Design (Brainstorming-Dialog)
+Datum: 2026-06-11 · Status: ✅ umgesetzt (11.06.2026, inkl. Upload Modul 1, Sicherheitstests student/teacher/anon und Mobile-Header-Fix)
 
 ## Kontext / Problem
 
