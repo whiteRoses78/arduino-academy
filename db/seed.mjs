@@ -146,6 +146,16 @@ const { data: course, error: cErr } = await supabase
   .single();
 die("courses.insert", cErr);
 
+// Pruefungsrelevante Lektionen je Modul (legacy_id) — Quelle: Te-Pruefungs-
+// Praesentation 2026 + Review 07/2026. Steuert Filter/Spaced-Repetition.
+const EXAM_RELEVANT = {
+  grundlagen: [35],
+  digital: [5, 7, 10],
+  analog: [30, 13, 14, 31],
+  aktoren: [32, 33, 34],
+  projekt: [17],
+};
+
 // --- 2) Lektionen anlegen ---
 const lessons = LESSONS.map((lesson, i) => {
   const { id, title, exercises, ...content } = lesson;
@@ -159,7 +169,7 @@ const lessons = LESSONS.map((lesson, i) => {
       title,
       content: patchContent(content),
       parts: PARTS[moduleKey]?.[slugify(title)] ?? [],
-      exam_relevant: false,
+      exam_relevant: EXAM_RELEVANT[moduleKey]?.includes(id) ?? false,
     },
     exercises: exercises ?? [],
   };

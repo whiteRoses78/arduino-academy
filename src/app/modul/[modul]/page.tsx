@@ -37,6 +37,11 @@ export default async function ModulePage({ params }: Props) {
                     {l.position}
                   </span>
                   <CardTitle className="text-lg">{l.title}</CardTitle>
+                  {l.exam_relevant && (
+                    <span className="ml-auto shrink-0 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
+                      Prüfung
+                    </span>
+                  )}
                 </CardHeader>
               </Card>
             </Link>
