@@ -355,3 +355,35 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 - **Was:** `/lehrer/tests` zeigt jetzt ALLE Testergebnisse statt nur der LEDs-Lektion: je Modul ein Abschnitt (didaktische Reihenfolge), darin je Klasse eine Matrix-Tabelle — Zeilen = Konten, Spalten = Lektionen (Köpfe „L1…L6" + Legende), Zelle = Prozent mit Tooltip (Punkte + Zeitpunkt), „—" = Test fehlt. Ø-Zeile je Tabelle, Fußnote „Noch kein Versuch: …" je Klasse, Hinweis auf Module ohne Versuche. Klassen-Zuordnung über die Kontonummer (arduino01–20 / 21–30, Helfer `accountGroup` in `src/lib/klassen.ts`, vitest-getestet).
 - **Wie:** Neue SECURITY-DEFINER-RPC `list_all_test_results()` — eine Zeile pro Versuch + eine pro versuchslosem Schüler-Konto (für die Fußnote); Rollen-Check teacher/admin, kein anon-EXECUTE; additive Migration, `list_test_results(p_lesson_id)` bleibt unverändert. Seite als Server Component gruppiert serverseitig; Spalten kommen aus der `lessons`-Tabelle (auch ungetestete Lektionen sichtbar = Lücken-Übersicht).
 - **Verifiziert:** RPC-Sicherheit (anon kein EXECUTE; Schüler-Kontext → Exception „Nur Lehrer/Admins."; Admin-Kontext → 54 Zeilen = 30 Versuche + 24 versuchslose Konten); vitest 32 + tsc/lint/build grün; Anon auf /lehrer/tests = NEXT_REDIRECT ohne jeden geschützten Inhalt (0 Konto-/Prozent-Strings im HTML); SQL-Gegenprobe der Matrix-Eckwerte (aktive Konten arduino02–08, 14+10 inaktive, Grundlagen-Ø 92/94/86/90/90). Eingeloggter Sichttest: Marco nach dem Deploy. Spec `docs/superpowers/specs/2026-06-10-lehrer-tests-uebersicht-design.md`, Plan `docs/superpowers/plans/2026-06-10-lehrer-tests-uebersicht.md`.
+
+---
+
+## 2026-06-11 / 2026-07-04 — Lehrer-Material-Ablage ✅ LIVE
+
+- **Was:** Eingeloggte Lehrer/Admins finden unter `/lehrer/material` (neuer Header-Link neben „Tests") die Modularbeiten zum Download — je Modul Arbeit + Lösung, jeweils als HTML und PDF. Schüler und Anonyme sehen die Seite nicht und kommen auch nicht an die Dateien. Damit liegen die Papier-Materialien dort, wo die Lehrkraft sie im Unterricht braucht, statt nur auf Marcos Desktop.
+- **Wie:** Privater Supabase-Storage-Bucket `lehrer-material` (RLS: SELECT für teacher/admin, Schreiben nur admin — Policies am Ende von `db/schema.sql`). Die Seite listet den Bucket serverseitig und erzeugt pro Datei eine **signierte URL mit 1 h Laufzeit** und Download-Disposition; Guard identisch zu `/lehrer/tests` (`canViewSolutions`). Neuer Helfer `src/lib/format.ts` (`formatBytes`, deutsche Formatierung, 3 Tests). Upload per Script: `node db/upload-material.mjs <modulnr>`.
+- **Zeitlicher Ablauf:** Gebaut am 11.06., **Deploy bewusst verzögert bis 04.07.** wegen der Netlify-Credit-Grenze (jeder Deploy kostet 15 von 300 Credits/Monat) — danach von Marco freigegeben und gepusht (`5b66646..79bba60`, 10 Commits). Beim Nachladen von Modul 2–5 bewährte sich der Trick, ein **Wegwerf-Admin-Konto per SQL anzulegen, zu nutzen und sofort zu löschen** (Marcos echte Zugangsdaten bleiben außen vor).
+- **Verifiziert:** Sicherheits-E2E vor und nach dem Deploy — Schüler-JWT: list=[] / sign=404 / GET=400; Lehrer-JWT: Dateien sichtbar + PDF-Download 200; Anon: nur NEXT_REDIRECT, 0 Dateinamen im HTML. Bucket-Count 20 Dateien, 30 Schüler-Konten unberührt. Marco-Abnahme eingeloggt am 04.07. ✅
+- **2 Review-Funde gefixt:** Download-Link auf 44 px Tap-Target (`476d29b`); **Header lief auf schmalen Screens durch den neuen Link über** → `flex-wrap` + `min-h-14` (`3cf1c40`). **Lehre: ein neuer Header-Link verlangt einen Mobile-Check als eingeloggter Lehrer** — als Anon fällt er nicht auf. Spec/Plan `docs/superpowers/{specs,plans}/2026-06-11-lehrer-material*`.
+
+---
+
+## 2026-07-11 — Didaktik-Review: 3 Fix-Phasen + Prüfungs-Badge ✅ LIVE
+
+- **Was:** Vollständiger didaktischer Review der App (Skill `lernprogramm-review`, 1 Reviewer je Modul) → 7 KRITISCH / 21 WICHTIG / 27 NICE. Alle drei Fix-Phasen umgesetzt; die App hat jetzt **93 Übungen**.
+- **Phase 1 (Fakten + Kleinkram):** sachliche Fehler, falsche Querverweise, Formulierungen.
+- **Phase 2 (Inhalte + Prüfungsrelevanz):** Schaltsymbole (L35), Piezo + HC-SR04 (L32), RGB-Plus-Box (L17), L298N-SVG + Praxis-Tab (L34), Hysterese-SVG, neue Übungen zu int-Division und Flussdiagramm. Dazu die Spalte **`exam_relevant`** in DB + `seed.mjs` befüllt (12 von 23 Lektionen, abgeleitet aus der Te-Prüfungspräsentation 2026 + den Prüfungs-Arbeitsblättern) und ein gelbes **„Prüfung"-Badge** in der Lektionsliste der Modulseiten. Bewusst NICHT gebaut (KISS, erst bei echtem Unterrichtsbedarf): Filter „nur Prüfungsstoff" und SR-Priorisierung nach dem Flag.
+- **Phase 3 (Interaktivität):** 6 Inline-Simulatoren (L298N, Ampel, LDR, PWM, Hysterese, Vorwiderstand) + Dubletten-Fix in L31.
+- **Wie:** Content-Updates via PATCH-Sync-Script (temporäre Policy + GRANT, danach wieder entzogen) direkt nach Supabase. **Wichtig: `seed.mjs` ist insert-only — für Content-Updates niemals neu seeden, sonst ist der Schülerfortschritt weg.**
+- **Verifiziert:** Beide Repos gepusht + Netlify-Deploy live (Fingerabdruck-Check bestanden); die GitHub-Pages-Vanilla-App wurde parallel aktualisiert. Commits: Vanilla `e2af84c`, academy `2372d6a`. Badge von Marco live gesehen und in der Bedeutung bestätigt. Die 5 Modularbeiten wurden gegen die Fakten-Fixes gegengeprüft — kein Fehler enthalten, Desktop-Dateien und Bucket byte-identisch.
+- **Bewusst ausgelassen:** Encoding-Vereinheitlichung, why-context-Boxen, Übungs-Verschiebung aus L17.
+
+---
+
+## 2026-07-22 — Schülerdaten-Reset zum Schuljahresende (DB-only)
+
+- **Was:** Die Nutzerdaten der Schüler:innen, die die Schule verlassen haben, wurden gelöscht: **58 `test_attempts` + 42 `user_progress`**. Betroffen waren `arduino01@klasse.de` bis `arduino08@klasse.de` — die einzigen Konten mit Daten (09–30 standen bereits auf 0). Beide Tabellen sind danach komplett leer.
+- **Nicht angetastet:** die Konten selbst samt Passwörtern (Zugangskärtchen bleiben gültig), Lektionen, Übungen, Testfragen, Lehrer-Lösungen und der Material-Bucket. Die 30 Konten sind unverändert für die nächste Klasse nutzbar.
+- **Nebeneffekt (gewollt):** Die Sperre „ein Versuch pro Konto und Lektion" hängt an `test_attempts` — ohne Zeile darf wieder getestet werden. Genau das ist beim Jahrgangswechsel erwünscht.
+- **Wie:** Ein CTE via MCP `execute_sql` (Auswahl über Regex `^arduino0[1-8]@klasse\.de$`, `test_attempts` und `user_progress` in einem Statement). Die Ergebnisse wurden vorher ausgelesen und im Sitzungsprotokoll gesichert. Kein Deploy, kein Netlify-Credit verbraucht.
+- **Verifiziert:** Gegenprobe nach dem Löschen — `user_progress` = 0 und `test_attempts` = 0.
