@@ -57,7 +57,9 @@ const { access_token } = await loginRes.json();
 // --- 2) Dateien hochladen (Bucket-Name = Dateiname ohne "arduino-"-Praefix) ---
 for (const f of FILES) {
   const remote = f.local.replace(/^arduino-/, "");
-  const body = readFileSync(join(homedir(), "Desktop", f.local));
+  const body = readFileSync(
+    join(homedir(), "Desktop", "Arduino Academy Zugang Schüler", f.local),
+  );
   const res = await fetch(`${url}/storage/v1/object/lehrer-material/${remote}`, {
     method: "POST",
     headers: {
