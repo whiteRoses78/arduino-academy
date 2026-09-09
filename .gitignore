@@ -53,3 +53,6 @@ next-env.d.ts
 # Unterrichtsmaterial (Modularbeiten, Loesungen, Zugangskarten mit Klartext-
 # Passwoertern) -> NIEMALS ins oeffentliche Repo. Quelle fuer db/upload-material.mjs.
 /material/
+
+# interne Uebergabe-Notizen, nicht ins oeffentliche Repo
+HANDOFF.md
