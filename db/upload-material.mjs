@@ -1,8 +1,13 @@
 // =========================================================================
-// upload-material.mjs — laedt die Modularbeit-Dateien eines Moduls vom
-// Desktop in den privaten Storage-Bucket "lehrer-material".
+// upload-material.mjs — laedt die Modularbeit-Dateien eines Moduls aus
+// material/modul<N>/ in den privaten Storage-Bucket "lehrer-material".
 //
 // Aufruf:  node db/upload-material.mjs [modulnummer]   (default: 1)
+//
+// Lokal liegen die Dateien pro Modul im eigenen Ordner und heissen schlicht
+// "modularbeit.pdf". Im Bucket liegen alle flach nebeneinander und brauchen
+// deshalb die Modulnummer im Namen -> "remote" bleibt unveraendert, damit
+// ein Re-Upload die vorhandene Datei ersetzt statt eine zweite anzulegen.
 //
 // Login laeuft mit dem Admin-Konto; Credentials kommen aus .env.local
 // (gitignored, nie committen):
@@ -13,15 +18,15 @@
 // =========================================================================
 
 import { readFileSync } from "node:fs";
-import { homedir } from "node:os";
 import { join } from "node:path";
 
 const modul = process.argv[2] ?? "1";
+const DIR = join(import.meta.dirname, "..", "material", `modul${modul}`);
 const FILES = [
-  { local: `arduino-modularbeit-modul${modul}.pdf`, type: "application/pdf" },
-  { local: `arduino-modularbeit-modul${modul}-loesung.pdf`, type: "application/pdf" },
-  { local: `arduino-modularbeit-modul${modul}.html`, type: "text/html" },
-  { local: `arduino-modularbeit-modul${modul}-loesung.html`, type: "text/html" },
+  { local: "modularbeit.pdf", remote: `modularbeit-modul${modul}.pdf`, type: "application/pdf" },
+  { local: "modularbeit-loesung.pdf", remote: `modularbeit-modul${modul}-loesung.pdf`, type: "application/pdf" },
+  { local: "modularbeit.html", remote: `modularbeit-modul${modul}.html`, type: "text/html" },
+  { local: "modularbeit-loesung.html", remote: `modularbeit-modul${modul}-loesung.html`, type: "text/html" },
 ];
 
 // --- .env.local einlesen (ohne dotenv-Dependency, wie seed.mjs) ---
@@ -54,13 +59,10 @@ const loginRes = await fetch(`${url}/auth/v1/token?grant_type=password`, {
 if (!loginRes.ok) throw new Error(`Login fehlgeschlagen: ${await loginRes.text()}`);
 const { access_token } = await loginRes.json();
 
-// --- 2) Dateien hochladen (Bucket-Name = Dateiname ohne "arduino-"-Praefix) ---
+// --- 2) Dateien hochladen (lokaler Name je Modul gleich, Bucket-Name mit Modulnummer) ---
 for (const f of FILES) {
-  const remote = f.local.replace(/^arduino-/, "");
-  const body = readFileSync(
-    join(homedir(), "Desktop", "Arduino Academy Zugang Schüler", f.local),
-  );
-  const res = await fetch(`${url}/storage/v1/object/lehrer-material/${remote}`, {
+  const body = readFileSync(join(DIR, f.local));
+  const res = await fetch(`${url}/storage/v1/object/lehrer-material/${f.remote}`, {
     method: "POST",
     headers: {
       apikey: key,
@@ -70,7 +72,7 @@ for (const f of FILES) {
     },
     body,
   });
-  if (!res.ok) throw new Error(`Upload ${remote}: ${res.status} ${await res.text()}`);
-  console.log(`OK: ${remote} (${body.length} Bytes)`);
+  if (!res.ok) throw new Error(`Upload ${f.remote}: ${res.status} ${await res.text()}`);
+  console.log(`OK: ${f.remote} (${body.length} Bytes)`);
 }
 console.log(`Fertig: ${FILES.length} Dateien fuer Modul ${modul} im Bucket lehrer-material.`);

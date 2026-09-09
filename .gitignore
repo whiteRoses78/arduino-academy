@@ -49,3 +49,7 @@ next-env.d.ts
 
 # lokale Design-Backups (Theme-Quelle lebt versioniert in src/app/globals.css)
 /docs/design/
+
+# Unterrichtsmaterial (Modularbeiten, Loesungen, Zugangskarten mit Klartext-
+# Passwoertern) -> NIEMALS ins oeffentliche Repo. Quelle fuer db/upload-material.mjs.
+/material/
