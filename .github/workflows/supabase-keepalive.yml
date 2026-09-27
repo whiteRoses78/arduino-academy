@@ -1,0 +1,26 @@
+# Haelt die Supabase-Free-Projekte wach (Pause nach 7 Tagen ohne Zugriff).
+# Laeuft auf GitHubs Servern, unabhaengig vom Mac. Mac-Job bleibt als Backup:
+# ~/Library/Scripts/arduino-supabase-ping.sh
+# Die Keys sind PUBLISHABLE Keys (gehen ohnehin an jeden Browser) -> kein Geheimnis.
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    - cron: "17 6 * * 1,4"   # Mo + Do, 06:17 UTC
+  workflow_dispatch:         # Knopf "Run workflow" zum Testen
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: arduino-academy
+        run: |
+          curl -fsS --retry 5 --retry-delay 30 --retry-all-errors -o /dev/null \
+            -H "apikey: sb_publishable_zWWqfQSCnMBj0Tt6W2ualA_TgNs8TRk" \
+            "https://viryugqggorzexchlyqw.supabase.co/rest/v1/lessons?select=id&limit=1"
+      - name: hsap-technik-9a
+        if: always()
+        run: |
+          curl -fsS --retry 5 --retry-delay 30 --retry-all-errors -o /dev/null \
+            -H "apikey: sb_publishable_xpEKD3qnMArLMoBGSj0hCQ_cZN5XayQ" \
+            "https://lvejgcbumfiipdusuvga.supabase.co/rest/v1/rpc/ping"
