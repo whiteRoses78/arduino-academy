@@ -16,6 +16,7 @@ import { getLessonParts } from "@/lib/parts";
 import { getCurrentUserRole } from "@/lib/auth/role";
 import { canViewSolutions } from "@/lib/roles";
 import { TeacherSolution } from "@/components/teacher-solution";
+import { LessonTabs, type LessonTab } from "@/components/lesson-tabs";
 import type { ExercisePayload } from "@/lib/exercises";
 
 type Props = { params: Promise<{ modul: string; lektion: string }> };
@@ -50,6 +51,56 @@ export default async function LessonPage({ params }: Props) {
     p_lesson_id: lesson.id,
   });
 
+  // Reiter in Lernreihenfolge; Praxis/Test nur, wenn die Lektion sie hat.
+  const tabs: LessonTab[] = [
+    {
+      id: "einfuehrung",
+      label: "Einführung",
+      content: (
+        <>
+          <PartsList parts={getLessonParts(lesson.parts)} />
+          <LessonContentView content={content} />
+        </>
+      ),
+    },
+    {
+      id: "uebung",
+      label: "Übung",
+      content: (
+        <ExerciseSection
+          exercises={exercises.map((e) => ({
+            id: e.id,
+            position: e.position,
+            payload: e.payload as ExercisePayload,
+          }))}
+          seedBase={`L${lesson.legacy_id ?? 0}`}
+          lessonId={lesson.id}
+          isLoggedIn={!!user}
+        />
+      ),
+    },
+  ];
+  if (content.praxis) {
+    tabs.push({
+      id: "praxis",
+      label: "Praxis",
+      content: <PraxisSection praxis={content.praxis} />,
+    });
+  }
+  if (hasTest) {
+    tabs.push({
+      id: "test",
+      label: "Kompetenztest",
+      content: (
+        <StartTest
+          lessonId={lesson.id}
+          lessonTitle={lesson.title}
+          isLoggedIn={!!user}
+        />
+      ),
+    });
+  }
+
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:px-6">
       <Link
@@ -61,26 +112,7 @@ export default async function LessonPage({ params }: Props) {
       <h1 className="mt-4 text-3xl font-semibold tracking-tight">
         {lesson.title}
       </h1>
-      <PartsList parts={getLessonParts(lesson.parts)} />
-      <LessonContentView content={content} />
-      <ExerciseSection
-        exercises={exercises.map((e) => ({
-          id: e.id,
-          position: e.position,
-          payload: e.payload as ExercisePayload,
-        }))}
-        seedBase={`L${lesson.legacy_id ?? 0}`}
-        lessonId={lesson.id}
-        isLoggedIn={!!user}
-      />
-      {content.praxis && <PraxisSection praxis={content.praxis} />}
-      {hasTest && (
-        <StartTest
-          lessonId={lesson.id}
-          lessonTitle={lesson.title}
-          isLoggedIn={!!user}
-        />
-      )}
+      <LessonTabs tabs={tabs} />
       {solution && <TeacherSolution solution={solution} />}
     </main>
   );
