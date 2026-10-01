@@ -11,6 +11,7 @@ import {
   GROUP_ORDER,
   type AccountGroup,
 } from "@/lib/klassen";
+import { percentToGrade } from "@/lib/note";
 
 export const metadata: Metadata = { title: "Test-Ergebnisse" };
 
@@ -34,6 +35,17 @@ type ResultRow = {
 
 type LessonCol = { slug: string; title: string; position: number };
 type Cell = { percent: number; score: number; maxScore: number; when: string };
+
+// Ø eines Kontos über die GEMACHTEN Tests eines Moduls (fehlende zählen
+// nicht mit). Gerechnet über Punkte (Summe erreicht / Summe möglich), damit
+// gerundete Einzelprozente die Note an der Stufengrenze nicht verfälschen.
+function accountAverage(cellsOfRow: (Cell | undefined)[]) {
+  const done = cellsOfRow.filter((c): c is Cell => c !== undefined);
+  const max = done.reduce((s, c) => s + c.maxScore, 0);
+  if (max === 0) return null;
+  const score = done.reduce((s, c) => s + c.score, 0);
+  return { percent: (score / max) * 100, score, max, count: done.length };
+}
 
 const dateFmt = new Intl.DateTimeFormat("de-DE", {
   dateStyle: "short",
@@ -103,15 +115,15 @@ export default async function TeacherTestsPage() {
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6">
       <h1 className="text-3xl font-semibold tracking-tight">Test-Ergebnisse</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        Zeilen = Konten, Spalten = Lektionen, Zelle = Prozent (&bdquo;—&ldquo;
-        = Test fehlt noch). Die Zuordnung zum echten Namen läuft über die
+        Zeilen = Konten, Spalten = Lektionen, Zelle = Prozent (&bdquo;—&ldquo; =
+        Test fehlt noch). Die Zuordnung zum echten Namen läuft über die
         Zugangskärtchen.
       </p>
 
       {rows.length === 0 && (
         <p className="mt-8 text-sm text-muted-foreground">
-          Noch keine Ergebnisse — sobald Schüler Tests gemacht haben,
-          erscheinen sie hier.
+          Noch keine Ergebnisse — sobald Schüler Tests gemacht haben, erscheinen
+          sie hier.
         </p>
       )}
 
@@ -146,34 +158,66 @@ export default async function TeacherTestsPage() {
                               L{l.position}
                             </th>
                           ))}
+                          <th
+                            title="Durchschnitt über die gemachten Tests"
+                            className="border-l border-border px-2 py-2 text-center font-medium"
+                          >
+                            Ø
+                          </th>
+                          <th className="px-2 py-2 text-center font-medium">
+                            Note
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
-                        {groupRows.map((email) => (
-                          <tr key={email} className="border-b border-border/50">
-                            <td className="py-2 pr-4">
-                              {accounts.get(email)?.name ?? email}
-                            </td>
-                            {lessons.map((l) => {
-                              const cell = cells.get(
-                                `${email}|${mod.slug}/${l.slug}`,
-                              );
-                              return (
-                                <td
-                                  key={l.slug}
-                                  title={
-                                    cell
-                                      ? `${cell.score}/${cell.maxScore} Punkte · ${cell.when}`
-                                      : "Test fehlt noch"
-                                  }
-                                  className="px-2 py-2 text-center tabular-nums"
-                                >
-                                  {cell ? `${cell.percent} %` : "—"}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                        ))}
+                        {groupRows.map((email) => {
+                          const avg = accountAverage(
+                            lessons.map((l) =>
+                              cells.get(`${email}|${mod.slug}/${l.slug}`),
+                            ),
+                          );
+                          return (
+                            <tr
+                              key={email}
+                              className="border-b border-border/50"
+                            >
+                              <td className="py-2 pr-4">
+                                {accounts.get(email)?.name ?? email}
+                              </td>
+                              {lessons.map((l) => {
+                                const cell = cells.get(
+                                  `${email}|${mod.slug}/${l.slug}`,
+                                );
+                                return (
+                                  <td
+                                    key={l.slug}
+                                    title={
+                                      cell
+                                        ? `${cell.score}/${cell.maxScore} Punkte · ${cell.when}`
+                                        : "Test fehlt noch"
+                                    }
+                                    className="px-2 py-2 text-center tabular-nums"
+                                  >
+                                    {cell ? `${cell.percent} %` : "—"}
+                                  </td>
+                                );
+                              })}
+                              <td
+                                title={
+                                  avg
+                                    ? `${avg.score}/${avg.max} Punkte aus ${avg.count} Test(s)`
+                                    : undefined
+                                }
+                                className="border-l border-border px-2 py-2 text-center font-medium tabular-nums"
+                              >
+                                {avg ? `${Math.round(avg.percent)} %` : "—"}
+                              </td>
+                              <td className="px-2 py-2 text-center font-medium tabular-nums">
+                                {avg ? percentToGrade(avg.percent) : "—"}
+                              </td>
+                            </tr>
+                          );
+                        })}
                         <tr className="text-muted-foreground">
                           <td className="py-2 pr-4">Ø</td>
                           {lessons.map((l) => {
@@ -198,6 +242,36 @@ export default async function TeacherTestsPage() {
                               </td>
                             );
                           })}
+                          {(() => {
+                            // Klassen-Ø = Mittel der Schüler-Durchschnitte
+                            const avgs = groupRows
+                              .map((email) =>
+                                accountAverage(
+                                  lessons.map((l) =>
+                                    cells.get(`${email}|${mod.slug}/${l.slug}`),
+                                  ),
+                                ),
+                              )
+                              .filter((a) => a !== null)
+                              .map((a) => a.percent);
+                            const classAvg = avgs.length
+                              ? avgs.reduce((s, v) => s + v, 0) / avgs.length
+                              : null;
+                            return (
+                              <>
+                                <td className="border-l border-border px-2 py-2 text-center tabular-nums">
+                                  {classAvg === null
+                                    ? "—"
+                                    : `${Math.round(classAvg)} %`}
+                                </td>
+                                <td className="px-2 py-2 text-center tabular-nums">
+                                  {classAvg === null
+                                    ? "—"
+                                    : percentToGrade(classAvg)}
+                                </td>
+                              </>
+                            );
+                          })()}
                         </tr>
                       </tbody>
                     </table>
