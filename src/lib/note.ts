@@ -2,6 +2,8 @@
 // ab 92 % = 1, ab 81 % = 2, ab 67 % = 3, ab 50 % = 4, ab 30 % = 5, darunter 6.
 // Jede Stufe wird in drei gleich breite Teile geteilt: oberes Drittel „+",
 // mittleres ohne Zeichen, unteres Drittel „−" (6 bleibt ohne Tendenz).
+// Es wird ZUERST auf ganze Prozent gerundet — die Note passt so immer zur
+// angezeigten Zahl (66,7 % → 67 % → 3−).
 const GRADE_BANDS = [
   { grade: 1, min: 92, max: 100 },
   { grade: 2, min: 81, max: 92 },
@@ -10,7 +12,8 @@ const GRADE_BANDS = [
   { grade: 5, min: 30, max: 50 },
 ];
 
-export function percentToGrade(percent: number): string {
+export function percentToGrade(rawPercent: number): string {
+  const percent = Math.round(rawPercent);
   const band = GRADE_BANDS.find((b) => percent >= b.min);
   if (!band) return "6";
   const third = (band.max - band.min) / 3;
