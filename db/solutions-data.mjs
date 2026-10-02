@@ -354,9 +354,9 @@ Die Kathode per Jumper mit der gemeinsamen Minus-/GND-Schiene des Breadboards ve
 Eselsbrücke Polung: langes Bein = lang = Plus; Kathode hat ein K wie Kurz.`,
       mistakes: `• Vorwiderstand vergessen: LED direkt am Pin überlastet die LED (und den Pin) — sie kann durchbrennen. Immer 220 Ohm in Reihe.
 • LED-Polung vertauscht: kurzes Bein (Kathode) am Pin statt an GND — dann leuchtet sie gar nicht. Kaputt geht sie davon aber nicht, einfach umdrehen.
-• pinMode() im setup() vergessen: ohne OUTPUT liefert der Pin keinen Strom, die LED bleibt dunkel.
+• pinMode() im setup() vergessen: ohne OUTPUT liefert der Pin kaum Strom, die LED bleibt dunkel oder glimmt nur ganz schwach (HIGH schaltet dann nur den internen Pull-up ein).
 • Pin im Code und gestecktes Kabel stimmen nicht überein: Code sagt Pin 8, Kabel steckt in Pin 7.
-• INPUT statt OUTPUT gesetzt: Eingang kann keinen Strom liefern, LED bleibt aus.
+• INPUT statt OUTPUT gesetzt: Eingang liefert kaum Strom, LED bleibt aus oder glimmt nur schwach.
 • GND-Verbindung zum Arduino vergessen: Breadboard-Minus-Schiene hängt in der Luft, Stromkreis ist nicht geschlossen.`,
       didactics: `• Prüfungsbezug: pinMode(pin, OUTPUT) und digitalWrite(pin, HIGH/LOW) sind die absoluten Grundbausteine der BW-Abschlussprüfung — sie tauchen in jeder digitalen Ausgabe-Aufgabe auf, oft kombiniert mit delay().
 • Vorwiderstand und Polung an der Tafel als kleine Skizze festhalten (Pin -> 220 Ohm -> Anode (lang) -> Kathode (kurz) -> GND); Schüler:innen den Stromweg einmal mit dem Finger nachfahren lassen.
@@ -435,7 +435,7 @@ Pro LED: Pin -> eigener 220-Ohm-Vorwiderstand -> Anode (langes Bein) -> Kathode 
 Alle fünf Kathoden auf dieselbe GND-Schiene; diese einmal per Jumper an einen GND-Pin des Arduino. Ordentlich nebeneinander stecken (gleicher Spaltenabstand), damit die Bewegung als "Laufen" erkennbar ist.`,
       mistakes: `• LEDs in falscher Pin-Reihenfolge gesteckt: Lauflicht springt unsortiert; Pin-Reihenfolge (8->12) muss zur physischen Reihenfolge passen.
 • Ein Vorwiderstand statt fünf: einzelne LEDs leuchten schwächer oder gar nicht — jede LED braucht ihren eigenen 220 Ohm.
-• Eine pinMode-Zeile vergessen: die betroffene LED bleibt dunkel, der Lauf hat eine "Lücke".
+• Eine pinMode-Zeile vergessen: die betroffene LED bleibt dunkel oder glimmt nur schwach, der Lauf hat eine "Lücke".
 • LED am Ende nicht wieder auf LOW gesetzt: mehrere LEDs leuchten gleichzeitig statt nacheinander — das Muster "verschmiert".
 • Beim Knight Rider LED 5 oder LED 1 im Rückweg doppelt geschaltet: das Lauflicht bleibt an den Enden kurz "hängen".`,
       didactics: `• Prüfungsbezug: Der wiederholende, lange Code macht den Bedarf für die for-Schleife greifbar — Schleifen sind ein zentraler BW-Prüfungsbaustein. Hier bewusst zeigen "so geht es ohne", später "so kurz mit Schleife".
@@ -519,9 +519,9 @@ void loop() {
       wiring: `Kombination aus den zwei vorigen Lektionen. Taster: ein Bein an Pin 7, das diagonal gegenüberliegende an GND — über die Mittelrinne gesteckt, dank INPUT_PULLUP kein externer Widerstand.
 LED: Pin 8 -> 220-Ohm-Vorwiderstand -> Anode (langes Bein) -> Kathode (kurzes Bein) -> GND-Schiene.
 Beide Bauteile teilen sich die gemeinsame GND-Schiene des Breadboards; diese einmal per Jumper an einen GND-Pin des Arduino. Stromweg: Taster gedrückt -> digitalRead(7) = LOW -> digitalWrite(8, HIGH) -> LED leuchtet.`,
-      mistakes: `• = statt == in der Bedingung: if (zustand = LOW) weist zu statt zu vergleichen — Bedingung ist quasi immer "wahr", LED reagiert falsch. Klassiker, gezielt thematisieren.
+      mistakes: `• = statt == in der Bedingung: if (zustand = LOW) weist zu statt zu vergleichen — LOW ist 0, die Zuweisung liefert 0 = falsch: die Bedingung ist NIE erfüllt, die LED geht nie an. Klassiker, gezielt thematisieren.
 • Pull-up-Logik vertauscht: auf HIGH statt LOW geprüft -> LED leuchtet, wenn NICHT gedrückt wird.
-• Toggle ohne letzterDruck (Flankenerkennung): die LED schaltet bei jedem loop()-Durchlauf (tausende/Sekunde) um -> wildes Flackern, solange man hält.
+• Toggle ohne letzterDruck (Flankenerkennung): die LED schaltet bei jedem loop()-Durchlauf (mit delay(50) etwa 20-mal pro Sekunde) um -> ständiges Hin- und Herschalten, solange man hält.
 • delay(50) zum Entprellen weggelassen: ein Tastendruck wird durch Prellen als mehrere erkannt, der Toggle "springt" unkontrolliert.
 • tasterPin und ledPin im Code vertauscht oder Kabel falsch gesteckt: Eingang/Ausgang verwechselt.`,
       didactics: `• Prüfungsbezug: Hier verbinden sich die Kern-Prüfungsbausteine — digitalRead, if/else, digitalWrite, INPUT_PULLUP. Das Muster "Eingang abfragen -> Bedingung -> Ausgang schalten" ist das Grundgerüst fast jeder Steuerungs-Aufgabe der BW-Abschlussprüfung.

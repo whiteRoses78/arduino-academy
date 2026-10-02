@@ -7,29 +7,31 @@ export const TEST_QUESTIONS = {
   "digital/leds-ansteuern": [
     {
       type: "multiple-choice",
-      question: "Warum braucht eine LED einen Vorwiderstand?",
+      question:
+        "Deine LED an Pin 8 bleibt dunkel, obwohl der Code stimmt und hochgeladen ist. Was prüfst du zuerst?",
       options: [
-        "Damit die LED heller leuchtet",
-        "Damit der Strom begrenzt wird und die LED nicht durchbrennt",
-        "Damit der Arduino schneller arbeitet",
-        "Damit die LED blinkt",
+        "Ob die LED richtig herum steckt und die GND-Schiene mit einem GND-Pin am Arduino verbunden ist",
+        "Ob der delay()-Wert groß genug ist",
+        "Ob du einen zweiten Vorwiderstand brauchst",
+        "Ob der Arduino neu gekauft werden muss",
       ],
-      correct: 1,
+      correct: 0,
       explanation:
-        "Ohne Vorwiderstand fließt zu viel Strom durch die LED und sie brennt durch. 220 Ω ist der Standardwert für die meisten LEDs.",
+        "Wenn der Code stimmt, liegt der Fehler meist im Aufbau: Eine falsch herum gesteckte LED sperrt, und ohne Verbindung zu GND fehlt dem Strom der Rückweg. delay() ändert nur das Timing, ein zweiter Widerstand macht die LED nur dunkler.",
     },
     {
       type: "multiple-choice",
-      question: "Welcher Code lässt eine LED an Pin 5 leuchten (nicht blinken)?",
+      question:
+        "In loop() stehen nur: digitalWrite(8, HIGH); delay(500); digitalWrite(8, LOW); Was siehst du an der LED?",
       options: [
-        "pinMode(5, INPUT); digitalWrite(5, HIGH);",
-        "pinMode(5, OUTPUT); digitalWrite(5, HIGH);",
-        "pinMode(5, OUTPUT); digitalRead(5);",
-        "analogWrite(5, HIGH);",
+        "Sie blinkt im Halbsekundentakt",
+        "Sie scheint dauerhaft zu leuchten, weil sie nur für einen winzigen Moment aus ist",
+        "Sie bleibt die ganze Zeit aus",
+        "Die IDE meldet einen Fehler, weil das zweite delay() fehlt",
       ],
       correct: 1,
       explanation:
-        "Erst den Pin als OUTPUT setzen, dann mit digitalWrite(5, HIGH) einschalten. Ohne OUTPUT-Modus kann der Pin keinen Strom liefern.",
+        "Nach digitalWrite(8, LOW) springt loop() sofort wieder an den Anfang und schaltet die LED gleich wieder an. Die Aus-Phase dauert nur Mikrosekunden, das sieht dein Auge nicht. Zum Blinken braucht es auch nach LOW ein delay().",
     },
     {
       type: "multiple-choice",
@@ -75,13 +77,13 @@ export const TEST_QUESTIONS = {
       question: "Was passiert, wenn du pinMode(8, OUTPUT) vergisst?",
       options: [
         "Die LED leuchtet trotzdem ganz normal",
-        "Der Pin kann keinen Strom liefern — die LED bleibt dunkel",
+        "Der Pin liefert nur einen winzigen Strom — die LED bleibt dunkel oder glimmt nur ganz schwach",
         "Der Arduino startet gar nicht",
         "Die LED blinkt unkontrolliert",
       ],
       correct: 1,
       explanation:
-        "Ohne OUTPUT ist der Pin kein richtiger Ausgang und versorgt die LED nicht zuverlässig mit Strom — sie bleibt dunkel.",
+        "Ohne OUTPUT ist der Pin ein Eingang. digitalWrite(8, HIGH) schaltet dann nur den eingebauten Pull-up-Widerstand ein — durch die LED fließt kaum Strom, sie bleibt dunkel oder glimmt ganz schwach.",
     },
     {
       type: "multiple-choice",
@@ -514,11 +516,17 @@ export const TEST_QUESTIONS = {
   "digital/wechselblinker": [
     {
       type: "multiple-choice",
-      question: "An welchen beiden Pins werden die LEDs beim Wechselblinker angeschlossen?",
-      options: ["Pin 12 und Pin 13", "Pin 1 und Pin 2", "Pin 9 und Pin 10", "Pin 5 und Pin 6"],
+      question:
+        "Beim Wechselblinker gehen beide LEDs gleichzeitig an und gleichzeitig aus. Was ist im Code wahrscheinlich falsch?",
+      options: [
+        "Im ersten Schritt stehen beide digitalWrite() auf HIGH und im zweiten beide auf LOW",
+        "Der delay()-Wert ist zu groß",
+        "Im setup() fehlt Serial.begin(9600)",
+        "Der Vorwiderstand ist zu groß",
+      ],
       correct: 0,
       explanation:
-        "Im Code steht int led1 = 12; und int led2 = 13; — die grüne LED hängt an Pin 12, die rote an Pin 13.",
+        "Beim Wechselblinker muss in jedem Schritt eine LED HIGH und die andere LOW sein. Stehen beide gleich, schalten sie gemeinsam. delay() ändert nur das Tempo, Serial.begin() hat mit den LEDs nichts zu tun.",
     },
     {
       type: "multiple-choice",
@@ -614,16 +622,17 @@ export const TEST_QUESTIONS = {
   "digital/led-lauflicht": [
     {
       type: "multiple-choice",
-      question: "An welche Pins werden die 5 LEDs beim Lauflicht angeschlossen?",
+      question:
+        "Beim Lauflicht leuchten nach dem ersten Durchlauf alle 5 LEDs gleichzeitig. Was wurde im Code vergessen?",
       options: [
-        "Pin 1, 2, 3, 4 und 5",
-        "Pin 8, 9, 10, 11 und 12",
-        "Pin 0, 5, 10, 15 und 20",
-        "Pin A0, A1, A2, A3 und A4",
+        "Jede LED nach ihrer Leuchtzeit mit digitalWrite(..., LOW) wieder auszuschalten",
+        "Ein delay() vor der ersten LED",
+        "Der Vorwiderstand für jede LED",
+        "Das Serial.begin() im setup()",
       ],
-      correct: 1,
+      correct: 0,
       explanation:
-        "Laut Lektion werden die 5 LEDs an die digitalen Pins 8, 9, 10, 11 und 12 angeschlossen.",
+        "Jede LED wird eingeschaltet, kurz gewartet und muss dann wieder ausgeschaltet werden. Fehlt das LOW, bleibt jede LED an, die einmal dran war. Die Widerstände sind Hardware und ändern den Ablauf nicht.",
     },
     {
       type: "multiple-choice",
@@ -886,7 +895,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "== vergleicht zwei Werte, = setzt einen Wert. Schreibt man if (zustand = LOW), wird der Wert gesetzt und die Bedingung ist immer wahr.",
+        "== vergleicht zwei Werte, = setzt einen Wert. Schreibt man if (zustand = LOW), wird zustand auf LOW (= 0) gesetzt. 0 zählt als falsch, die Bedingung ist also nie erfüllt.",
     },
     {
       type: "multiple-choice",
@@ -926,34 +935,36 @@ export const TEST_QUESTIONS = {
   "digital/einfache-ampelschaltung": [
     {
       type: "multiple-choice",
-      question: "An welche Pins werden die drei LEDs der Ampelschaltung angeschlossen?",
+      question:
+        "Deine Ampel zeigt in der Phase Rot-Gelb nur Gelb. Welcher Fehler steckt im Code dieser Phase?",
       options: [
-        "Rot an Pin 2, Gelb an Pin 3, Grün an Pin 4",
-        "Rot an Pin 1, Gelb an Pin 2, Grün an Pin 3",
-        "Alle drei LEDs an Pin 13",
-        "Rot an Pin 4, Gelb an Pin 3, Grün an Pin 2",
+        "Dort steht digitalWrite(rotPin, LOW) statt HIGH",
+        "Dort steht delay(1000) statt delay(2000)",
+        "Im setup() steht pinMode(gelbPin, OUTPUT)",
+        "Die grüne LED wurde in dieser Phase ausgeschaltet",
       ],
       correct: 0,
       explanation:
-        "Laut Lektion liegt die rote LED an Pin 2, die gelbe an Pin 3 und die grüne an Pin 4.",
-    },
-    {
-      type: "multiple-choice",
-      question: "In welcher Reihenfolge durchläuft die deutsche Ampel ihre vier Phasen?",
-      options: [
-        "Rot → Grün → Gelb → Rot-Gelb",
-        "Rot → Rot-Gelb → Grün → Gelb",
-        "Grün → Gelb → Rot → Rot-Gelb",
-        "Rot → Gelb → Grün → Rot-Gelb",
-      ],
-      correct: 1,
-      explanation:
-        "Die deutsche Ampel folgt dem Ablauf Rot, dann Rot-Gelb, dann Grün und schließlich Gelb, bevor es wieder von vorne beginnt.",
+        "Bei Rot-Gelb müssen Rot UND Gelb an sein. Leuchtet nur Gelb, wurde Rot in dieser Phase ausgeschaltet. Die Dauer ändert nur die Zeit, pinMode(gelbPin, OUTPUT) ist richtig, und Grün soll in dieser Phase aus sein.",
     },
     {
       type: "multiple-choice",
       question:
-        "Welche Ampelphase gibt es laut Lektion vor allem in Deutschland und nur in wenigen anderen Ländern?",
+        "Die Ampel steht gerade auf Rot. In welcher Reihenfolge geht es weiter?",
+      options: [
+        "Rot → Grün → Gelb → Rot-Gelb",
+        "Rot → Rot-Gelb → Grün → Gelb",
+        "Rot → Rot-Gelb → Gelb → Grün",
+        "Rot → Gelb → Grün → Rot-Gelb",
+      ],
+      correct: 1,
+      explanation:
+        "Nach Rot kommt Rot-Gelb (gleich geht es los), dann Grün, dann Gelb als Warnung vor dem nächsten Rot. Gelb allein kommt also immer nach Grün, nie davor.",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Welche Ampelphase kündigt an einer deutschen Ampel an, dass gleich Grün kommt?",
       options: [
         "Die Phase Rot-Gelb",
         "Die Phase nur Gelb",
@@ -962,14 +973,21 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "In vielen Ländern springt die Ampel direkt von Rot auf Grün. Die Phase Rot-Gelb ist eine deutsche Besonderheit.",
+        "Rot-Gelb heißt: gleich wird es Grün. Gelb allein kündigt dagegen Rot an. In vielen Ländern, zum Beispiel in den USA, gibt es Rot-Gelb gar nicht – dort springt die Ampel direkt von Rot auf Grün.",
     },
     {
       type: "multiple-choice",
-      question: "Wie lange dauert die Grün-Phase in der Ampelschaltung der Lektion?",
-      options: ["1 Sekunde", "2 Sekunden", "5 Sekunden", "10 Sekunden"],
-      correct: 2,
-      explanation: "Laut Phasentabelle und Code (delay(5000)) leuchtet Grün 5 Sekunden lang.",
+      question:
+        "Welche Ampelphase schaltet der Aufruf ampelSchalten(true, true, false, 1000); ?",
+      options: [
+        "Rot-Gelb für 1 Sekunde",
+        "Rot und Gelb für 1000 Sekunden",
+        "Nur Gelb für 1 Sekunde",
+        "Grün für 1 Sekunde",
+      ],
+      correct: 0,
+      explanation:
+        "Die Werte werden der Reihe nach eingesetzt: rot = true, gelb = true, gruen = false, dauer = 1000. Also leuchten Rot und Gelb, und zwar 1000 Millisekunden = 1 Sekunde.",
     },
     {
       type: "multiple-choice",
@@ -999,7 +1017,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Was ist laut Lektion der Nachteil von delay()?",
+      question: "Was ist der Nachteil von delay()?",
       options: [
         "delay() macht die LEDs dunkler",
         "Während delay() läuft, kann der Arduino nichts anderes tun",

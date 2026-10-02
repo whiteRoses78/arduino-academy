@@ -11,8 +11,8 @@ Format: Stichpunkt, optional mit Datum + Begründung.
 Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = braucht Marcos Angabe, (UI) = nur nach Rückfrage.
 
 - [x] [KRITISCH] App · Rechte-Lücke in der Datenbank — behoben 02.10.2026
-- [ ] [KRITISCH] M2 · Erklärung zu `if (zustand = LOW)` falsch („immer wahr“ statt nie wahr)
-- [ ] [KRITISCH] M2 · Ampel-Reihenfolge: richtige Antwort im Test als falsch gewertet (Wertung prüfen)
+- [x] [KRITISCH] M2 · Erklärung zu `if (zustand = LOW)` falsch („immer wahr“ statt nie wahr) — erledigt 02.10.
+- [x] [KRITISCH] M2 · Ampel-Reihenfolge: richtige Antwort im Test als falsch gewertet (Wertung prüfen) — erledigt 02.10.
 - [ ] [KRITISCH] M3 · Spannungsteiler-Praxis: c8/c10 ergibt keinen Stromkreis
 - [ ] [KRITISCH] M4 · Testfrage belohnt falsche Diagnose „C/E vertauscht → Motor läuft ständig“
 - [ ] [KRITISCH] M4 · Tipp „5–9 V an 5V-Pin“ zerstört den Arduino ❓
@@ -28,14 +28,14 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [WICHTIG] M1 · int/void/kompilieren/Port/Baud nie erklärt — erledigt 02.10.
 - [x] [WICHTIG] M1 · Begriff „Aktor“ nie erklärt — erledigt 02.10.
 - [x] [WICHTIG] M1 · Pins 0/1 (RX/TX) ohne Warnhinweis — erledigt 02.10.
-- [ ] [WICHTIG] M2 · Praxis L1: Steckplätze passen nicht zum Bild
-- [ ] [WICHTIG] M2 · L1-Beispiel: GND-Schiene nie mit Arduino verbunden
-- [ ] [WICHTIG] M2 · Taster „gegenüber“ statt diagonal, keine Fehlerhilfe
-- [ ] [WICHTIG] M2 · Fehlersuche fehlt in 5 von 6 Lektionen
-- [ ] [WICHTIG] M2 · Ab L2 kein Schaltplan mit Schaltzeichen
-- [ ] [WICHTIG] M2 · &&, bool-Vergleich, digitalWrite(bool), Parameter unerklärt
-- [ ] [WICHTIG] M2 · Kompetenztest: Detailfragen, Dubletten, keine Fehlersuche
-- [ ] [WICHTIG] M2 · „pinMode vergessen → dunkel“ (glimmt in Wahrheit)
+- [x] [WICHTIG] M2 · Praxis L1: Steckplätze passen nicht zum Bild — erledigt 02.10.
+- [x] [WICHTIG] M2 · L1-Beispiel: GND-Schiene nie mit Arduino verbunden — erledigt 02.10.
+- [x] [WICHTIG] M2 · Taster „gegenüber“ statt diagonal, keine Fehlerhilfe — erledigt 02.10.
+- [x] [WICHTIG] M2 · Fehlersuche fehlt in 5 von 6 Lektionen — erledigt 02.10.
+- [x] [WICHTIG] M2 · Ab L2 kein Schaltplan mit Schaltzeichen — erledigt 02.10.
+- [x] [WICHTIG] M2 · &&, bool-Vergleich, digitalWrite(bool), Parameter unerklärt — erledigt 02.10.
+- [x] [WICHTIG] M2 · Kompetenztest: Detailfragen, Dubletten, keine Fehlersuche — erledigt 02.10.
+- [x] [WICHTIG] M2 · „pinMode vergessen → dunkel“ (glimmt in Wahrheit) — erledigt 02.10.
 - [ ] [WICHTIG] M3 · Poti-Belegung: Text, SVGs und Lösung widersprechen sich
 - [ ] [WICHTIG] M3 · NTC-Aufbau: Text ≠ Bild, Jumperzahl, A0-Kabel im SVG
 - [ ] [WICHTIG] M3 · LDR-Pupillen-Analogie verdreht (auch Testfrage)

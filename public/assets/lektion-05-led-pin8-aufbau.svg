@@ -26,15 +26,6 @@
     <text x="180" y="129" font-size="9">GND</text>
   </g>
 
-  <!-- ===== KABEL: ARDUINO -&gt; BREADBOARD ===== -->
-  <!-- Pin 8 -&gt; Sp.3 Reihe e (gelb, x=100) -->
-  <line x1="100" y1="138" x2="100" y2="342" stroke="#cc0" stroke-width="2.5" stroke-linecap="round"/>
-  <circle cx="100" cy="342" r="3.5" fill="#cc0" stroke="#660" stroke-width="0.8"/>
-
-  <!-- GND -&gt; obere -Schiene (schwarz, x=180) -->
-  <line x1="180" y1="138" x2="180" y2="250" stroke="#222" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="180" cy="250" r="3.5" fill="#222"/>
-
   <!-- ===== BREADBOARD (unten, volle Breite) ===== -->
   <rect x="20" y="215" width="680" height="320" rx="6" fill="#e8e0d0" stroke="#999" stroke-width="1.5"/>
   <text x="360" y="550" text-anchor="middle" font-size="9" fill="#444" font-weight="bold">Breadboard (32 Spalten)</text>
@@ -85,6 +76,15 @@
   <rect x="50" y="470" width="640" height="10" rx="2" fill="#fdd" stroke="#c00" stroke-width="0.8"/>
   <text x="38" y="477" font-size="8" fill="#c00" font-weight="bold">+</text>
 
+  <!-- ===== KABEL (nach dem Breadboard gezeichnet, Enden sichtbar) ===== -->
+  <!-- Pin 8 -&gt; Sp.3 Reihe e (gelb, x=100) -->
+  <line x1="100" y1="138" x2="100" y2="342" stroke="#cc0" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="100" cy="342" r="3.5" fill="#cc0" stroke="#660" stroke-width="0.8"/>
+
+  <!-- GND -&gt; obere -Schiene (schwarz, x=180) -->
+  <line x1="180" y1="138" x2="180" y2="250" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="180" cy="250" r="3.5" fill="#222"/>
+
   <!-- ===== BAUTEILE ===== -->
   <!-- Schema: Sp.3 (Pin 8) -&gt; 220&#937; -&gt; Sp.4 (LED-Anode) -&gt; Sp.5 (LED-Kathode) -&gt; -Schiene -->
 
@@ -102,8 +102,6 @@
   <circle cx="100" cy="310" r="2.2" fill="#e8d0a0" stroke="#864" stroke-width="0.8"/>
   <circle cx="120" cy="310" r="2.2" fill="#e8d0a0" stroke="#864" stroke-width="0.8"/>
   <!-- Bein-Linien: Sp.3 Reihe c -&gt; e (zum Pin-Kabel-Anschluss) und Sp.4 Reihe c -&gt; a (zur LED-Anode) -->
-  <line x1="100" y1="310" x2="100" y2="342" stroke="#864" stroke-width="1.5"/>
-  <line x1="120" y1="310" x2="120" y2="282" stroke="#864" stroke-width="1.5"/>
 
   <!-- LED horizontal Sp.4 Anode -&gt; Sp.5 Kathode, Reihe a -->
   <polygon points="119,274 119,286 132,280" fill="#e00" stroke="#a00" stroke-width="1.2"/>
@@ -112,14 +110,14 @@
   <circle cx="120" cy="280" r="2.2" fill="#e00" stroke="#600" stroke-width="0.6"/>
   <circle cx="140" cy="280" r="2.2" fill="#864" stroke="#444" stroke-width="0.6"/>
   <!-- Kathoden-Jumper Sp.5 -&gt; obere -Schiene (durchgezogen schwarz, Konvention: GND immer #222) -->
-  <line x1="140" y1="280" x2="140" y2="250" stroke="#222" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="140" cy="296" r="2.5" fill="#222"/><polyline points="140,296 152,288 152,250" fill="none" stroke="#222" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 
   <!-- ===== ZUSATZ-HINWEISE rechts vom LED-Kreis ===== -->
   <g font-size="9.5" fill="#333">
     <text x="180" y="282" font-style="italic">&#8592; LED-Anode (langes Bein) in Sp.4</text>
     <text x="180" y="298" font-style="italic">&#8592; LED-Kathode (kurzes Bein) in Sp.5</text>
     <text x="180" y="314" font-style="italic">&#8592; 220 &#937; Vorwiderstand in Reihe c (Sp.3 &#8594; Sp.4)</text>
-    <text x="180" y="330" font-style="italic">&#8592; Schwarzer Jumper Sp.5 &#8594; obere &#8722;Schiene (GND)</text>
+    <text x="180" y="330" font-style="italic">&#8592; Schwarzer Jumper von 5b zur oberen &#8722;Schiene (GND)</text>
   </g>
 
   <!-- ===== LEGENDE ===== -->

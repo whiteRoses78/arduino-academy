@@ -19,6 +19,7 @@
 // Patch-Datei: export default { module, text: [...], newExercises: [...] }
 //   text-Eintrag (from/to = Klartext, NICHT JSON-escaped):
 //     { slug, from, to }                    -> lessons.content
+//     { slug, path: [...], old, value }     -> lessons.content: Einzelwert setzen
 //     { exercise: "<uuid>", from, to }      -> exercises.payload (nur INNERHALB
 //                                             eines Textwerts; jsonb formatiert
 //                                             die Struktur anders als JSON.stringify)
@@ -108,6 +109,26 @@ patch.text.forEach((p, i) => {
   where l.id = s.lesson_id and l.module = '${patch.module}' and l.slug = '${p.solution}'
     and (length(${col}) - length(replace(${col}, f, ''))) = length(f);
   if not found then raise exception 'Patch ${label} trifft nicht genau einmal'; end if;
+end $do$;`);
+    return;
+  }
+  if (p.slug && p.path) {
+    // Einzelwert an einem Pfad setzen (z. B. Zahl in einer Liste), mit Prüfung des alten Werts.
+    const row = lessons.find((l) => l.module === patch.module && l.slug === p.slug);
+    if (!row) return errors.push(`${label}: Zeile nicht gefunden`);
+    const obj = JSON.parse(texts.lessons[row.id] ?? JSON.stringify(row.content));
+    let cur = obj;
+    for (const k of p.path.slice(0, -1)) cur = cur?.[k];
+    const last = p.path.at(-1);
+    if (JSON.stringify(cur?.[last]) !== JSON.stringify(p.old))
+      return errors.push(`${label}: Pfad ${p.path.join(".")} hat nicht den erwarteten alten Wert`);
+    cur[last] = p.value;
+    texts.lessons[row.id] = JSON.stringify(obj);
+    const pg = `{${p.path.join(",")}}`;
+    sql.push(`do $do$ begin
+  update public.lessons set content = jsonb_set(content, '${pg}', ${dq(JSON.stringify(p.value))}::jsonb)
+  where id = '${row.id}' and content #> '${pg}' = ${dq(JSON.stringify(p.old))}::jsonb;
+  if not found then raise exception 'Patch ${label} (Pfad) trifft nicht'; end if;
 end $do$;`);
     return;
   }

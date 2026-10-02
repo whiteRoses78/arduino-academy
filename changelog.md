@@ -417,3 +417,36 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
   - **Neue Übungen:** zwei Übungen zu Reihen- und Parallelschaltung.
 - **Kompetenztest M1:** 4 reine Wissens- bzw. Dublettenfragen durch Anwendungsfragen ersetzt (Garagentor-Aktor, Reihe rot+grün, blaue LED mit Widerstandsset, setup() mit leerer loop()). Die Erklärungen begründen jetzt das WARUM statt „laut Lektion“. Die Fragen wurden per UPDATE geändert, die IDs bleiben, die Punkte bereits geschriebener Tests sind unberührt.
 - **Verifiziert:** `--verify` ist nach jedem Schritt OK. Die md5-Prüfsummen aller 30 M1-Testfragen stimmen zwischen DB und `test-questions-data.mjs` überein. Die Grafiken habe ich gerendert und angesehen. Ein Reviewer-Subagent fand nichts Kritisches, seine 3 Hinweise sind eingearbeitet. vitest 35/35, tsc und eslint grün. Die Live-Seite rendert dynamisch, deshalb ist kein Deploy nötig und es wurde kein Netlify-Credit verbraucht.
+
+---
+
+## 2026-10-02 — Härtung: überflüssige Tabellenrechte entzogen (DB-only)
+
+- **Was:** `truncate`, `references` und `trigger` auf allen `public`-Tabellen für `anon`/`authenticated` entzogen, auch für künftige Tabellen (`alter default privileges`). TRUNCATE umgeht RLS. Über die REST-Schnittstelle war es zwar nicht erreichbar, gehört aber trotzdem nicht in Schülerhände.
+- **Wie:** Marco hat es selbst im SQL-Editor ausgeführt, weil der Supabase-Guard-Hook jedes SQL mit „TRUNCATE“ blockt.
+- **Verifiziert:** 0 Rest-Grants. Übrig sind nur SELECT auf die Inhalte und CRUD auf `user_progress` (eigene Zeilen via RLS).
+
+---
+
+## 2026-10-02 — Gesamtprüfung: Modul 2 „Digital“ überarbeitet (DB live + 1 Asset)
+
+- **KRITISCH behoben:**
+  - `if (zustand = LOW)` ist jetzt korrekt als „**nie** wahr“ erklärt, in Lektion, Testfrage und Lehrer-Lösung.
+  - Die Ampel-Reihenfolge hat in Testfrage und Übung jetzt genau eine richtige Antwort (Startpunkt „steht auf Rot“, kein zweiter Kreislauf). Betroffene Versuche in diesem Schuljahr: **0**, keine Nachkorrektur nötig.
+- **Grafiken (alle 6 Lektionen):**
+  - Die Kabelenden werden nach dem Steckbrett gezeichnet und sind damit sichtbar.
+  - Kein Loch ist mehr doppelt belegt: keine Widerstands-Beinlinien mehr, Kathoden-Jumper ab Reihe b, Taster-Kabel auf d/g.
+  - Im Toggle-Bild sitzt der Widerstand jetzt in Reihe c statt in der Rinne.
+  - Generiert per `svgfix` (Logik im Patch-Protokoll `db/patches/m2.mjs`).
+  - Das Praxis-Asset `public/assets/lektion-05-led-pin8-aufbau.svg` ist ebenso korrigiert, `?v=9` sorgt für Cache-Busting. **Das braucht einen Deploy.**
+- **Neue Schaltpläne:** Taster mit INPUT_PULLUP (Schließer, interner Pull-up) und Ampel (drei Zweige).
+- **Selbstständigkeit:** In allen 6 Lektionen gibt es einen Kasten „Klappt nicht? So findest du den Fehler“ (Symptom → Ursache → Abhilfe).
+- **Inhalte:**
+  - Praxis L1: Die Steckanleitung passt jetzt zum Bild (a4/a5, c3→c4, e3, b5), es sind 3 Jumper.
+  - Der GND-Schritt in L1 ist ergänzt, beim Taster steht „diagonal“.
+  - `&&`, bool-Vergleich, `digitalWrite(pin, bool)` und Funktionsparameter sind jetzt erklärt.
+  - „pinMode vergessen → dunkel oder glimmt“ steht überall einheitlich.
+  - Verweis auf Modul 4 → Modul 5, die Türklingel-Analogie ist neu, und die Rot-Gelb-Aussage ist korrigiert.
+- **Kompetenztest M2:** 6 Fragen sind durch Anwendungs- bzw. Fehlersuch-Fragen ersetzt, 5 korrigiert. Der Anti-Dubletten-Abgleich mit Modularbeit M2 ist bestanden. Die Änderungen liefen per UPDATE, die IDs bleiben.
+- **Verifiziert:** `--verify` ist OK nach `m2` und `m2b`. Die md5-Prüfsummen aller 48 M2-Testfragen stimmen zwischen DB und Datei. Alle Grafiken sind gerendert und angesehen. Der Reviewer hat 2 WICHTIG-Bildfehler gefunden, beide sind behoben (`m2b`). vitest 35/35, tsc und eslint grün.
+- **Nebenbei:** Der Versuch, große SQL-Pakete über eine temporäre Tabelle `patch_inbox` hochzuladen, wurde vom Auto-Mode blockiert (Rechte-Erweiterung). Die Tabelle ist leer, ohne Grants und ohne Policy. Löschen muss Marco im SQL-Editor, weil der Guard-Hook `DROP TABLE` blockt.
