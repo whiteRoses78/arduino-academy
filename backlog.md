@@ -17,17 +17,17 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [ ] [KRITISCH] M4 · Testfrage belohnt falsche Diagnose „C/E vertauscht → Motor läuft ständig“
 - [ ] [KRITISCH] M4 · Tipp „5–9 V an 5V-Pin“ zerstört den Arduino ❓
 - [ ] [KRITISCH] M5 · „Nachtabschaltung“ schaltet tagsüber ab, Titel/Einleitung widersprechen ❓
-- [ ] [WICHTIG] M1 · Board-Grafik gegenüber echtem Uno gespiegelt
-- [ ] [WICHTIG] M1 · Breadboard-Grafik L4: zwei Drähte pro Loch
-- [ ] [WICHTIG] M1 · LED-Strom widersprüchlich (15/20 mA, 220/150 Ω, „brennt durch“)
-- [ ] [WICHTIG] M1 · Reihenfolge-Übung „Hochladen“ wertet richtige Abläufe falsch
-- [ ] [WICHTIG] M1 · Keine Fehlersuche beim ersten Hochladen / Port ❓
-- [ ] [WICHTIG] M1 · Kompetenztest nur Wissen, Dubletten zu Übungen
-- [ ] [WICHTIG] M1 · Reihen-/Parallelschaltung ohne Übung
-- [ ] [WICHTIG] M1 · Kochrezept-Analogie widerspricht „loop endlos“
-- [ ] [WICHTIG] M1 · int/void/kompilieren/Port/Baud nie erklärt
-- [ ] [WICHTIG] M1 · Begriff „Aktor“ nie erklärt
-- [ ] [WICHTIG] M1 · Pins 0/1 (RX/TX) ohne Warnhinweis
+- [x] [WICHTIG] M1 · Board-Grafik gegenüber echtem Uno gespiegelt — erledigt 02.10.
+- [x] [WICHTIG] M1 · Breadboard-Grafik L4: zwei Drähte pro Loch — erledigt 02.10.
+- [x] [WICHTIG] M1 · LED-Strom widersprüchlich (15/20 mA, 220/150 Ω, „brennt durch“) — erledigt 02.10.
+- [x] [WICHTIG] M1 · Reihenfolge-Übung „Hochladen“ wertet richtige Abläufe falsch — erledigt 02.10.
+- [x] [WICHTIG] M1 · Keine Fehlersuche beim ersten Hochladen / Port — erledigt 02.10.
+- [x] [WICHTIG] M1 · Kompetenztest nur Wissen, Dubletten zu Übungen — erledigt 02.10.
+- [x] [WICHTIG] M1 · Reihen-/Parallelschaltung ohne Übung — erledigt 02.10.
+- [x] [WICHTIG] M1 · Kochrezept-Analogie widerspricht „loop endlos“ — erledigt 02.10.
+- [x] [WICHTIG] M1 · int/void/kompilieren/Port/Baud nie erklärt — erledigt 02.10.
+- [x] [WICHTIG] M1 · Begriff „Aktor“ nie erklärt — erledigt 02.10.
+- [x] [WICHTIG] M1 · Pins 0/1 (RX/TX) ohne Warnhinweis — erledigt 02.10.
 - [ ] [WICHTIG] M2 · Praxis L1: Steckplätze passen nicht zum Bild
 - [ ] [WICHTIG] M2 · L1-Beispiel: GND-Schiene nie mit Arduino verbunden
 - [ ] [WICHTIG] M2 · Taster „gegenüber“ statt diagonal, keine Fehlerhilfe

@@ -115,16 +115,17 @@ export const TEST_QUESTIONS = {
   "grundlagen/was-ist-ein-arduino": [
     {
       type: "multiple-choice",
-      question: "Wie groß ist ein Arduino ungefähr?",
+      question:
+        "Ein Garagentor öffnet sich auf Knopfdruck: Ein Taster, ein Arduino und ein Motor arbeiten zusammen. Welches Bauteil ist der Aktor?",
       options: [
-        "So groß wie ein Laptop",
-        "Etwa so groß wie eine Kreditkarte",
-        "So groß wie ein Smartphone-Ladegerät",
-        "So klein wie ein Reiskorn",
+        "Der Taster",
+        "Der Arduino",
+        "Der Motor",
+        "Das USB-Kabel",
       ],
-      correct: 1,
+      correct: 2,
       explanation:
-        "In der Lektion wird der Arduino als kleine Schaltzentrale beschrieben, die nicht größer als eine Kreditkarte ist.",
+        "Ein Aktor bewirkt etwas: Der Motor bewegt das Tor. Der Taster ist ein Sensor (er meldet \"gedrückt?\"), der Arduino ist die Verarbeitung dazwischen.",
     },
     {
       type: "multiple-choice",
@@ -202,7 +203,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Laut Lektion sind die digitalen Pins Ein/Aus-Anschlüsse und werden für LEDs, Taster und Buzzer genutzt.",
+        "Digitale Pins kennen nur zwei Zustände: an (5 V) oder aus (0 V). Das passt genau zu LEDs, Tastern und Buzzern, die auch nur an oder aus sind.",
     },
     {
       type: "multiple-choice",
@@ -274,11 +275,12 @@ export const TEST_QUESTIONS = {
   "grundlagen/strom-spannung-und-widerstand": [
     {
       type: "multiple-choice",
-      question: "Welche Einheit gehört zur elektrischen Spannung (U)?",
-      options: ["Volt (V)", "Ampere (A)", "Ohm", "Watt"],
+      question:
+        "Eine rote LED (2 V) und eine grüne LED (2,2 V) sind in Reihe an 5 V angeschlossen. Wie viel Spannung bleibt für den Vorwiderstand?",
+      options: ["0,8 V", "3 V", "2,8 V", "4,2 V"],
       correct: 0,
       explanation:
-        "Die Spannung wird in Volt (V) gemessen. Der Arduino liefert zum Beispiel 5 V.",
+        "In Reihe addieren sich die Spannungen: 2 V + 2,2 V = 4,2 V brauchen die LEDs. Für den Widerstand bleiben 5 V − 4,2 V = 0,8 V.",
     },
     {
       type: "multiple-choice",
@@ -308,11 +310,17 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "An einem Widerstand von 250 Ω liegen 5 V an. Wie groß ist der Strom?",
-      options: ["0,02 A (20 mA)", "2 A", "50 mA", "1250 mA"],
-      correct: 0,
+      question:
+        "Eine blaue LED (Flussspannung 3,2 V) soll an 5 V mit 15 mA leuchten. Im Set liegen Widerstände mit 150, 220, 330 und 470 Ω. Welchen Vorwiderstand wählst du?",
+      options: [
+        "Gerechnet 333 Ω, also 330 Ω nehmen",
+        "Gerechnet 213 Ω, also 220 Ω nehmen",
+        "Gerechnet 120 Ω, also 150 Ω nehmen",
+        "Gerechnet 0,12 Ω, also gar keinen nehmen",
+      ],
+      correct: 2,
       explanation:
-        "Mit I = U / R ergibt sich 5 V / 250 Ω = 0,02 A, das sind 20 mA.",
+        "Am Widerstand liegen 5 V − 3,2 V = 1,8 V. R = 1,8 V ÷ 0,015 A = 120 Ω, als nächstgrößerer Wert aus dem Set also 150 Ω. 333 Ω entsteht, wenn man die LED-Spannung vergisst, 213 Ω, wenn man 3,2 V statt 1,8 V einsetzt, und 0,12 Ω, wenn man 15 mA nicht in 0,015 A umrechnet.",
     },
     {
       type: "multiple-choice",
@@ -423,16 +431,17 @@ export const TEST_QUESTIONS = {
   "grundlagen/setup-und-loop": [
     {
       type: "multiple-choice",
-      question: "Wie oft wird der Code in setup() ausgeführt?",
+      question:
+        "In setup() stehen pinMode(13, OUTPUT); und digitalWrite(13, HIGH);. Die loop() ist leer. Was passiert?",
       options: [
-        "Endlos immer wieder",
-        "Genau einmal beim Start",
-        "Gar nicht, er ist nur ein Kommentar",
-        "Jedes Mal, wenn man einen Taster drückt",
+        "Die LED an Pin 13 blinkt im Sekundentakt",
+        "Die LED an Pin 13 geht an und bleibt an",
+        "Die LED bleibt aus, weil loop() leer ist",
+        "Die IDE meldet einen Fehler, weil loop() leer ist",
       ],
       correct: 1,
       explanation:
-        "setup() läuft laut Lektion einmal beim Start des Arduino, um alles einzurichten.",
+        "setup() läuft genau einmal: Pin 13 wird Ausgang und eingeschaltet. loop() läuft danach endlos, ändert aber nichts, weil sie leer ist. Also bleibt die LED an. Eine leere loop() ist erlaubt.",
     },
     {
       type: "multiple-choice",
@@ -445,7 +454,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "loop() ist das Hauptprogramm und wird laut Lektion endlos wiederholt: loop -> loop -> loop ...",
+        "loop() ist das Hauptprogramm: Ist der letzte Befehl erledigt, springt der Arduino wieder an den Anfang von loop(), solange er Strom hat. So kann er ständig auf Taster oder Sensoren reagieren.",
     },
     {
       type: "multiple-choice",
@@ -459,7 +468,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "pinMode() richtet einen Pin ein. Solche einmaligen Einrichtungen gehören laut Lektion in setup().",
+        "pinMode() legt fest, ob ein Pin Ein- oder Ausgang ist. Das stellt man einmal ein, danach ändert es sich nicht mehr. Deshalb gehört es in setup() und nicht in loop().",
     },
     {
       type: "multiple-choice",
@@ -472,7 +481,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "Variablen werden laut Lektion im Bereich Variablen ganz oben vor setup() festgelegt, damit setup() und loop() den Namen nutzen können.",
+        "Variablen ganz oben vor setup() gelten im ganzen Sketch. So können setup() und loop() denselben Namen ledPin benutzen.",
     },
     {
       type: "multiple-choice",
@@ -485,7 +494,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Die Lektion nennt die feste Reihenfolge: Variablen -> setup() -> loop() -> loop() -> loop() ...",
+        "Zuerst werden die Variablen oben angelegt, dann läuft setup() einmal, danach wiederholt sich loop() endlos: Variablen -> setup() -> loop() -> loop() ...",
     },
     {
       type: "multiple-choice",
@@ -498,7 +507,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Laut Lektion ignoriert der Arduino Kommentare mit //; sie sind nur als Erinnerung für dich gedacht.",
+        "Alles hinter // ist eine Notiz für Menschen. Beim Übersetzen (Kompilieren) wird es übersprungen, der Arduino bekommt es gar nicht mit.",
     },
   ],
 

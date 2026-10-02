@@ -319,7 +319,7 @@ SCHWELLE (300) nach dem Aufbau mit dem Serial Monitor an die Raumhelligkeit anpa
 • Mit Blink starten, weil die LED an Pin 13 fest verbaut ist — kein zusätzliches Bauteil nötig, schneller Erfolg. Code Zeile für Zeile: pinMode(13, OUTPUT), digitalWrite(13, HIGH/LOW) als an/aus (5 V / 0 V), delay(1000) als Warten in Millisekunden.
 • Häufige Fehlvorstellung: "delay zählt in Sekunden." Besser: delay() arbeitet in Millisekunden, 1000 ms = 1 s, delay(500) = halbe Sekunde. Ebenso: HIGH = an = 5 V (Eselsbrücke: High = hohe Spannung), nicht "halbe Helligkeit".
 • Wenn ein Board da ist, einmal live hochladen und die blinkende Onboard-LED zeigen — das macht "Code steuert echte Hardware" greifbar.
-• Prüfungsbezug: pinMode/digitalWrite, der Unterschied OUTPUT/INPUT, die Bedeutung von HIGH/LOW und die Reihenfolge Anschließen -> Schreiben -> Überprüfen -> Hochladen sind typische BW-Bausteine. Den 220-Ohm-Vorwiderstand der externen LED mit der vorherigen Lektion verknüpfen.`,
+• Prüfungsbezug: pinMode/digitalWrite, der Unterschied OUTPUT/INPUT, die Bedeutung von HIGH/LOW und die Reihenfolge Schreiben -> Überprüfen -> Hochladen (spätestens vor dem Hochladen anschließen + Port wählen) sind typische BW-Bausteine. Den 220-Ohm-Vorwiderstand der externen LED mit der vorherigen Lektion verknüpfen.`,
     },
     "setup-und-loop": {
       didactics: `• Kernunterscheidung zuerst sichern: setup() läuft genau EINMAL beim Start/Reset, loop() läuft danach ENDLOS wiederholt. Analogie Kochrezept: setup() = Ofen vorheizen (einmal), loop() = rühren/würzen (immer wieder).

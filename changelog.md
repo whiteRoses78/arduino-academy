@@ -396,3 +396,24 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 - **Fix:** Migration `profiles_readonly_for_users`: `insert`/`update` auf `profiles` für `authenticated`/`anon` entzogen, Policies „own profile insert/update“ gelöscht, `db/schema.sql` nachgezogen. Die App liest `profiles` nur. Profile legt der Trigger `handle_new_user` an, Rollen vergibt nur die RPC `set_teacher_role` (SECURITY DEFINER, prüft auf Admin).
 - **Verifiziert:** Als `arduino01` nachgespielt: Das Update auf `role='admin'` wird verweigert, das eigene Profil ist weiter lesbar. Die Rollen sind unverändert: 2 Admins (beide Marco, 03.06.) und 30 Schüler:innen. Die Lücke wurde nicht ausgenutzt. Kein Deploy nötig.
 - **Außerdem:** Prüfberichte (`PRUEFBERICHT-*.md`) sind gitignored, weil sie offene Lücken beschreiben. Im Backlog stehen die Datenschutz-Funde deshalb nur allgemein formuliert.
+
+---
+
+## 2026-10-02 — Gesamtprüfung: Modul 1 „Grundlagen“ überarbeitet (DB-only, live)
+
+- **Anlass:** Die Gesamtprüfung vom 02.10.2026 hatte für M1 11 WICHTIG- und 10 NICE-Funde, aber nichts KRITISCH. Fakten von Marco: IDE an den Schulrechnern vorinstalliert, Original-Uno, Stromschienen durchgehend.
+- **Neues Werkzeug `db/content-patch.mjs`:** Inhalts-Korrekturen laufen als exakte Text-Ersetzungen mit Schutzklausel. Jede Ersetzung muss genau einmal treffen, sonst bricht die ganze Transaktion ab. Danach vergleicht `--verify` einen frischen Export Zeichen für Zeichen mit dem erwarteten Stand. Die Exercise-IDs bleiben erhalten, damit hängt der Schülerfortschritt nicht in der Luft. Die Patches liegen als Protokoll in `db/patches/m1*.mjs`, weil die Vanilla-Quelle lokal nicht mehr existiert und die DB jetzt die Quelle der Wahrheit ist.
+- **Inhalte (41 Ersetzungen + 2 neue Übungen):**
+  - **Board-Grafik:** neu, Pin-Reihenfolge wie beim echten Uno R3, mit ~-Markierungen.
+  - **Steckbrett-Grafik L4:** Doppelbelegung der Löcher behoben, Kabelenden sichtbar, Polungs-Legende ergänzt, als „Nur zum Anschauen“ markiert.
+  - **LED-Strom:** überall einheitlich 15 mA. Der Regler meldet Überlast erst ab 20 mA, mit Dezimalkomma.
+  - **Fehlersuche:** Kasten „Klappt nicht?“ beim ersten Hochladen. Port und Kompilieren sind erklärt.
+  - **Sensor/Aktor:** Unterschied und Begriff „Aktor“ erklärt, mit Zuordnungspaar in der Übung.
+  - **Pins 0/1:** Tipp, sie wegen RX/TX frei zu lassen.
+  - **Grundbegriffe:** int, void und Baud erklärt.
+  - **Kochrezept-Analogie:** passt jetzt zu „loop() läuft endlos“.
+  - **Taster-Symbol:** mit Druckknopf.
+  - **Reihenfolge-Übung „Hochladen“:** korrigiert, die Lehrer-Lösung zieht mit.
+  - **Neue Übungen:** zwei Übungen zu Reihen- und Parallelschaltung.
+- **Kompetenztest M1:** 4 reine Wissens- bzw. Dublettenfragen durch Anwendungsfragen ersetzt (Garagentor-Aktor, Reihe rot+grün, blaue LED mit Widerstandsset, setup() mit leerer loop()). Die Erklärungen begründen jetzt das WARUM statt „laut Lektion“. Die Fragen wurden per UPDATE geändert, die IDs bleiben, die Punkte bereits geschriebener Tests sind unberührt.
+- **Verifiziert:** `--verify` ist nach jedem Schritt OK. Die md5-Prüfsummen aller 30 M1-Testfragen stimmen zwischen DB und `test-questions-data.mjs` überein. Die Grafiken habe ich gerendert und angesehen. Ein Reviewer-Subagent fand nichts Kritisches, seine 3 Hinweise sind eingearbeitet. vitest 35/35, tsc und eslint grün. Die Live-Seite rendert dynamisch, deshalb ist kein Deploy nötig und es wurde kein Netlify-Credit verbraucht.
