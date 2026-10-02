@@ -127,7 +127,7 @@ export const PARTS = {
       { name: "Arduino Uno", qty: 1 },
       { name: "Motortreiber L298N", qty: 1 },
       { name: "DC-Motor", qty: 1 },
-      { name: "Externe Stromversorgung 6–12 V (Batterie/Netzteil)", qty: 1 },
+      { name: "9-V-Block mit Anschluss-Clip", qty: 1 },
       { name: "Jumper-Kabel nach Bedarf" },
     ],
   },

@@ -482,3 +482,12 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
   - Alle Grafiken gerendert und angesehen.
   - Ein Reviewer-Subagent fand nichts Kritisches. Seine Funde sind vor dem Einspielen eingearbeitet (−Schiene „oben“ in den Praxis-Schritten, Puffer-Zone-Tipp, Kathoden-Kabel im PWM-Tipp, NTC-Tabelle, 220-Ω-Schreibweise, Label-Überlappungen).
   - vitest 35/35, tsc und eslint grün.
+
+## 2026-10-02 — Gesamtprüfung: Modul 4 „Aktoren" überarbeitet (DB live + 1 Asset)
+
+- KRITISCH: Testfrage Transistor #8 belohnte falsche Diagnose („C/E vertauscht → läuft ständig“). Neue richtige Option „zweites Motorkabel in −Schiene“ an derselben Position (correct=3 unverändert → keine Neubewertung nötig). Frage #2 Erklärung, Lektion, Lehrer-Lösung angeglichen; Diodentext („ruckelig“) korrigiert.
+- KRITISCH: „5–9 V an Vin/5V“ überall entfernt → „anderer USB-Port / Lehrkraft, nie 9-V-Block an 5V-Pin“ (auch Servo).
+- Marco-Fakten: nur BC547, Motor unbekannt (RE-140 gestrichen, 100-mA-Hinweis), L298N mit 9-V-Block (≈7 V am Motor), HC-SR04 nur Theorie (jetzt vollständiger Sketch + long/delayMicroseconds).
+- L298N: LOW/LOW = Bremse, ENA=0 = Auslauf; Jumper M-F/M-M aufgeteilt + erklärt; Testfrage vmax/2 = 127.
+- Servo: SVG `lektion-32-servo-aufbau.svg` (a10/b10, eigenes +Loch, Stecker braun|rot|orange, `?v=9`), 6 Jumper, Schienen oben/unten, Polungs-Feedback, winkel--, Sweep-Erweiterung.
+- Patch-Protokoll `db/patches/m4.mjs` (35 Ersetzungen + parts), verifiziert gegen frischen Export. **Deploy für das SVG offen.**

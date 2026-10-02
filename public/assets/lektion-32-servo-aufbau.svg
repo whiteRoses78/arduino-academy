@@ -67,10 +67,10 @@
   <circle cx="334" cy="180" r="3.5" fill="#222"/>
   <circle cx="380" cy="444" r="6" fill="#222" stroke="#fff" stroke-width="1.5"/>
 
-  <!-- ORANGE: Pin 9 (absolut 434) -> Loch a10 (absolut 260, 281) -->
-  <path d="M 434 180 L 434 220 L 260 220 L 260 281" stroke="#E67E22" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- ORANGE: Pin 9 (absolut 434) -> Loch a10 (absolut 280, 281) -->
+  <path d="M 434 180 L 434 220 L 280 220 L 280 281" stroke="#E67E22" stroke-width="3" fill="none" stroke-linecap="round"/>
   <circle cx="434" cy="180" r="3.5" fill="#E67E22"/>
-  <circle cx="260" cy="281" r="3.5" fill="#E67E22"/>
+  <circle cx="280" cy="281" r="3.5" fill="#E67E22"/>
 
   <!-- ===================== BREADBOARD ===================== -->
   <g id="breadboard" transform="translate(60, 234)">
@@ -116,16 +116,16 @@
     </g>
 
     <!-- ===== Markierungs-Kreise mit Beschriftung wo die Servo-Draehte ankommen (weißer Outline gegen Kabel-Überdeckung) ===== -->
-    <!-- Markierung am +Schiene-Loch (Spalte 5, Servo-Versorgung) -->
-    <circle cx="100" cy="17" r="7" fill="none" stroke="#d62828" stroke-width="2" stroke-dasharray="3 2"/>
-    <text x="50" y="-8" text-anchor="middle" font-size="10" font-weight="bold" fill="#d62828" stroke="white" stroke-width="4" stroke-linejoin="round" paint-order="stroke fill">Servo +</text>
+    <!-- Markierung am +Schiene-Loch (eigenes Loch, links vom 5V-Kabel) -->
+    <circle cx="60" cy="17" r="7" fill="none" stroke="#d62828" stroke-width="2" stroke-dasharray="3 2"/>
+    <text x="60" y="-8" text-anchor="middle" font-size="10" font-weight="bold" fill="#d62828" stroke="white" stroke-width="4" stroke-linejoin="round" paint-order="stroke fill">Servo +</text>
 
-    <!-- Markierung am -Schiene-Loch (Spalte 13, Servo-GND) - Label am Ende des SVG (nach Kabeln) -->
+    <!-- Markierung am -Schiene-Loch (Servo-GND) - Label am Ende des SVG (nach Kabeln) -->
     <circle cx="240" cy="213" r="7" fill="none" stroke="#222" stroke-width="2" stroke-dasharray="3 2"/>
 
-    <!-- Markierung am a10 (Spalte 10 obere Halbinsel, Servo-Signal & Pin-9-Jumper-Ende) -->
-    <circle cx="200" cy="47" r="7" fill="none" stroke="#E67E22" stroke-width="2" stroke-dasharray="3 2"/>
-    <text x="150" y="-8" text-anchor="middle" font-size="10" font-weight="bold" fill="#E67E22" stroke="white" stroke-width="4" stroke-linejoin="round" paint-order="stroke fill">Servo S</text>
+    <!-- Markierung am b10 (Spalte 10, Servo-Signal; Pin-9-Kabel steckt darueber in a10) -->
+    <circle cx="220" cy="65" r="7" fill="none" stroke="#E67E22" stroke-width="2" stroke-dasharray="3 2"/>
+    <text x="180" y="-8" text-anchor="middle" font-size="10" font-weight="bold" fill="#E67E22" stroke="white" stroke-width="4" stroke-linejoin="round" paint-order="stroke fill">Servo S</text>
 
     <!-- Breadboard-Label - am Ende des SVG (nach Kabeln) gerendert -->
   </g>
@@ -143,40 +143,40 @@
 
     <!-- 3 Pin-Anschluss-Punkte (oben am Servo, links) -->
     <rect x="10" y="-6" width="48" height="12" rx="1.5" fill="#0f172a" stroke="#000" stroke-width="1"/>
-    <circle cx="18" cy="0" r="2.5" fill="#d62828"/>
-    <circle cx="34" cy="0" r="2.5" fill="#222"/>
+    <circle cx="18" cy="0" r="2.5" fill="#222"/>
+    <circle cx="34" cy="0" r="2.5" fill="#d62828"/>
     <circle cx="50" cy="0" r="2.5" fill="#E67E22"/>
 
     <!-- Pin-Beschriftung UNTERHALB des Pin-Blocks (im Gehaeuse, weiss) -->
-    <text x="18" y="22" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">+</text>
-    <text x="34" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">&#8722;</text>
+    <text x="18" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff">&#8722;</text>
+    <text x="34" y="22" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">+</text>
     <text x="50" y="22" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">S</text>
   </g>
 
   <!-- ===================== DRAEHTE VOM SERVO ZUM BREADBOARD ===================== -->
   <!-- Servo-Pin-Positionen absolut:
-       rot:    (298, 534)
-       schwarz: (314, 534)
-       orange:  (330, 534)
+       braun:  (298, 534)
+       rot:    (314, 534)
+       orange: (330, 534)
        Breadboard-Anschluesse:
-       +Schiene Spalte 5:  (160, 251)
-       -Schiene Spalte 13: (300, 447)
-       a10:                (260, 281) -->
+       +Schiene (eigenes Loch): (120, 251)
+       -Schiene:                (300, 447)
+       b10:                     (280, 299) -->
 
   <!-- ROT: Servo VCC -> +Schiene -->
-  <path d="M 298 534 C 240 480, 180 360, 160 251" stroke="#d62828" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <circle cx="298" cy="534" r="3.5" fill="#d62828"/>
-  <circle cx="160" cy="251" r="3.5" fill="#d62828"/>
+  <path d="M 314 534 C 250 480, 140 360, 120 251" stroke="#d62828" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="314" cy="534" r="3.5" fill="#d62828"/>
+  <circle cx="120" cy="251" r="3.5" fill="#d62828"/>
 
   <!-- SCHWARZ: Servo GND -> -Schiene-Loch unten -->
-  <path d="M 314 534 C 312 500, 305 470, 300 447" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <circle cx="314" cy="534" r="3.5" fill="#222"/>
+  <path d="M 298 534 C 298 500, 300 470, 300 447" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="298" cy="534" r="3.5" fill="#222"/>
   <circle cx="300" cy="447" r="3.5" fill="#222"/>
 
-  <!-- ORANGE: Servo Signal -> a10 -->
-  <path d="M 330 534 C 335 460, 280 350, 260 281" stroke="#E67E22" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- ORANGE: Servo Signal -> b10 -->
+  <path d="M 330 534 C 335 460, 290 370, 280 299" stroke="#E67E22" stroke-width="3" fill="none" stroke-linecap="round"/>
   <circle cx="330" cy="534" r="3.5" fill="#E67E22"/>
-  <circle cx="260" cy="281" r="3.5" fill="#E67E22"/>
+  <circle cx="280" cy="299" r="3.5" fill="#E67E22"/>
 
   <!-- ===================== LABELS NACH KABELN (Z-Order: liegen OBEN auf den Kabeln) ===================== -->
   <!-- "Servo -" Label - garantiert oben auf schwarzem Servo-Kabel sichtbar -->
@@ -188,7 +188,7 @@
   <g transform="translate(60, 655)">
     <rect x="0" y="0" width="640" height="70" rx="6" fill="#fff8e1" stroke="#ffb300" stroke-width="1.5"/>
     <text x="14" y="22" font-size="12" font-weight="bold" fill="#5d4118">Polung beachten!</text>
-    <text x="14" y="40" font-size="11" fill="#5d4118"><tspan font-weight="bold" fill="#d62828">rot</tspan> &#8594; +5V &#183; <tspan font-weight="bold" fill="#222">braun/schwarz</tspan> &#8594; GND &#183; <tspan font-weight="bold" fill="#E67E22">orange/gelb</tspan> &#8594; Signal (Pin 9 ueber Spalte 10).</text>
-    <text x="14" y="58" font-size="11" fill="#5d4118">Die 3 gestrichelten Kreise markieren die Anschluss-Loecher.</text>
+    <text x="14" y="40" font-size="11" fill="#5d4118"><tspan font-weight="bold" fill="#d62828">rot</tspan> &#8594; +5V &#183; <tspan font-weight="bold" fill="#222">braun/schwarz</tspan> &#8594; GND &#183; <tspan font-weight="bold" fill="#E67E22">orange/gelb</tspan> &#8594; Signal (b10 &#8594; a10 &#8594; Pin 9). Stecker: braun | rot | orange.</text>
+    <text x="14" y="58" font-size="11" fill="#5d4118">Die 3 gestrichelten Kreise markieren die Anschluss-Löcher.</text>
   </g>
 </svg>

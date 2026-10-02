@@ -14,8 +14,8 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [KRITISCH] M2 · Erklärung zu `if (zustand = LOW)` falsch („immer wahr“ statt nie wahr) — erledigt 02.10.
 - [x] [KRITISCH] M2 · Ampel-Reihenfolge: richtige Antwort im Test als falsch gewertet (Wertung prüfen) — erledigt 02.10.
 - [x] [KRITISCH] M3 · Spannungsteiler-Praxis: c8/c10 ergibt keinen Stromkreis — erledigt 02.10.
-- [ ] [KRITISCH] M4 · Testfrage belohnt falsche Diagnose „C/E vertauscht → Motor läuft ständig“
-- [ ] [KRITISCH] M4 · Tipp „5–9 V an 5V-Pin“ zerstört den Arduino ❓
+- [x] [KRITISCH] M4 · Testfrage belohnt falsche Diagnose „C/E vertauscht → Motor läuft ständig“ — erledigt 02.10.
+- [x] [KRITISCH] M4 · Tipp „5–9 V an 5V-Pin“ zerstört den Arduino — erledigt 02.10.
 - [ ] [KRITISCH] M5 · „Nachtabschaltung“ schaltet tagsüber ab, Titel/Einleitung widersprechen ❓
 - [x] [WICHTIG] M1 · Board-Grafik gegenüber echtem Uno gespiegelt — erledigt 02.10.
 - [x] [WICHTIG] M1 · Breadboard-Grafik L4: zwei Drähte pro Loch — erledigt 02.10.
@@ -47,15 +47,15 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [WICHTIG] M3 · Spannungsteiler-Einstieg „warm = höhere Spannung“ — erledigt 02.10.
 - [x] [WICHTIG] M3 · NTC-Fehlerdiagnose falsch (nur in praxis.loesung, erledigt sich mit App-Fund) — erledigt 02.10.
 - [x] [WICHTIG] M3 · Spannungsteiler-Lösung 5 mA statt 2,5 mA (nur in praxis.loesung) — erledigt 02.10.
-- [ ] [WICHTIG] M4 · L298N-Tabelle: LOW/LOW ist Bremse
-- [ ] [WICHTIG] M4 · Servo-SVG: Spalte 9 statt 10, zwei Kabel in einem Loch
-- [ ] [WICHTIG] M4 · Servo-SVG: Stecker mit „−“ in der Mitte
-- [ ] [WICHTIG] M4 · Motor/BC547-Grenze/RE-140/L298N-Spannung ❓
-- [ ] [WICHTIG] M4 · HC-SR04 nur Code-Bruchstück ❓
-- [ ] [WICHTIG] M4 · Feedback „Servo hat keine Polung“
-- [ ] [WICHTIG] M4 · Servo: 3 statt 6 Jumper in der Liste
-- [ ] [WICHTIG] M4 · −Schiene „oben“ im Text, unten im Bild
-- [ ] [WICHTIG] M4 · L298N: GND als Male-Female, M/F unerklärt
+- [x] [WICHTIG] M4 · L298N-Tabelle: LOW/LOW ist Bremse — erledigt 02.10.
+- [x] [WICHTIG] M4 · Servo-SVG: Spalte 9 statt 10, zwei Kabel in einem Loch — erledigt 02.10.
+- [x] [WICHTIG] M4 · Servo-SVG: Stecker mit „−“ in der Mitte — erledigt 02.10.
+- [x] [WICHTIG] M4 · Motor/BC547-Grenze/RE-140/L298N-Spannung — erledigt 02.10.
+- [x] [WICHTIG] M4 · HC-SR04 nur Code-Bruchstück — erledigt 02.10.
+- [x] [WICHTIG] M4 · Feedback „Servo hat keine Polung“ — erledigt 02.10.
+- [x] [WICHTIG] M4 · Servo: 3 statt 6 Jumper in der Liste — erledigt 02.10.
+- [x] [WICHTIG] M4 · −Schiene „oben“ im Text, unten im Bild — erledigt 02.10.
+- [x] [WICHTIG] M4 · L298N: GND als Male-Female, M/F unerklärt — erledigt 02.10.
 - [ ] [WICHTIG] M5 · LDR-Bein im SVG auf GND-Schiene
 - [ ] [WICHTIG] M5 · 10-kΩ-Widerstand mit 120-Ω-Ringen
 - [ ] [WICHTIG] M5 · Lüftung: Basiswiderstand fehlt

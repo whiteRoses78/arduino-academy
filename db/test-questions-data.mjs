@@ -1815,7 +1815,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Beim BC547 gilt mit flacher Seite zum Betrachter von links: C - B - E (Merksatz 'Chef Befiehlt Ende'). Die anderen Reihenfolgen würden Collector und Emitter vertauschen - dann läuft der Motor ständig oder gar nicht.",
+        "Beim BC547 gilt mit flacher Seite zum Betrachter von links: C - B - E (Merksatz 'Chef Befiehlt Ende'). Die anderen Reihenfolgen würden die Beine vertauschen - sind Collector und Emitter vertauscht, läuft der Motor gar nicht oder nur ganz schwach.",
     },
     {
       type: "multiple-choice",
@@ -1889,11 +1889,11 @@ export const TEST_QUESTIONS = {
         "Der Basiswiderstand ist zu groß gewählt",
         "Die Freilaufdiode fehlt",
         "Pin 9 ist nicht PWM-fähig",
-        "Collector und Emitter des BC547 wurden vertauscht",
+        "Das zweite Motorkabel steckt in der −Schiene statt in der Collector-Spalte",
       ],
       correct: 3,
       explanation:
-        "Laut Lektion bedeutet 'Motor läuft ständig, auch bei LOW', dass Collector und Emitter vertauscht sind (beim BC547: C-B-E von links). Eine fehlende Diode macht ruckeligen Lauf, ein zu großer Widerstand schwaches Schalten, und Pin 9 ist sehr wohl PWM-fähig.",
+        "Steckt das zweite Motorkabel in der −Schiene, hängt der Motor direkt zwischen 5 V und GND - der Transistor wird umgangen und kann nichts ausschalten. Eine fehlende Diode ändert am Lauf zunächst nichts (sie schützt den Transistor beim Abschalten), ein zu großer Widerstand macht höchstens schwaches Schalten, und Pin 9 ist sehr wohl PWM-fähig.",
     },
   ],
 
@@ -1974,7 +1974,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "vmax/2 (=128) ist halbe Drehzahl, und IN1=LOW mit IN2=HIGH ist die umgekehrte Richtung. Voll wäre vmax (255), Stillstand wäre beide IN gleich, und ein Motor blinkt nicht.",
+        "vmax / 2 ergibt 127 (bei ganzen Zahlen fällt der Rest weg) - also ungefähr halbe Drehzahl, und IN1=LOW mit IN2=HIGH ist die umgekehrte Richtung. Voll wäre vmax (255), Stillstand wäre beide IN gleich, und ein Motor blinkt nicht.",
     },
     {
       type: "multiple-choice",
