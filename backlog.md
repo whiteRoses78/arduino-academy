@@ -13,7 +13,7 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [KRITISCH] App · Rechte-Lücke in der Datenbank — behoben 02.10.2026
 - [x] [KRITISCH] M2 · Erklärung zu `if (zustand = LOW)` falsch („immer wahr“ statt nie wahr) — erledigt 02.10.
 - [x] [KRITISCH] M2 · Ampel-Reihenfolge: richtige Antwort im Test als falsch gewertet (Wertung prüfen) — erledigt 02.10.
-- [ ] [KRITISCH] M3 · Spannungsteiler-Praxis: c8/c10 ergibt keinen Stromkreis
+- [x] [KRITISCH] M3 · Spannungsteiler-Praxis: c8/c10 ergibt keinen Stromkreis — erledigt 02.10.
 - [ ] [KRITISCH] M4 · Testfrage belohnt falsche Diagnose „C/E vertauscht → Motor läuft ständig“
 - [ ] [KRITISCH] M4 · Tipp „5–9 V an 5V-Pin“ zerstört den Arduino ❓
 - [ ] [KRITISCH] M5 · „Nachtabschaltung“ schaltet tagsüber ab, Titel/Einleitung widersprechen ❓
@@ -36,17 +36,17 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [WICHTIG] M2 · &&, bool-Vergleich, digitalWrite(bool), Parameter unerklärt — erledigt 02.10.
 - [x] [WICHTIG] M2 · Kompetenztest: Detailfragen, Dubletten, keine Fehlersuche — erledigt 02.10.
 - [x] [WICHTIG] M2 · „pinMode vergessen → dunkel“ (glimmt in Wahrheit) — erledigt 02.10.
-- [ ] [WICHTIG] M3 · Poti-Belegung: Text, SVGs und Lösung widersprechen sich
-- [ ] [WICHTIG] M3 · NTC-Aufbau: Text ≠ Bild, Jumperzahl, A0-Kabel im SVG
-- [ ] [WICHTIG] M3 · LDR-Pupillen-Analogie verdreht (auch Testfrage)
-- [ ] [WICHTIG] M3 · LDR-Bild LED an Pin 2 statt 8 / LED in Bauteilliste ❓
-- [ ] [WICHTIG] M3 · Keine Norm-Schaltzeichen für Poti und LDR
-- [ ] [WICHTIG] M3 · Nachtlicht/LDR/PWM ohne Praxis und Fehlersuche
-- [ ] [WICHTIG] M3 · NTC-Beispiel: Anhauchen ≠ 50 °C
-- [ ] [WICHTIG] M3 · Ordering Nachtlicht: Reihenfolge unlogisch
-- [ ] [WICHTIG] M3 · Spannungsteiler-Einstieg „warm = höhere Spannung“
-- [ ] [WICHTIG] M3 · NTC-Fehlerdiagnose falsch (nur in praxis.loesung, erledigt sich mit App-Fund)
-- [ ] [WICHTIG] M3 · Spannungsteiler-Lösung 5 mA statt 2,5 mA (nur in praxis.loesung)
+- [x] [WICHTIG] M3 · Poti-Belegung: Text, SVGs und Lösung widersprechen sich — erledigt 02.10.
+- [x] [WICHTIG] M3 · NTC-Aufbau: Text ≠ Bild, Jumperzahl, A0-Kabel im SVG — erledigt 02.10.
+- [x] [WICHTIG] M3 · LDR-Pupillen-Analogie verdreht (auch Testfrage) — erledigt 02.10.
+- [x] [WICHTIG] M3 · LDR-Bild LED an Pin 2 statt 8 / LED in Bauteilliste ❓ — erledigt 02.10.
+- [x] [WICHTIG] M3 · Keine Norm-Schaltzeichen für Poti und LDR — erledigt 02.10.
+- [x] [WICHTIG] M3 · Nachtlicht/LDR/PWM ohne Praxis und Fehlersuche — erledigt 02.10.
+- [x] [WICHTIG] M3 · NTC-Beispiel: Anhauchen ≠ 50 °C — erledigt 02.10.
+- [x] [WICHTIG] M3 · Ordering Nachtlicht: Reihenfolge unlogisch — erledigt 02.10.
+- [x] [WICHTIG] M3 · Spannungsteiler-Einstieg „warm = höhere Spannung“ — erledigt 02.10.
+- [x] [WICHTIG] M3 · NTC-Fehlerdiagnose falsch (nur in praxis.loesung, erledigt sich mit App-Fund) — erledigt 02.10.
+- [x] [WICHTIG] M3 · Spannungsteiler-Lösung 5 mA statt 2,5 mA (nur in praxis.loesung) — erledigt 02.10.
 - [ ] [WICHTIG] M4 · L298N-Tabelle: LOW/LOW ist Bremse
 - [ ] [WICHTIG] M4 · Servo-SVG: Spalte 9 statt 10, zwei Kabel in einem Loch
 - [ ] [WICHTIG] M4 · Servo-SVG: Stecker mit „−“ in der Mitte

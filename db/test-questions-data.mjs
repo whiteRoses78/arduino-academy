@@ -1359,7 +1359,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "An einem Pin ohne Tilde funktioniert echtes Dimmen nicht: Statt halber Helligkeit wird die LED nur ganz an oder ganz aus geschaltet. Der Arduino nimmt dabei keinen Schaden und ein Pin kann nicht von selbst zum PWM-Pin werden.",
+        "An einem Pin ohne Tilde funktioniert echtes Dimmen nicht: Statt halber Helligkeit wird die LED nur ganz an oder ganz aus geschaltet. Bei 127 bleibt sie sogar ganz aus, erst ab 128 geht sie voll an. Der Arduino nimmt dabei keinen Schaden und ein Pin kann nicht von selbst zum PWM-Pin werden.",
     },
   ],
 
@@ -1371,28 +1371,28 @@ export const TEST_QUESTIONS = {
         "Es ist ein lichtabhängiger Widerstand: Er ändert seinen Widerstand je nachdem, wie hell es ist.",
         "Es ist eine besonders helle LED, die man zum Beleuchten benutzt.",
         "Es ist ein Sensor, der die Temperatur in der Umgebung misst.",
-        "Es ist ein fester Widerstand, der immer genau 10 kOhm hat.",
+        "Es ist ein fester Widerstand, der immer genau 10 kΩ hat.",
       ],
       correct: 0,
       explanation:
-        "LDR heißt Light Dependent Resistor, also lichtabhängiger Widerstand. Eine LED leuchtet, misst aber nichts; Temperatur misst ein anderer Sensor; und der feste 10-kOhm-Widerstand ist in der Schaltung das Gegenstück zum LDR, nicht der LDR selbst.",
+        "LDR heißt Light Dependent Resistor, also lichtabhängiger Widerstand. Eine LED leuchtet, misst aber nichts; Temperatur misst ein anderer Sensor; und der feste 10-kΩ-Widerstand ist in der Schaltung das Gegenstück zum LDR, nicht der LDR selbst.",
     },
     {
       type: "multiple-choice",
       question: "Wie verändert sich der Widerstand des LDR, wenn es HELLER wird?",
       options: [
         "Der Widerstand bleibt gleich, nur die Spannung ändert sich.",
-        "Der Widerstand wird größer (z.B. von 1 kOhm auf 100 kOhm).",
-        "Der Widerstand wird kleiner (z.B. von 100 kOhm auf 1 kOhm).",
+        "Der Widerstand wird größer (z.B. von 1 kΩ auf 100 kΩ).",
+        "Der Widerstand wird kleiner (z.B. von 100 kΩ auf 1 kΩ).",
         "Der LDR wird heiß und schaltet sich ab.",
       ],
       correct: 2,
       explanation:
-        "Bei Helligkeit sinkt der LDR-Widerstand (hell ~1 kOhm, dunkel ~100 kOhm) - wie die Pupille, die bei Licht klein wird. Dass der Widerstand steigt, ist genau der umgekehrte Denkfehler; gleich bleibt er nicht, und mit Hitze hat das nichts zu tun.",
+        "Bei Helligkeit sinkt der LDR-Widerstand (hell ~1 kΩ, dunkel ~100 kΩ). Dass der Widerstand steigt, ist genau der umgekehrte Denkfehler; gleich bleibt er nicht, und mit Hitze hat das nichts zu tun.",
     },
     {
       type: "multiple-choice",
-      question: "Warum braucht man für den LDR überhaupt einen Spannungsteiler mit einem 10-kOhm-Widerstand?",
+      question: "Warum braucht man für den LDR überhaupt einen Spannungsteiler mit einem 10-kΩ-Widerstand?",
       options: [
         "Damit der LDR nicht zu heiß wird und kaputtgeht.",
         "Weil der Arduino keinen Widerstand direkt messen kann, sondern nur Spannung.",
@@ -1407,14 +1407,14 @@ export const TEST_QUESTIONS = {
       type: "multiple-choice",
       question: "In welcher Reihenfolge ist die Schaltung in dieser Lektion aufgebaut?",
       options: [
-        "GND -> LDR -> A0 -> 10-kOhm-Widerstand -> 5V",
-        "A0 -> 5V -> LDR -> 10-kOhm-Widerstand -> GND",
-        "5V -> 10-kOhm-Widerstand -> A0 -> LDR -> GND",
-        "5V -> LDR -> Knotenpunkt (A0) -> 10-kOhm-Widerstand -> GND",
+        "GND -> LDR -> A0 -> 10-kΩ-Widerstand -> 5V",
+        "A0 -> 5V -> LDR -> 10-kΩ-Widerstand -> GND",
+        "5V -> 10-kΩ-Widerstand -> A0 -> LDR -> GND",
+        "5V -> LDR -> Knotenpunkt (A0) -> 10-kΩ-Widerstand -> GND",
       ],
       correct: 3,
       explanation:
-        "In dieser Schaltung liegt der LDR oben an 5V, dann folgt der Knotenpunkt mit A0 und darunter der 10-kOhm-Widerstand zu GND. Die anderen Reihenfolgen vertauschen Plus und Minus oder setzen LDR und Festwiderstand falsch herum - dann würde die Messung nicht zur Lektion passen.",
+        "In dieser Schaltung liegt der LDR oben an 5V, dann folgt der Knotenpunkt mit A0 und darunter der 10-kΩ-Widerstand zu GND. Die anderen Reihenfolgen vertauschen Plus und Minus oder setzen LDR und Festwiderstand falsch herum - dann würde die Messung nicht zur Lektion passen.",
     },
     {
       type: "multiple-choice",
@@ -1427,7 +1427,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Bei Helligkeit wird der LDR-Widerstand klein, fast die ganze Spannung fällt über dem unteren 10-kOhm-Widerstand ab, und genau die misst A0 - daher ein hoher Wert (~920). Der niedrige Wert gilt für Dunkelheit; 512 wäre nur Zufall, und der LDR sperrt nichts.",
+        "Bei Helligkeit wird der LDR-Widerstand klein, fast die ganze Spannung fällt über dem unteren 10-kΩ-Widerstand ab, und genau die misst A0 - daher ein hoher Wert (~920). Der niedrige Wert gilt für Dunkelheit; 512 wäre nur Zufall, und der LDR sperrt nichts.",
     },
     {
       type: "multiple-choice",
@@ -1440,7 +1440,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Dunkel bedeutet hoher LDR-Widerstand, dadurch fällt nur noch wenig Spannung über dem 10-kOhm-Widerstand ab, und A0 misst einen niedrigen Wert (~100). Ein Anstieg wäre der umgekehrte Fall (hell), unverändert bleibt der Wert nicht, und negativ kann analogRead nie werden (0 bis 1023).",
+        "Dunkel bedeutet hoher LDR-Widerstand, dadurch fällt nur noch wenig Spannung über dem 10-kΩ-Widerstand ab, und A0 misst einen niedrigen Wert (~100). Ein Anstieg wäre der umgekehrte Fall (hell), unverändert bleibt der Wert nicht, und negativ kann analogRead nie werden (0 bis 1023).",
     },
     {
       type: "multiple-choice",
@@ -1499,7 +1499,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Ein 10-kOhm-NTC hat seinen Nennwiderstand von 10 kOhm bei welcher Temperatur?",
+      question: "Ein 10-kΩ-NTC hat seinen Nennwiderstand von 10 kΩ bei welcher Temperatur?",
       options: [
         "bei 0 Grad C",
         "bei 25 Grad C (Zimmertemperatur)",
@@ -1508,7 +1508,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Der Nennwert eines 10-kOhm-NTC gilt bei 25 Grad C, also Zimmertemperatur. Bei 0 Grad C wären es ca. 33 kOhm, bei 50 Grad C nur ca. 3,6 kOhm.",
+        "Der Nennwert eines 10-kΩ-NTC gilt bei 25 Grad C, also Zimmertemperatur. Bei 0 Grad C wären es ca. 33 kΩ, bei 50 Grad C nur ca. 3,6 kΩ.",
     },
     {
       type: "multiple-choice",
@@ -1525,7 +1525,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "In dieser Lektion sitzt der NTC unten (an GND) und der feste 10-kOhm-Widerstand oben (an 5V), A0 greift den Mittelpunkt ab. Was misst der Arduino, wenn der NTC heiß wird?",
+      question: "In dieser Lektion sitzt der NTC unten (an GND) und der feste 10-kΩ-Widerstand oben (an 5V), A0 greift den Mittelpunkt ab. Was misst der Arduino, wenn der NTC heiß wird?",
       options: [
         "Der analogRead-Wert wird größer",
         "Der analogRead-Wert bleibt bei 1023",
@@ -1538,7 +1538,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Bei Zimmertemperatur (25 Grad C) sind R1 = 10 kOhm und der NTC = 10 kOhm gleich groß. Welche Sensorspannung U2 ergibt sich und welcher analogRead-Wert ungefähr?",
+      question: "Bei Zimmertemperatur (25 Grad C) sind R1 = 10 kΩ und der NTC = 10 kΩ gleich groß. Welche Sensorspannung U2 ergibt sich und welcher analogRead-Wert ungefähr?",
       options: [
         "5 V und etwa 1023",
         "2,5 V und etwa 511",

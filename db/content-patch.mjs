@@ -19,7 +19,10 @@
 // Patch-Datei: export default { module, text: [...], newExercises: [...] }
 //   text-Eintrag (from/to = Klartext, NICHT JSON-escaped):
 //     { slug, from, to }                    -> lessons.content
+//     { slug, from, to, count: N }          -> wie oben, aber ALLE Vorkommen (genau N)
 //     { slug, path: [...], old, value }     -> lessons.content: Einzelwert setzen
+//     { slug, path: [...], add: value }     -> lessons.content: neuen Schlüssel anlegen
+//                                             (bricht ab, wenn er schon existiert)
 //     { exercise: "<uuid>", from, to }      -> exercises.payload (nur INNERHALB
 //                                             eines Textwerts; jsonb formatiert
 //                                             die Struktur anders als JSON.stringify)
@@ -112,6 +115,26 @@ patch.text.forEach((p, i) => {
 end $do$;`);
     return;
   }
+  if (p.slug && p.path && "add" in p) {
+    // Neuen Schlüssel anlegen (z. B. einen ganzen Praxis-Block), nur wenn er fehlt.
+    const row = lessons.find((l) => l.module === patch.module && l.slug === p.slug);
+    if (!row) return errors.push(`${label}: Zeile nicht gefunden`);
+    const obj = JSON.parse(texts.lessons[row.id] ?? JSON.stringify(row.content));
+    let cur = obj;
+    for (const k of p.path.slice(0, -1)) cur = cur?.[k];
+    const last = p.path.at(-1);
+    if (!cur || typeof cur !== "object" || last in cur)
+      return errors.push(`${label}: Pfad ${p.path.join(".")} existiert schon oder Eltern fehlen`);
+    cur[last] = p.add;
+    texts.lessons[row.id] = JSON.stringify(obj);
+    const pg = `{${p.path.join(",")}}`;
+    sql.push(`do $do$ begin
+  update public.lessons set content = jsonb_set(content, '${pg}', ${dq(JSON.stringify(p.add))}::jsonb, true)
+  where id = '${row.id}' and content #> '${pg}' is null;
+  if not found then raise exception 'Patch ${label} (neu) trifft nicht'; end if;
+end $do$;`);
+    return;
+  }
   if (p.slug && p.path) {
     // Einzelwert an einem Pfad setzen (z. B. Zahl in einer Liste), mit Prüfung des alten Werts.
     const row = lessons.find((l) => l.module === patch.module && l.slug === p.slug);
@@ -150,16 +173,17 @@ end $do$;`);
   store[row.id] ??= JSON.stringify(isLesson ? row.content : row.payload);
   const from = jsonEsc(p.from);
   const to = jsonEsc(p.to);
+  const want = p.count ?? 1;
   const n = count(store[row.id], from);
-  if (n !== 1) return errors.push(`${label}: "${p.from.slice(0, 60)}…" kommt ${n}x vor (erwartet 1)`);
-  store[row.id] = store[row.id].replace(from, () => to);
+  if (n !== want) return errors.push(`${label}: "${p.from.slice(0, 60)}…" kommt ${n}x vor (erwartet ${want})`);
+  store[row.id] = store[row.id].replaceAll(from, () => to);
   const [table, col, key] = isLesson
     ? ["lessons", "content", `id = '${row.id}'`]
     : ["exercises", "payload", `id = '${row.id}'`];
   sql.push(`do $do$ declare f text := ${dq(from)}; t text := ${dq(to)}; begin
   update public.${table} set ${col} = replace(${col}::text, f, t)::jsonb
-  where ${key} and (length(${col}::text) - length(replace(${col}::text, f, ''))) = length(f);
-  if not found then raise exception 'Patch ${label} trifft nicht genau einmal'; end if;
+  where ${key} and (length(${col}::text) - length(replace(${col}::text, f, ''))) = ${want} * length(f);
+  if not found then raise exception 'Patch ${label} trifft nicht genau ${want}x'; end if;
 end $do$;`);
 });
 

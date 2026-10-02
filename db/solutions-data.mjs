@@ -646,7 +646,7 @@ void loop() {
 
   delay(200);                         // 5 Messungen pro Sekunde
 }`,
-      wiring: `Potentiometer (10 kOhm) ist ein verstellbarer Spannungsteiler mit drei Beinen: linkes Bein an 5V, mittleres Bein (Schleifer/Abgriff) an A0, rechtes Bein an GND (5V und GND an den äußeren Beinen sind vertauschbar — das kehrt nur die Drehrichtung um). Der Mittelabgriff liefert eine stufenlose Spannung zwischen 0 V (ganz links) und 5 V (ganz rechts); A0 misst genau diese Spannung. Ergebnis: ganz links -> analogRead = 0, Mitte -> ca. 512, ganz rechts -> 1023. Kein Vorwiderstand und kein pinMode() nötig. USB anstecken, Serial Monitor mit 9600 Baud öffnen, dann am Poti drehen.`,
+      wiring: `Potentiometer (10 kOhm) ist ein verstellbarer Spannungsteiler mit drei Beinen: linkes Bein an GND, mittleres Bein (Schleifer/Abgriff) an A0, rechtes Bein an 5V (5V und GND an den äußeren Beinen sind vertauschbar — das kehrt nur die Drehrichtung um). Der Mittelabgriff liefert eine stufenlose Spannung zwischen 0 V (ganz links) und 5 V (ganz rechts); A0 misst genau diese Spannung. Ergebnis: ganz links -> analogRead = 0, Mitte -> ca. 512, ganz rechts -> 1023. Kein Vorwiderstand und kein pinMode() nötig. USB anstecken, Serial Monitor mit 9600 Baud öffnen, dann am Poti drehen.`,
       mistakes: `• Mittleres Bein (Abgriff) nicht an A0, sondern an 5V oder GND -> konstanter Wert (1023 bzw. 0), Drehen ändert nichts.
 • digitalRead() statt analogRead() verwendet -> nur 0/1 statt 0-1023; analoger Verlauf geht verloren.
 • Poti versehentlich an einen digitalen Pin (z. B. 2) statt an A0-A5 angeschlossen.
@@ -682,7 +682,7 @@ void loop() {
 
   delay(100);
 }`,
-      wiring: `Zwei getrennte Teile auf einem Breadboard. Eingang: Potentiometer (10 kOhm) als Spannungsteiler — linkes Bein an 5V, Mittelabgriff an A0, rechtes Bein an GND. Ausgang: LED an PWM-Pin ~9 -> Anode (langes Bein) über 220-Ohm-Vorwiderstand zum Pin ~9, Kathode (kurzes Bein) an GND. Wichtig: Die LED muss an einem mit Tilde (~) markierten Pin hängen — an einem normalen Digitalpin (z. B. 8) macht analogWrite() nur ganz an/aus statt dimmen. analogWrite() braucht Werte 0-255 (0 = aus, 255 = voll), analogRead() liefert 0-1023 — deshalb die map()-Umrechnung.`,
+      wiring: `Zwei getrennte Teile auf einem Breadboard. Eingang: Potentiometer (10 kOhm) als Spannungsteiler — linkes Bein an GND, Mittelabgriff an A0, rechtes Bein an 5V. Ausgang: LED an PWM-Pin ~9 -> Anode (langes Bein) über 220-Ohm-Vorwiderstand zum Pin ~9, Kathode (kurzes Bein) an GND. Wichtig: Die LED muss an einem mit Tilde (~) markierten Pin hängen — an einem normalen Digitalpin (z. B. 8) macht analogWrite() nur ganz an/aus statt dimmen. analogWrite() braucht Werte 0-255 (0 = aus, 255 = voll), analogRead() liefert 0-1023 — deshalb die map()-Umrechnung.`,
       mistakes: `• LED an einem Nicht-PWM-Pin (z. B. Pin 8, ohne ~) -> kein Dimmen, nur an/aus. PWM-Pins am Uno: ~3, ~5, ~6, ~9, ~10, ~11.
 • map() vergessen und den rohen analogRead-Wert (0-1023) direkt an analogWrite() gegeben -> Werte über 255 werden zurückgefaltet (Modulo 256), die Helligkeit "springt" unsinnig.
 • analogWrite-Wert größer als 255 (oder negativ) -> undefiniertes/überlaufendes Verhalten; Bereich ist fest 0-255.

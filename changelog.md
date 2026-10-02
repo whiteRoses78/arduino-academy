@@ -450,3 +450,35 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 - **Kompetenztest M2:** 6 Fragen sind durch Anwendungs- bzw. Fehlersuch-Fragen ersetzt, 5 korrigiert. Der Anti-Dubletten-Abgleich mit Modularbeit M2 ist bestanden. Die Änderungen liefen per UPDATE, die IDs bleiben.
 - **Verifiziert:** `--verify` ist OK nach `m2` und `m2b`. Die md5-Prüfsummen aller 48 M2-Testfragen stimmen zwischen DB und Datei. Alle Grafiken sind gerendert und angesehen. Der Reviewer hat 2 WICHTIG-Bildfehler gefunden, beide sind behoben (`m2b`). vitest 35/35, tsc und eslint grün.
 - **Nebenbei:** Der Versuch, große SQL-Pakete über eine temporäre Tabelle `patch_inbox` hochzuladen, wurde vom Auto-Mode blockiert (Rechte-Erweiterung). Die Tabelle ist leer, ohne Grants und ohne Policy. Löschen muss Marco im SQL-Editor, weil der Guard-Hook `DROP TABLE` blockt.
+
+---
+
+## 2026-10-02 — Gesamtprüfung: Modul 3 „Analog" überarbeitet (DB live + 2 Assets)
+
+- **KRITISCH behoben:** Die Spannungsteiler-Praxis ergibt jetzt einen echten Stromkreis (+Schiene → a3, R1 b3–b8, R2 d8–d13, a13 → −Schiene, Mittelpunkt Spalte 8). Die Anleitung passt Loch für Loch zum Bild, es sind 4 Jumper.
+- **Entscheidungen von Marco:**
+  - LDR-Lektion: Variante B. LED + 220 Ω bleiben im Bild, jetzt an Pin 8, mit Hinweis „wird in der Nachtlicht-Lektion geschaltet“.
+  - Neue Praxis-Blöcke für **PWM** (Poti dimmt LED) und **Nachtlicht** (LDR + Hysterese). Beide haben Erfolgskriterium, Code-Gerüst und eine „Klappt nicht?“-Fehlerhilfe.
+- **Grafiken:**
+  - Poti-Belegung überall einheitlich: links GND, Mitte A0, rechts 5V. Das gilt für Text, beide Steckbrett-Bilder, Legende und Lehrerlösung. Neu ist ein Tipp, dass vertauschte äußere Beine nur die Drehrichtung umkehren.
+  - Die Steckbrett-Bilder für Poti, PWM und LDR sind neu angeordnet: Kein Loch ist doppelt belegt, die Kabel liegen über dem Board, die Kathoden-Jumper starten ab Reihe b.
+  - Im LDR-Bild hat der 10-kΩ-Widerstand jetzt die richtigen Farbringe (braun-schwarz-orange).
+  - Schaltzeichen nach Norm für Poti (Widerstand mit Abgriff-Pfeil) und LDR (mit Lichtpfeilen).
+  - Assets `lektion-30-spannungsteiler-aufbau.svg` (`?v=8`) und `lektion-31-ntc-aufbau.svg` (`?v=6`): Kabel sichtbar, NTC-A0-Kabel auf a8. **Das braucht einen Deploy.**
+- **NTC:** Die Steckanleitung passt jetzt zum Bild (5 Jumper). Föhn statt Anhauchen, Eiswürfel im Gefrierbeutel. Hinweis „Wichtig ist die Richtung“. Wert ~93 statt ~92, und die Kennlinie zeigt beim 50-°C-Punkt jetzt den Föhn.
+- **Inhalte:**
+  - LDR-Analogie ist jetzt ein Wasserhahn statt der verdrehten Pupille, auch in der Testfrage.
+  - Spannungsteiler-Einstieg: 2,5 V bei Zimmertemperatur, 1,7 V wenn wärmer.
+  - Die Pull-Down-Tabellenzeile ist korrigiert.
+  - PWM-Pin ohne ~: unter 128 aus, ab 128 an.
+  - Duty-Cycle, `float`, `const` und `else if` sind jetzt erklärt.
+  - Die Nachtlicht-Reihenfolge-Übung ist logisch, und die Kommentare behaupten keine LEDs mehr, die es nicht gibt.
+  - Einheitlich kΩ/Ω in Lektionen, Übungen und M3-Testfragen.
+- **Testfragen M3:** 10 Fragen per UPDATE geändert (Text, keine Lösung verändert), die IDs bleiben.
+- **Werkzeug:** `db/content-patch.mjs` kann jetzt `count: N` (genau N Vorkommen ersetzen) und `add` (neuen Schlüssel anlegen, z. B. einen Praxis-Block).
+- **Verifiziert:**
+  - `--verify` OK.
+  - md5 aller 48 M3-Testfragen DB = Datei.
+  - Alle Grafiken gerendert und angesehen.
+  - Ein Reviewer-Subagent fand nichts Kritisches. Seine Funde sind vor dem Einspielen eingearbeitet (−Schiene „oben“ in den Praxis-Schritten, Puffer-Zone-Tipp, Kathoden-Kabel im PWM-Tipp, NTC-Tabelle, 220-Ω-Schreibweise, Label-Überlappungen).
+  - vitest 35/35, tsc und eslint grün.

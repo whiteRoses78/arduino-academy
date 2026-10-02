@@ -50,17 +50,6 @@
     <rect x="109" y="116" width="11" height="12" fill="#222" stroke="#fff" stroke-width="1"/>
   </g>
 
-  <!-- ===================== JUMPER-KABEL Arduino -> Breadboard ===================== -->
-  <!-- Rotes Kabel: 5V (Arduino x=180+74=254) -> Breadboard +Schiene (x=120, y=240) -->
-  <path d="M 254 180 L 254 220 L 120 220 L 120 240" stroke="#d62828" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <circle cx="254" cy="180" r="3.5" fill="#d62828"/>
-  <circle cx="120" cy="240" r="3.5" fill="#d62828"/>
-
-  <!-- Schwarzes Kabel: GND (Arduino x=180+114=294) -> Breadboard -Schiene (x=120, y=440) -->
-  <path d="M 294 180 L 294 200 L 90 200 L 90 440 L 120 440" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <circle cx="294" cy="180" r="3.5" fill="#222"/>
-  <circle cx="120" cy="440" r="3.5" fill="#222"/>
-
   <!-- ===================== BREADBOARD ===================== -->
   <g id="breadboard" transform="translate(60, 230)">
     <rect x="0" y="0" width="640" height="230" rx="6" fill="#f0ede6" stroke="#c8c3b8" stroke-width="1.5"/>
@@ -134,7 +123,7 @@
     <!-- ===== Highlight Spalte 8: gemeinsamer Knoten M (Reihen a-e elektrisch verbunden) ===== -->
     <rect x="174" y="44" width="12" height="78" rx="2" fill="#FEF3C7" opacity="0.65" stroke="#F59E0B" stroke-width="1" stroke-dasharray="3 2"/>
     <text x="180" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="#B45309">M = Spalte 8</text>
-    <text x="180" y="38" text-anchor="middle" font-size="7" font-style="italic" fill="#B45309">(alle Löcher a–e verbunden)</text>
+    <text x="172" y="132" text-anchor="end" font-size="7" font-style="italic" fill="#B45309">(alle Löcher a–e verbunden)</text>
 
     <!-- ===== Verbindungs-Jumper: +Schiene -> Spalte 3 (a3) ===== -->
     <line x1="80" y1="24" x2="80" y2="47" stroke="#d62828" stroke-width="2.5"/>
@@ -183,6 +172,18 @@
     <!-- Breadboard-Label UNTER dem Breadboard (linksbündig ab Sp.2-3) -->
     <text x="60" y="244" text-anchor="start" font-size="10" fill="#444" font-weight="bold">Breadboard (32 Spalten)</text>
   </g>
+
+  <!-- Kabel nach dem Breadboard gezeichnet, damit die Enden sichtbar sind -->
+  <!-- ===================== JUMPER-KABEL Arduino -> Breadboard ===================== -->
+  <!-- Rotes Kabel: 5V (Arduino x=180+74=254) -> Breadboard +Schiene (x=120, y=240) -->
+  <path d="M 254 180 L 254 220 L 120 220 L 120 247" stroke="#d62828" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="254" cy="180" r="3.5" fill="#d62828"/>
+  <circle cx="120" cy="247" r="3.5" fill="#d62828"/>
+
+  <!-- Schwarzes Kabel: GND (Arduino x=180+114=294) -> Breadboard -Schiene (x=120, y=440) -->
+  <path d="M 294 180 L 294 200 L 45 200 L 45 443 L 100 443" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="294" cy="180" r="3.5" fill="#222"/>
+  <circle cx="100" cy="443" r="3.5" fill="#222"/>
 
   <!-- ===================== MULTIMETER (rechts) ===================== -->
   <g id="multimeter" transform="translate(540, 360)">
