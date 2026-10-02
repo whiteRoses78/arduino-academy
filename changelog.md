@@ -491,3 +491,14 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 - L298N: LOW/LOW = Bremse, ENA=0 = Auslauf; Jumper M-F/M-M aufgeteilt + erklärt; Testfrage vmax/2 = 127.
 - Servo: SVG `lektion-32-servo-aufbau.svg` (a10/b10, eigenes +Loch, Stecker braun|rot|orange, `?v=9`), 6 Jumper, Schienen oben/unten, Polungs-Feedback, winkel--, Sweep-Erweiterung.
 - Patch-Protokoll `db/patches/m4.mjs` (35 Ersetzungen + parts), verifiziert gegen frischen Export. **Deploy für das SVG offen.**
+
+## 2026-10-02 — Gesamtprüfung: Modul 5 „Projekt" überarbeitet (DB live, Modularbeit neu)
+
+- KRITISCH: Nachtabschaltung auf **Variante A** umgestellt (Marco-Entscheidung): hell → normaler Betrieb mit Taster, dunkel → Nachtmodus (alles aus, Auto-Gelb blinkt 500/500 ms, Taster ignoriert). Code `if (lichtWert > SCHWELLE)`, Einleitung, Analogie, Karten, Slider, Ablauf, example.steps, Übung `d77c7798`, 4 Testfragen, beide Lehrer-Lösungen angeglichen.
+- Grafiken: LDR-Kabel in beiden Steckbrett-SVGs aus eigenem Loch b26 zur +Schiene (vorher GND-Schiene); 10 kΩ mit braun-schwarz-orange-gold.
+- Showcases: 230 V raus (Netzspannung tabu), Relais/Lichtschranke/Regensensor/Umschalter/Summer = „mit Lehrkraft klären“ (nicht vorhanden); Lüftung mit 1-kΩ-Basiswiderstand, BC337/TIP120 → L298N, Diode schützt den Transistor, Toggle mit Flankenerkennung wie M2.
+- Löten: Sicherheitsbox, bleifreies Lot (340–360 °C), Faustregel ohne „spitzen Gipfel“, Hinweis „bleifrei glänzt weniger“. RGB-LED: beide Bauformen. „Zustandsmaschine“ → feste Ablauf-Reihenfolge. Hysterese-Hinweis (L2+L3), Fehlersuche-Boxen (L1+L2), for-Schleife als Wiederholung.
+- Neuer Praxis-Block „Lampe mit Dämmerungssensor“ (Transfer, ohne `loesung` im Content; Musterlösung auskommentiert in lesson_solutions).
+- Kompetenztest: 8 Fragen per UPDATE (correct unverändert; 4 Pin-/Zeitfragen → Diagnose/Transfer). Noch kein M5-Testversuch in der DB, also keine Neubewertung nötig.
+- Modularbeit 5 (lokal, gitignored): Aufgaben 2b/3b/6/Bonus auf Variante A, Aufgabe 6 neu (Blinken statt Bedingung, Anti-Dublette), Seitenumbruch gefixt; Sicherung in `material/modul5/_alt/`. **Bucket-Upload offen** (Admin-Credentials fehlen in .env.local).
+- Patch-Protokoll `db/patches/m5.mjs` (54 Einträge), verifiziert gegen frischen Export; Lösungen + Testfragen per md5 abgeglichen. Zwei Reviewer-Durchläufe vor dem Einspielen.

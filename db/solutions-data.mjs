@@ -95,8 +95,8 @@ Insgesamt 5 Vorwiderstände, Arduino-GND einmal mit der GND-Schiene verbinden.`,
       sketch: `// ===========================================================
 //  Nachtabschaltung mit Lichtsensor (LDR)
 //  Ampel mit Fußgängerüberweg + LDR-Nachtabschaltung an A0
-//  Hell  -> Ampel "schläft" (alle LEDs aus)
-//  Dunkel-> normaler Ampelbetrieb mit Taster-Anforderung
+//  Hell  -> normaler Ampelbetrieb mit Taster-Anforderung
+//  Dunkel-> Nachtmodus: alles aus, nur Auto-Gelb blinkt
 // ===========================================================
 
 // ===== Pin-Definitionen =====
@@ -108,7 +108,7 @@ int fussGruen  = 6;   // Fußgänger-Ampel: Grüne LED
 int taster     = 7;   // Taster für Fußgänger (INPUT_PULLUP)
 int ldrPin     = A0;  // LDR-Spannungsteiler (Lichtsensor)
 
-// Schwellenwert: unter diesem Wert = dunkel = Ampel aktiv.
+// Schwellenwert: bis zu diesem Wert = dunkel = Nachtmodus.
 // WICHTIG: pro Aufbau mit dem Serial Monitor kalibrieren!
 int SCHWELLE   = 300;
 
@@ -127,8 +127,9 @@ void loop() {
   int lichtWert = analogRead(ldrPin);  // LDR auslesen (0..1023)
   Serial.println(lichtWert);           // Hilfe beim Kalibrieren
 
-  if (lichtWert <= SCHWELLE) {
-    // ===== DUNKEL: Ampel ist aktiv =====
+  if (lichtWert > SCHWELLE) {
+    // ===== HELL: normaler Ampelbetrieb =====
+    digitalWrite(autoGelb, LOW);     // Gelb aus (blinkt nur nachts)
     digitalWrite(autoGruen, HIGH);   // Normalzustand: Auto Grün
     digitalWrite(fussRot, HIGH);     // Fußgänger Rot
 
@@ -167,12 +168,15 @@ void loop() {
       digitalWrite(autoGruen, HIGH);
     }
   } else {
-    // ===== HELL: Ampel schläft (alle LEDs aus) =====
+    // ===== DUNKEL: Nachtmodus, nur Auto-Gelb blinkt =====
     digitalWrite(autoRot, LOW);
-    digitalWrite(autoGelb, LOW);
     digitalWrite(autoGruen, LOW);
     digitalWrite(fussRot, LOW);
     digitalWrite(fussGruen, LOW);
+    digitalWrite(autoGelb, HIGH);
+    delay(500);
+    digitalWrite(autoGelb, LOW);
+    delay(500);
   }
 }`,
       wiring: `Ampel-Teil wie gehabt: jede LED über 220 Ω an ihren Pin (Auto Rot=2, Gelb=3, Grün=4, Fußgänger Rot=5, Grün=6), alle Kathoden an die GND-Schiene.
@@ -224,8 +228,9 @@ void loop() {
   Serial.print("LDR: ");
   Serial.println(lichtWert);            // zum Kalibrieren
 
-  if (lichtWert <= SCHWELLE) {
-    // --- ES IST DUNKEL: Ampel aktiv ---
+  if (lichtWert > SCHWELLE) {
+    // --- ES IST HELL (Tag): normaler Ampelbetrieb ---
+    digitalWrite(autoGelb, LOW);        // Gelb aus (blinkt nur nachts)
     digitalWrite(autoGruen, HIGH);      // Normalzustand: Auto Grün
     digitalWrite(fussRot, HIGH);        // Fußgänger Rot
 
@@ -264,16 +269,52 @@ void loop() {
       digitalWrite(autoGruen, HIGH);
     }
   } else {
-    // --- ES IST HELL: Ampel schläft ---
+    // --- ES IST DUNKEL (Nacht): Nachtmodus, nur Auto-Gelb blinkt ---
     digitalWrite(autoRot, LOW);
-    digitalWrite(autoGelb, LOW);
     digitalWrite(autoGruen, LOW);
     digitalWrite(fussRot, LOW);
     digitalWrite(fussGruen, LOW);
+    digitalWrite(autoGelb, HIGH);
+    delay(500);
+    digitalWrite(autoGelb, LOW);
+    delay(500);
   }
 
   delay(100);  // kurze Pause (stabiler Ablauf)
-}`,
+}
+
+// =====================================================================
+// ZWEITER SKETCH – Lösung zur Praxis-Aufgabe "Lampe mit Dämmerungssensor"
+// (Prüfungsschaltung bleibt stecken; gelbe LED an Pin 3 = Lampe)
+// Auskommentiert: NUR EINEN der beiden Sketche in die IDE kopieren und
+// dann die // am Zeilenanfang entfernen.
+// =====================================================================
+// int lampe    = 3;    // gelbe LED als Außenlampe
+// int taster   = 7;    // Taster (INPUT_PULLUP)
+// int ldrPin   = A0;   // LDR-Spannungsteiler
+// int SCHWELLE = 300;  // an eigene Messwerte anpassen
+//
+// void setup() {
+//   pinMode(lampe, OUTPUT);
+//   pinMode(taster, INPUT_PULLUP);
+//   Serial.begin(9600);
+// }
+//
+// void loop() {
+//   int lichtWert = analogRead(ldrPin);
+//   Serial.println(lichtWert);
+//
+//   if (lichtWert <= SCHWELLE) {             // dunkel
+//     if (digitalRead(taster) == LOW) {      // ... und Taster gedrückt
+//       digitalWrite(lampe, HIGH);           // Lampe an
+//       delay(10000);                        // 10 Sekunden
+//       digitalWrite(lampe, LOW);            // Lampe aus
+//     }
+//   } else {                                 // hell
+//     digitalWrite(lampe, LOW);
+//   }
+//   delay(100);
+// }`,
       wiring: `5 LEDs je über einen eigenen 220-Ω-Vorwiderstand an die Pins: Auto-Rot=2, Auto-Gelb=3, Auto-Grün=4, Fußgänger-Rot=5, Fußgänger-Grün=6.
 Pin → Widerstand → Anode (+, langes Bein); Kathode (−, kurz/abgeflacht) jeder LED auf die gemeinsame GND-Schiene.
 Taster zwischen Pin 7 und GND (INPUT_PULLUP, gedrückt = LOW).
@@ -284,7 +325,9 @@ SCHWELLE (300) nach dem Aufbau mit dem Serial Monitor an die Raumhelligkeit anpa
 • Vorwiderstand vergessen oder zu klein → LED brennt durch oder Pin wird überlastet.
 • Taster: externen Widerstand erwartet statt INPUT_PULLUP; auf HIGH statt LOW abgefragt (Logik invertiert).
 • LDR-Spannungsteiler nur halb verdrahtet: 10 kΩ fehlt oder A0 direkt an 5V/GND → A0 misst nur 0 oder 1023.
-• Schwellenwert nicht kalibriert → Ampel bleibt dauerhaft aus oder an.
+• Schwellenwert nicht kalibriert → Ampel bleibt dauerhaft im Nachtmodus oder schaltet nie hinein.
+• Blinken ohne delay nach dem Ausschalten von Gelb → Gelb ist nur Mikrosekunden aus und scheint dauerhaft zu leuchten.
+• Praxis "Lampe mit Dämmerungssensor": Taster-Abfrage außerhalb des Dunkel-Zweigs → Lampe geht auch bei Helligkeit an.
 • Gemeinsame Masse vergessen: obere/untere GND-Schiene nicht gebrückt → Taster oder LDR-Zweig funktioniert nicht.`,
       didactics: `• Modular aufbauen und einzeln testen: erst Auto-Ampel (3 LEDs), dann Fußgänger (2 LEDs), dann Taster, zuletzt LDR — Fehler sofort lokalisierbar.
 • Serial Monitor als Diagnose-Werkzeug einüben: LDR-Rohwerte ablesen und SCHWELLE bewusst setzen statt raten.

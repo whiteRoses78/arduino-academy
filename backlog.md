@@ -16,7 +16,7 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [KRITISCH] M3 · Spannungsteiler-Praxis: c8/c10 ergibt keinen Stromkreis — erledigt 02.10.
 - [x] [KRITISCH] M4 · Testfrage belohnt falsche Diagnose „C/E vertauscht → Motor läuft ständig“ — erledigt 02.10.
 - [x] [KRITISCH] M4 · Tipp „5–9 V an 5V-Pin“ zerstört den Arduino — erledigt 02.10.
-- [ ] [KRITISCH] M5 · „Nachtabschaltung“ schaltet tagsüber ab, Titel/Einleitung widersprechen ❓
+- [x] [KRITISCH] M5 · „Nachtabschaltung“ schaltet tagsüber ab, Titel/Einleitung widersprechen — erledigt 02.10.
 - [x] [WICHTIG] M1 · Board-Grafik gegenüber echtem Uno gespiegelt — erledigt 02.10.
 - [x] [WICHTIG] M1 · Breadboard-Grafik L4: zwei Drähte pro Loch — erledigt 02.10.
 - [x] [WICHTIG] M1 · LED-Strom widersprüchlich (15/20 mA, 220/150 Ω, „brennt durch“) — erledigt 02.10.
@@ -56,18 +56,18 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [WICHTIG] M4 · Servo: 3 statt 6 Jumper in der Liste — erledigt 02.10.
 - [x] [WICHTIG] M4 · −Schiene „oben“ im Text, unten im Bild — erledigt 02.10.
 - [x] [WICHTIG] M4 · L298N: GND als Male-Female, M/F unerklärt — erledigt 02.10.
-- [ ] [WICHTIG] M5 · LDR-Bein im SVG auf GND-Schiene
-- [ ] [WICHTIG] M5 · 10-kΩ-Widerstand mit 120-Ω-Ringen
-- [ ] [WICHTIG] M5 · Lüftung: Basiswiderstand fehlt
-- [ ] [WICHTIG] M5 · Relais „z. B. 230 V“, Pool-Bauteile unerklärt ❓
-- [ ] [WICHTIG] M5 · Löten ohne Sicherheitsregeln ❓
-- [ ] [WICHTIG] M5 · Lötstellen-Faustregel widerspricht sich
-- [ ] [WICHTIG] M5 · Testfrage: vertauschter Spannungsteiler „funktioniert nicht“
-- [ ] [WICHTIG] M5 · Keine Schüler-Fehlersuche in L1/L2
-- [ ] [WICHTIG] M5 · Keine Praxis-/Transfer-Aufgabe im Projektmodul
-- [ ] [WICHTIG] M5 · Lüftungs-Skelett mit fehlerhaftem Toggle
-- [ ] [WICHTIG] M5 · „Zustandsmaschine“ unerklärt
-- [ ] [WICHTIG] M5 · RGB-LED nur gemeinsame Kathode ❓
+- [x] [WICHTIG] M5 · LDR-Bein im SVG auf GND-Schiene — erledigt 02.10.
+- [x] [WICHTIG] M5 · 10-kΩ-Widerstand mit 120-Ω-Ringen — erledigt 02.10.
+- [x] [WICHTIG] M5 · Lüftung: Basiswiderstand fehlt — erledigt 02.10.
+- [x] [WICHTIG] M5 · Relais „z. B. 230 V“, Pool-Bauteile unerklärt — erledigt 02.10.
+- [x] [WICHTIG] M5 · Löten ohne Sicherheitsregeln — erledigt 02.10.
+- [x] [WICHTIG] M5 · Lötstellen-Faustregel widerspricht sich — erledigt 02.10.
+- [x] [WICHTIG] M5 · Testfrage: vertauschter Spannungsteiler „funktioniert nicht“ — erledigt 02.10.
+- [x] [WICHTIG] M5 · Keine Schüler-Fehlersuche in L1/L2 — erledigt 02.10.
+- [x] [WICHTIG] M5 · Keine Praxis-/Transfer-Aufgabe im Projektmodul — erledigt 02.10.
+- [x] [WICHTIG] M5 · Lüftungs-Skelett mit fehlerhaftem Toggle — erledigt 02.10.
+- [x] [WICHTIG] M5 · „Zustandsmaschine“ unerklärt — erledigt 02.10.
+- [x] [WICHTIG] M5 · RGB-LED nur gemeinsame Kathode — erledigt 02.10.
 - [ ] [WICHTIG] Übergreifend · Lektionsverweise (L5, L19, Lektion 11 …) falsch/unauffindbar
 - [ ] [WICHTIG] Übergreifend · Ersatzschreibungen ae/oe/ue in M2–M5 (Wortliste, kein Regex)
 - [ ] [WICHTIG] Übergreifend · Operatoren ||, <=, >=, != nie erklärt

@@ -2006,16 +2006,16 @@ export const TEST_QUESTIONS = {
   "projekt/ampel-mit-fussgaengerueberweg": [
     {
       type: "multiple-choice",
-      question: "An welchem Pin ist in dieser Lektion die grüne LED der Auto-Ampel angeschlossen?",
+      question: "Die Ampel-Sequenz startet immer wieder von selbst, obwohl niemand drückt. Der Code prüft richtig auf == LOW. Was ist die wahrscheinlichste Ursache?",
       options: [
-        "Pin 4",
-        "Pin 6",
-        "Pin 2",
-        "Pin 7",
+        "Die Taster-Beinchen sind dauerhaft verbunden, weil der Taster nicht diagonal über der Mittelrinne genutzt wird",
+        "Die grüne Fußgänger-LED steckt falsch herum",
+        "Das delay(200) zur Entprellung ist zu kurz",
+        "Der Vorwiderstand der gelben LED fehlt",
       ],
       correct: 0,
       explanation:
-        "Laut Pin-Belegung sitzt die grüne Auto-LED an Pin 4 (autoGruen = 4). Pin 2 ist Auto-Rot, Pin 6 ist die grüne Fußgänger-LED und Pin 7 der Taster - die sind hier falsch.",
+        "Sind die beiden genutzten Taster-Beinchen schon ohne Drücken verbunden, liegt Pin 7 dauernd auf GND und liest LOW - für den Code sieht das aus wie ein Dauerdruck. Deshalb diagonal gegenüberliegende Beinchen über der Mittelrinne nutzen. Eine falsch gesteckte LED oder ein fehlender Vorwiderstand ändern nur die LED, und ein längeres delay würde die Sequenz trotzdem starten.",
     },
     {
       type: "multiple-choice",
@@ -2122,7 +2122,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "In der Lektion sitzt der LDR oben an 5V, danach kommt der Abgriff an A0 und ein 10-kOhm-Widerstand nach GND. Die anderen Varianten vertauschen 5V/GND oder lassen den Festwiderstand weg, dann funktioniert der Spannungsteiler nicht.",
+        "In der Lektion sitzt der LDR oben an 5V, danach kommt der Abgriff an A0 und ein 10-kOhm-Widerstand nach GND. Ist GND oben und 5V unten, misst der Teiler auch, aber umgekehrt (hell = niedriger Wert) - dann passt die if-Bedingung nicht mehr. Die Variante, die zweimal an 5V endet, und die ohne Festwiderstand funktionieren gar nicht.",
     },
     {
       type: "multiple-choice",
@@ -2141,27 +2141,27 @@ export const TEST_QUESTIONS = {
       type: "multiple-choice",
       question: "Was macht die Nachtabschaltung in dieser Lektion genau?",
       options: [
-        "Sie schaltet die Ampel bei Helligkeit EIN und bei Dunkelheit AUS",
-        "Sie dimmt die LEDs je nach Helligkeit stufenlos",
         "Sie lässt die Ampel nur bei Dunkelheit laufen und schaltet bei Helligkeit alle LEDs aus",
+        "Sie dimmt die LEDs je nach Helligkeit stufenlos",
+        "Bei Helligkeit läuft die Ampel normal, bei Dunkelheit sind alle LEDs aus und nur Auto-Gelb blinkt",
         "Sie schaltet bei Dunkelheit ein zusätzliches Nachtlicht ein",
       ],
       correct: 2,
       explanation:
-        "Laut Lektion ist die Ampel nur aktiv, wenn es dunkel genug ist; bei Helligkeit schläft sie und alle LEDs gehen aus. Das ist genau umgekehrt zur Straßenlaterne und hat nichts mit Dimmen oder einem extra Nachtlicht zu tun.",
+        "Wie eine echte Ampel nachts: Tagsüber (hell) läuft der normale Betrieb mit Taster, bei Dunkelheit schaltet sie in den Nachtmodus - alles aus, nur Auto-Gelb blinkt. Ganz aus wäre unübersichtlicher, und mit Dimmen oder einem extra Nachtlicht hat das nichts zu tun.",
     },
     {
       type: "multiple-choice",
-      question: "Im Code steht: if (lichtWert <= SCHWELLE) { ... }. Wann wird dieser Block ausgeführt?",
+      question: "Im Code steht: if (lichtWert > SCHWELLE) { ... }. Wann wird dieser Block ausgeführt?",
       options: [
-        "Wenn es hell ist, dann schläft die Ampel",
-        "Wenn lichtWert genau 1023 beträgt",
+        "Wenn es dunkel ist, dann blinkt nur Gelb",
+        "Nur wenn lichtWert genau 1023 beträgt",
         "Wenn der Taster gedrückt wird",
-        "Wenn es dunkel ist, dann ist die Ampel aktiv",
+        "Wenn es hell ist, dann läuft die Ampel normal",
       ],
       correct: 3,
       explanation:
-        "Ein kleiner Lichtwert bedeutet Dunkelheit; lichtWert <= SCHWELLE ist also der Dunkel-Fall, in dem die Ampel normal läuft. Der else-Zweig gehört zu hell, 1023 wäre sehr hell, und der Taster wird erst innerhalb des Dunkel-Blocks geprüft.",
+        "Ein großer Lichtwert bedeutet Helligkeit; lichtWert > SCHWELLE ist also der Hell-Fall, in dem die Ampel normal läuft. Der Nachtmodus mit blinkendem Gelb steht im else-Zweig, 1023 ist nur ein Beispiel für sehr hell, und der Taster wird erst innerhalb des Hell-Blocks geprüft.",
     },
     {
       type: "multiple-choice",
@@ -2233,16 +2233,16 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "An welchem Pin hängt in der Prüfungsschaltung der LDR (Lichtsensor)?",
+      question: "Gewächshaus-Showcase: Der NTC-Wert sinkt unter SCHWELLE_HEISS. Was macht die Steuerung?",
       options: [
-        "Pin 7",
-        "Pin A0",
-        "Pin 2",
-        "Pin 6",
+        "Lampe an, Fenster zu",
+        "Fenster auf (Servo auf 90°), Lampe aus",
+        "Nichts, das ist die Wohlfühlzone",
+        "Fenster zu und Lampe aus",
       ],
       correct: 1,
       explanation:
-        "Der LDR wird laut Schaltplan am analogen Eingang A0 ausgelesen (analogRead(A0)). Pin 7 ist der Taster, Pin 2 die rote Auto-LED, Pin 6 die grüne Fußgänger-LED.",
+        "Beim NTC unten im Spannungsteiler gilt: warm = kleiner Wert. Liegt der Wert unter SCHWELLE_HEISS, ist es zu warm - das Fenster geht auf, die Lampe (Heizung) bleibt aus. Lampe an gehört zu kalt (Wert über SCHWELLE_KALT), alles aus zur Wohlfühlzone dazwischen.",
     },
     {
       type: "multiple-choice",
@@ -2255,33 +2255,33 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Laut Lektion erfüllt die Ampel die Pflicht durch 2 Sensoren (LDR analog + Taster digital), 5 Aktoren (LEDs) und Steuerung mit if/else plus Zustandsmaschine. Ein analoger Sensor (LDR) ist dabei, deshalb ist sie konform.",
+        "Laut Lektion erfüllt die Ampel die Pflicht durch 2 Sensoren (LDR analog + Taster digital), 5 Aktoren (LEDs) und Steuerung mit if/else und einer festen Ablauf-Reihenfolge (Phasen 1-4). Ein analoger Sensor (LDR) ist dabei, deshalb ist sie konform.",
     },
     {
       type: "multiple-choice",
-      question: "Was passiert in der Schaltung, wenn der LDR misst, dass es HELL ist?",
+      question: "Was passiert in der Schaltung, wenn der LDR misst, dass es DUNKEL ist?",
       options: [
         "Die komplette Ampel-Sequenz startet sofort",
-        "Der Taster wird dauerhaft gesperrt",
-        "Nur die Fußgänger-Ampel leuchtet grün",
         "Alle LEDs werden ausgeschaltet, die Ampel schläft",
+        "Nur die Fußgänger-Ampel leuchtet grün",
+        "Alle LEDs aus, nur Auto-Gelb blinkt (Nachtmodus)",
       ],
       correct: 3,
       explanation:
-        "Im else-Zweig (hell) werden alle fünf LEDs auf LOW gesetzt, die Ampel schläft. Erst wenn der LDR dunkel meldet (Wert unter der SCHWELLE), wird die Ampel aktiv und prüft den Taster.",
+        "Im else-Zweig (dunkel, Wert bis zur SCHWELLE) gehen Auto-Rot, Auto-Grün und beide Fußgänger-LEDs aus, und Auto-Gelb blinkt - wie eine echte Ampel nachts. Das Blinken zeigt Autofahrern, dass hier eine Ampel steht. Den Taster prüft die Ampel nur bei Helligkeit im normalen Betrieb.",
     },
     {
       type: "multiple-choice",
-      question: "Der Taster ist als INPUT_PULLUP konfiguriert. Wann erkennt der Code, dass er gedrückt wurde?",
+      question: "Für welche dieser Pool-Aufgaben brauchst du Transistor, Basiswiderstand und Freilaufdiode?",
       options: [
-        "Wenn digitalRead(taster) den Wert LOW liefert",
-        "Wenn analogRead(taster) über 300 liegt",
-        "Wenn digitalRead(taster) den Wert HIGH liefert",
-        "Wenn der LDR gleichzeitig hell misst",
+        "Lüftung (DC-Motor)",
+        "Ampel (5 LEDs)",
+        "Gewächshaus-Fenster (Servo)",
+        "Temperaturanzeige (RGB-LED)",
       ],
       correct: 0,
       explanation:
-        "Bei INPUT_PULLUP ist der Eingang normalerweise HIGH und wird beim Drücken auf LOW gezogen; der Code prüft genau digitalRead(taster) == LOW. analogRead passt nicht, weil der Taster ein digitaler Eingang an Pin 7 ist.",
+        "Ein DC-Motor braucht mehr Strom, als ein Arduino-Pin liefern darf - der Transistor schaltet ihn, der Basiswiderstand schützt den Pin, und die Freilaufdiode fängt die Spannungsspitze der Motorspule ab. LEDs brauchen nur einen Vorwiderstand, und der Servo hat seine Steuerelektronik schon eingebaut.",
     },
     {
       type: "multiple-choice",
