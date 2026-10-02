@@ -387,3 +387,12 @@ Marco hat die polierte App auf iPad + Handy + Mac geprüft und die Richtung abge
 - **Nebeneffekt (gewollt):** Die Sperre „ein Versuch pro Konto und Lektion" hängt an `test_attempts` — ohne Zeile darf wieder getestet werden. Genau das ist beim Jahrgangswechsel erwünscht.
 - **Wie:** Ein CTE via MCP `execute_sql` (Auswahl über Regex `^arduino0[1-8]@klasse\.de$`, `test_attempts` und `user_progress` in einem Statement). Die Ergebnisse wurden vorher ausgelesen und im Sitzungsprotokoll gesichert. Kein Deploy, kein Netlify-Credit verbraucht.
 - **Verifiziert:** Gegenprobe nach dem Löschen — `user_progress` = 0 und `test_attempts` = 0.
+
+---
+
+## 2026-10-02 — Sicherheitsfix: Schüler:innen konnten sich selbst zum Admin machen (DB-only)
+
+- **Anlass:** Gesamtprüfung vom 02.10.2026 (KRITISCH-Fund App). Die Policy „own profile update“ und der Grant `update` auf `profiles` erlaubten jedem angemeldeten Konto, die eigene Spalte `role` auf `admin` zu setzen.
+- **Fix:** Migration `profiles_readonly_for_users`: `insert`/`update` auf `profiles` für `authenticated`/`anon` entzogen, Policies „own profile insert/update“ gelöscht, `db/schema.sql` nachgezogen. Die App liest `profiles` nur. Profile legt der Trigger `handle_new_user` an, Rollen vergibt nur die RPC `set_teacher_role` (SECURITY DEFINER, prüft auf Admin).
+- **Verifiziert:** Als `arduino01` nachgespielt: Das Update auf `role='admin'` wird verweigert, das eigene Profil ist weiter lesbar. Die Rollen sind unverändert: 2 Admins (beide Marco, 03.06.) und 30 Schüler:innen. Die Lücke wurde nicht ausgenutzt. Kein Deploy nötig.
+- **Außerdem:** Prüfberichte (`PRUEFBERICHT-*.md`) sind gitignored, weil sie offene Lücken beschreiben. Im Backlog stehen die Datenschutz-Funde deshalb nur allgemein formuliert.

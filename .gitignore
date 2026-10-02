@@ -56,3 +56,6 @@ next-env.d.ts
 
 # interne Uebergabe-Notizen, nicht ins oeffentliche Repo
 HANDOFF.md
+
+# Pruefberichte nennen offene Sicherheitsluecken -> nur lokal
+PRUEFBERICHT-*.md

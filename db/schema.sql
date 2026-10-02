@@ -121,8 +121,9 @@ drop policy if exists "own profile select" on public.profiles;
 drop policy if exists "own profile insert" on public.profiles;
 drop policy if exists "own profile update" on public.profiles;
 create policy "own profile select" on public.profiles for select using (auth.uid() = id);
-create policy "own profile insert" on public.profiles for insert with check (auth.uid() = id);
-create policy "own profile update" on public.profiles for update using (auth.uid() = id);
+-- KEINE insert/update-Policy (Sicherheitsfix 02.10.2026): sonst koennte sich
+-- jede:r per Update auf role='admin' selbst befoerdern. Profile legt der
+-- Trigger handle_new_user an, Rollen vergibt nur die RPC set_teacher_role.
 
 -- User-Progress: nur eigenes (das schuetzt das Trio personenbezogen).
 alter table public.user_progress enable row level security;
@@ -146,7 +147,7 @@ grant select on public.courses, public.lessons, public.exercises to anon, authen
 
 -- Personalisierte Daten: nur authenticated; RLS beschraenkt zusaetzlich auf
 -- die eigenen Zeilen (auth.uid()).
-grant select, insert, update        on public.profiles      to authenticated;
+grant select                        on public.profiles      to authenticated;  -- nur lesen, s. o.
 grant select, insert, update, delete on public.user_progress to authenticated;
 
 -- =========================================================================
