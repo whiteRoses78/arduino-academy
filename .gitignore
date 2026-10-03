@@ -43,7 +43,8 @@ next-env.d.ts
 # webapp-saas-erstellen
 .env.local
 .mcp.json
-.claude/settings.local.json
+# lokale Claude-Code-Einstellungen + Hooks (Supabase-Guard), nicht ins oeffentliche Repo
+/.claude/
 # .env.example ist Vorlage ohne Secrets -> committen (Negation nach .env*)
 !.env.example
 

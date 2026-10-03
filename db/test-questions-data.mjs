@@ -1721,7 +1721,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Laut Lektion ist 90 die Mittelstellung (Arm zeigt nach oben), 0 ist ganz links und 180 ganz rechts. 45 liegt zwischen links und Mitte, und 1 wäre fast ganz links - beides ist nicht die Mitte.",
+        "Ein Standard-Servo dreht von 0° bis 180°, und write() bekommt den Winkel in Grad. Die Mitte zwischen 0 und 180 ist 90 – dort zeigt der Arm nach oben. 0 ist ganz links und 180 ganz rechts. 45 liegt zwischen links und Mitte, 1 wäre fast ganz links.",
     },
     {
       type: "multiple-choice",
@@ -1734,7 +1734,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "Rot ist die Plus-/Versorgungsspannung und gehört an +5V. GND ist für das braune/schwarze Kabel, das orange/gelbe Signal-Kabel kommt an Pin 9, und Pin 13 wird laut Lektion vermieden (dort sitzt die Onboard-LED).",
+        "Ein Servo hat drei Kabel mit festen Aufgaben: Rot ist die Versorgung (+5V), Braun/Schwarz ist GND, und Orange/Gelb ist das Signal. Rot an GND oder an einen Signal-Pin wäre falsch gepolt bzw. ohne Stromversorgung. Das Signal-Kabel kommt an Pin 9. Pin 13 meidet man, weil dort die Onboard-LED mitblinkt.",
     },
     {
       type: "multiple-choice",
@@ -1760,7 +1760,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Ohne das delay() bekäme der Servo sofort den nächsten Befehl und könnte sich nicht sichtbar bewegen - mechanisch braucht er etwas Zeit. Überhitzen oder Kaputtgehen durch fehlendes delay nennt die Lektion nicht, und die Library wird durch #include geladen, nicht durch delay.",
+        "Der Servo braucht mechanisch etwas Zeit, um zum neuen Winkel zu drehen. Ohne delay() käme sofort der nächste write()-Befehl, und der Arm könnte die Bewegung gar nicht ausführen – man sähe nichts oder nur ein Zucken. Kaputt geht er davon nicht, und die Library wird durch #include geladen, nicht durch delay().",
     },
     {
       type: "multiple-choice",
@@ -1786,7 +1786,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "Brummen ohne Bewegung heißt laut Lektion: das orange/gelbe Signal-Kabel hängt nicht an Pin 9 oder steckt falsch - prüfen, ob attach(9) zum Anschluss passt. Ein langes delay lässt den Servo nur warten, write()-Werte bis 180 sind erlaubt, und ein doppeltes #include erzeugt einen anderen Fehler.",
+        "Brummt der Servo, bekommt er Strom – Rot und Braun sind also richtig. Bewegt er sich trotzdem nicht, kommt das Steuersignal nicht an. Das orange/gelbe Kabel hängt dann nicht an Pin 9 oder steckt an einem anderen Pin als im Code bei attach(9) angegeben. Ein langes delay() lässt den Servo nur warten, Werte bis 180 sind in write() erlaubt, und ein doppeltes #include schadet nicht.",
     },
   ],
 
@@ -1819,7 +1819,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Welche Aufgabe hat der 1 kOhm-Widerstand zwischen Arduino-Pin und Basis des Transistors?",
+      question: "Welche Aufgabe hat der 1 kΩ-Widerstand zwischen Arduino-Pin und Basis des Transistors?",
       options: [
         "Er sorgt dafür, dass der Motor langsamer dreht",
         "Er erhöht die Spannung am Motor auf 9 V",
@@ -1828,7 +1828,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Die Basis-Emitter-Strecke wirkt wie eine Diode; ohne Widerstand würde der Strom den Pin grillen. 1 kOhm begrenzt den Basis-Strom auf ca. 4 mA. Mit der Drehzahl, der Motorspannung oder PWM-Glättung hat der Basiswiderstand nichts zu tun.",
+        "Die Basis-Emitter-Strecke wirkt wie eine Diode; ohne Widerstand würde der Strom den Pin grillen. 1 kΩ begrenzt den Basis-Strom auf ca. 4 mA. Mit der Drehzahl, der Motorspannung oder PWM-Glättung hat der Basiswiderstand nichts zu tun.",
     },
     {
       type: "multiple-choice",
@@ -1922,7 +1922,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Laut Anschlusstabelle der Lektion geht ENA an Pin 10 (~ PWM) für die Drehzahl. Pin 9 ist IN1 und Pin 8 ist IN2 (beide für die Drehrichtung), Pin 13 kommt nicht vor.",
+        "ENA steuert die Drehzahl. Dafür braucht es ein PWM-Signal, also einen Pin mit ~ – hier Pin 10. Pin 9 (IN1) und Pin 8 (IN2) legen nur die Drehrichtung fest, dafür reicht HIGH/LOW. Pin 13 wird in dieser Schaltung nicht benutzt.",
     },
     {
       type: "multiple-choice",
@@ -1961,7 +1961,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Sind beide Eingänge gleich (beide LOW), steht der Motor; alternativ ENA auf 0. HIGH/LOW lässt ihn drehen, GND abziehen ist kein Programmierschritt, delay() hält nur das Programm an, stoppt aber nicht den Motor.",
+        "Der Motor dreht nur, wenn zwischen seinen beiden Anschlüssen ein Spannungsunterschied besteht. Sind IN1 und IN2 beide LOW, liegen beide Motoranschlüsse auf demselben Pegel: Es fließt kein Strom, der Motor steht. ENA auf 0 schaltet die Ausgänge ganz ab und wirkt genauso. IN1 HIGH und IN2 LOW lassen ihn dagegen drehen. GND abziehen ist kein Programmierschritt, und delay() hält nur das Programm an – der Motor läuft mit dem letzten Befehl einfach weiter.",
     },
     {
       type: "multiple-choice",
@@ -1987,7 +1987,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Ohne gemeinsamen GND haben die kleinen Steuersignale keinen gemeinsamen Bezugspunkt und nichts funktioniert. Mit Drehzahl, Aufladen oder einer LED hat die GND-Verbindung laut Lektion nichts zu tun.",
+        "Eine Spannung ist immer ein Unterschied zwischen zwei Punkten. Schickt der Arduino HIGH (5 V) an IN1, muss der L298N wissen, von welchem Punkt aus diese 5 V gemessen werden – das ist der gemeinsame GND. Fehlt diese Verbindung, schweben die Steuersignale ohne Bezugspunkt, und der Motor reagiert gar nicht oder zufällig. Mit Drehzahl, Aufladen oder der LED am Modul hat die GND-Verbindung nichts zu tun.",
     },
     {
       type: "multiple-choice",
@@ -2115,14 +2115,14 @@ export const TEST_QUESTIONS = {
       type: "multiple-choice",
       question: "Wie ist der LDR in dieser Lektion als Spannungsteiler geschaltet?",
       options: [
-        "5V -> LDR -> Pin A0 -> 10-kOhm-Widerstand -> GND",
-        "GND -> LDR -> Pin A0 -> 10-kOhm-Widerstand -> 5V",
-        "5V -> 10-kOhm-Widerstand -> Pin A0 -> LDR -> 5V",
+        "5V -> LDR -> Pin A0 -> 10-kΩ-Widerstand -> GND",
+        "GND -> LDR -> Pin A0 -> 10-kΩ-Widerstand -> 5V",
+        "5V -> 10-kΩ-Widerstand -> Pin A0 -> LDR -> 5V",
         "Pin A0 -> LDR -> 5V, ohne weiteren Widerstand",
       ],
       correct: 0,
       explanation:
-        "In der Lektion sitzt der LDR oben an 5V, danach kommt der Abgriff an A0 und ein 10-kOhm-Widerstand nach GND. Ist GND oben und 5V unten, misst der Teiler auch, aber umgekehrt (hell = niedriger Wert) - dann passt die if-Bedingung nicht mehr. Die Variante, die zweimal an 5V endet, und die ohne Festwiderstand funktionieren gar nicht.",
+        "In der Lektion sitzt der LDR oben an 5V, danach kommt der Abgriff an A0 und ein 10-kΩ-Widerstand nach GND. Ist GND oben und 5V unten, misst der Teiler auch, aber umgekehrt (hell = niedriger Wert) - dann passt die if-Bedingung nicht mehr. Die Variante, die zweimal an 5V endet, und die ohne Festwiderstand funktionieren gar nicht.",
     },
     {
       type: "multiple-choice",
@@ -2135,7 +2135,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "In dieser Schaltung gilt: hell = hoher Wert. Bei viel Licht hat der LDR wenig Widerstand, deshalb misst A0 einen hohen Wert (800-1000). Niedrige Werte gehören zur Dunkelheit, 0 oder 300 sind erfundene Festwerte.",
+        "Der LDR sitzt im Spannungsteiler oben: 5V → LDR → A0 → 10 kΩ → GND. Bei viel Licht hat der LDR nur wenig Widerstand, deshalb fällt an ihm kaum Spannung ab und A0 liegt nah an 5 V. Das ergibt einen hohen Wert (etwa 800–1000). Niedrige Werte gehören zur Dunkelheit. Genau 0 käme nur ohne Verbindung zu 5 V heraus, und 300 ist der Schwellenwert, kein Messwert.",
     },
     {
       type: "multiple-choice",
@@ -2174,7 +2174,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Ein guter Schwellenwert liegt zwischen Hell- und Dunkelwert, hier zum Beispiel 300. Liegt er über oder unter beiden Werten, kann die Schaltung Hell und Dunkel nicht mehr unterscheiden; egal ist er also nicht.",
+        "Der Schwellenwert ist die Grenze, an der das Programm zwischen hell und dunkel umschaltet. Er muss deshalb zwischen dem Hellwert (750) und dem Dunkelwert (80) liegen, etwa bei 300. Mit Abstand zu beiden Werten schaltet die Schaltung sicher, auch wenn das Licht etwas schwankt. Läge er bei 1000, wäre jeder Messwert kleiner – die Schaltung hielte es immer für dunkel. Bei 50 wäre es immer hell. Egal ist der Wert also nicht.",
     },
     {
       type: "multiple-choice",
@@ -2200,7 +2200,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Die Lektion lässt analogRead(A0) per Serial.println ausgeben und im Serial Monitor ablesen, um Hell- und Dunkelwert zu notieren. Die anderen Optionen können keine Zahlenwerte des Sensors anzeigen.",
+        "Um Hell- und Dunkelwert zu kennen, musst du die Zahl sehen, die analogRead(A0) liefert. Das geht nur, wenn der Arduino sie mit Serial.println() an den PC schickt und du sie im Serial Monitor abliest. Die anderen Möglichkeiten können keine Zahlenwerte des Sensors anzeigen.",
     },
     {
       type: "multiple-choice",
@@ -2213,7 +2213,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "Laut Warnhinweis hängen die LDR-Werte von Bauteil und Umgebungslicht ab, deshalb kann der passende Schwellenwert bei dir 200, bei anderen 400 sein. Der Serial Monitor zeigt korrekte Werte, und 300 hat nichts mit der Onboard-LED zu tun.",
+        "Jeder LDR ist ein bisschen anders (Bauteil-Toleranz), und jeder Raum ist unterschiedlich hell. Darum misst dein Aufbau andere Hell- und Dunkelwerte als der deines Nachbarn, und der passende Schwellenwert kann bei dir 200, bei anderen 400 sein. Mit dem Serial Monitor findest du deine echten Werte heraus. Der Arduino verhält sich jeden Tag gleich, der Serial Monitor zeigt korrekte Werte, und 300 hat nichts mit der Onboard-LED zu tun.",
     },
   ],
 
@@ -2229,7 +2229,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Die Lektion nennt als Pflicht: 1 Sensor + 2 Aktoren ODER 2 Sensoren + 1 Aktor, und mindestens 1 externer Sensor muss analog sein. Ein reines Taster-Setup (nur digital) reicht laut Lektion ausdrücklich nicht.",
+        "Die Prüfungsschaltung soll zeigen, dass du den ganzen Weg beherrschst: Sensor misst → Programm entscheidet → Aktor reagiert (EVA-Prinzip). Darum braucht sie mindestens 1 Sensor + 2 Aktoren oder 2 Sensoren + 1 Aktor. Mindestens ein Sensor muss analog sein, denn damit beweist du, dass du Messwerte mit analogRead() einlesen und über einen Schwellenwert auswerten kannst. Ein Taster allein ist nur an/aus und zeigt das nicht. Schaltungen ganz ohne Sensor haben keine Eingabe.",
     },
     {
       type: "multiple-choice",
@@ -2255,7 +2255,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 2,
       explanation:
-        "Laut Lektion erfüllt die Ampel die Pflicht durch 2 Sensoren (LDR analog + Taster digital), 5 Aktoren (LEDs) und Steuerung mit if/else und einer festen Ablauf-Reihenfolge (Phasen 1-4). Ein analoger Sensor (LDR) ist dabei, deshalb ist sie konform.",
+        "Prüfe die Ampel an der Pflicht: Sensoren sind der LDR (analog) und der Taster (digital) – das sind 2 Sensoren, und einer davon ist analog. Aktoren sind die 5 LEDs, also mehr als genug. Dazu wertet das Programm die Sensoren mit if/else aus und steuert die Ampelphasen. Damit sind alle Bedingungen erfüllt. Die Ampel hat keine 3 analogen Sensoren, braucht mehr als nur einen Taster und kommt nicht ohne Code aus.",
     },
     {
       type: "multiple-choice",
@@ -2294,7 +2294,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Die Lektion rät, systematisch aufzubauen: erst Auto-Ampel, dann Fußgänger-Ampel, dann Taster, zuletzt LDR, und nach jedem Bauteil zu testen. Alles auf einmal aufzubauen macht die Fehlersuche schwerer.",
+        "Baust du Schritt für Schritt auf (erst Auto-Ampel, dann Fußgänger-Ampel, dann Taster, zuletzt LDR) und testest nach jedem Teil, weißt du bei einem Fehler sofort, wo er steckt: im zuletzt hinzugefügten Teil. Baust du alles auf einmal, kann der Fehler überall sein, und die Suche dauert viel länger.",
     },
     {
       type: "multiple-choice",
@@ -2320,7 +2320,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 3,
       explanation:
-        "Die Lektion listet 'GND vergessen' als häufigen Fehler auf, weil ohne Masse keine LED leuchtet. Kommentare und das Kalibrieren mit dem Serial Monitor empfiehlt die Lektion dagegen ausdrücklich als gutes Vorgehen.",
+        "Strom fließt nur in einem geschlossenen Kreis: vom Pin durch Widerstand und LED zurück zu GND. Fehlt die GND-Verbindung, ist der Kreis offen und keine LED leuchtet, auch wenn der Code stimmt. Weil man das leicht übersieht, gehört es zu den häufigsten Fehlern. Die anderen Antworten sind keine Fehler: Viele Kommentare und das Kalibrieren mit dem Serial Monitor sind gutes Vorgehen, und zu schnell programmieren gibt es nicht.",
     },
   ],
 };
