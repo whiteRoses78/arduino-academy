@@ -35,9 +35,10 @@ export function MakeTeacherForm() {
           placeholder="lehrer@beispiel.de"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="h-11 text-base md:text-base"
         />
       </div>
-      <Button type="submit" disabled={isPending || !email}>
+      <Button type="submit" disabled={isPending || !email} className="min-h-11">
         {isPending ? "Wird freigeschaltet …" : "Zum Lehrer machen"}
       </Button>
       {msg && (
