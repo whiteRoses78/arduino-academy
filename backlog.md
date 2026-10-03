@@ -72,11 +72,11 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [WICHTIG] Übergreifend · Ersatzschreibungen ae/oe/ue in M2–M5 (Wortliste, kein Regex) — erledigt 03.10.
 - [x] [WICHTIG] Übergreifend · Operatoren ||, <=, >=, != nie erklärt — erledigt 03.10.
 - [x] [WICHTIG] Übergreifend · Flussdiagramm nur einmal gezeigt — erledigt 03.10.
-- [ ] [WICHTIG] App · Zugriffsschutz für Lehrer-Inhalte nachschärfen (Details im lokalen Prüfbericht)
-- [ ] [WICHTIG] App · Ordering-Pfeile zu klein (UI)
-- [ ] [WICHTIG] App · Header/Prüfen/Login unter 44 px (UI)
-- [ ] [WICHTIG] App · iOS-Zoom bei Auswahlliste/Input (UI)
-- [ ] [WICHTIG] App · Zwei Zuordnungsübungen ungemischt (UI)
-- [ ] [WICHTIG] App · Datenschutzerklärung ohne Testergebnisse ❓
+- [x] [WICHTIG] App · Zugriffsschutz für Lehrer-Inhalte nachschärfen (Details im lokalen Prüfbericht) — erledigt 03.10.
+- [x] [WICHTIG] App · Ordering-Pfeile zu klein (UI) — erledigt 03.10.
+- [x] [WICHTIG] App · Header/Prüfen/Login unter 44 px (UI) — erledigt 03.10.
+- [x] [WICHTIG] App · iOS-Zoom bei Auswahlliste/Input (UI) — erledigt 03.10.
+- [x] [WICHTIG] App · Zwei Zuordnungsübungen ungemischt (UI) — erledigt 03.10.
+- [x] [WICHTIG] App · Datenschutzerklärung ohne Testergebnisse — erledigt 03.10.
 - [ ] [NICE] 37 weitere Politur-Funde (alle Module + App) → siehe `PRUEFBERICHT-2026-10-02.md`
 
