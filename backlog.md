@@ -78,5 +78,5 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [WICHTIG] App · iOS-Zoom bei Auswahlliste/Input (UI) — erledigt 03.10.
 - [x] [WICHTIG] App · Zwei Zuordnungsübungen ungemischt (UI) — erledigt 03.10.
 - [x] [WICHTIG] App · Datenschutzerklärung ohne Testergebnisse — erledigt 03.10.
-- [ ] [NICE] 37 weitere Politur-Funde (alle Module + App) → siehe `PRUEFBERICHT-2026-10-02.md`
+- [x] [NICE] 37 weitere Politur-Funde — erledigt 03.10. (meist schon in den Modul-Durchgängen; Rest: Steckbrett-Hinweis, kΩ, Test-Erklärungen M4/M5)
 
