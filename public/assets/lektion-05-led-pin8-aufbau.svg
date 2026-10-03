@@ -56,7 +56,7 @@
 
   <!-- Mittelrinne -->
   <rect x="50" y="350" width="640" height="14" rx="2" fill="#d0c8b8"/>
-  <text x="360" y="360" text-anchor="middle" font-size="7" fill="#aaa" font-style="italic">Mittelrinne (trennt obere und untere Haelfte)</text>
+  <text x="360" y="360" text-anchor="middle" font-size="7" fill="#aaa" font-style="italic">Mittelrinne (trennt obere und untere Hälfte)</text>
 
   <!-- Reihen f-j -->
   <g font-size="9" fill="#666" font-style="italic">

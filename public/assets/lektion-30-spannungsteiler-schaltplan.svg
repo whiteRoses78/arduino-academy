@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 360" font-family="system-ui, -apple-system, sans-serif">
-  <title>Schaltplan: Spannungsteiler mit zwei Widerstaenden, Multimeter misst U2</title>
+  <title>Schaltplan: Spannungsteiler mit zwei Widerständen, Multimeter misst U2</title>
 
   <rect x="0" y="0" width="460" height="360" rx="8" fill="#fdfdfd" stroke="#dee2e6" stroke-width="1"/>
 
   <!-- Titel -->
-  <text x="230" y="26" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Schaltplan: Spannungsteiler aus zwei Widerstaenden</text>
+  <text x="230" y="26" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Schaltplan: Spannungsteiler aus zwei Widerständen</text>
 
   <!-- +5V-Anschluss -->
   <line x1="170" y1="50" x2="170" y2="80" stroke="#222" stroke-width="2"/>

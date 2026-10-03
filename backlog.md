@@ -68,10 +68,10 @@ Details, Fixes und Gegenprüfung: lokaler Prüfbericht (nicht im Repo). ❓ = br
 - [x] [WICHTIG] M5 · Lüftungs-Skelett mit fehlerhaftem Toggle — erledigt 02.10.
 - [x] [WICHTIG] M5 · „Zustandsmaschine“ unerklärt — erledigt 02.10.
 - [x] [WICHTIG] M5 · RGB-LED nur gemeinsame Kathode — erledigt 02.10.
-- [ ] [WICHTIG] Übergreifend · Lektionsverweise (L5, L19, Lektion 11 …) falsch/unauffindbar
-- [ ] [WICHTIG] Übergreifend · Ersatzschreibungen ae/oe/ue in M2–M5 (Wortliste, kein Regex)
-- [ ] [WICHTIG] Übergreifend · Operatoren ||, <=, >=, != nie erklärt
-- [ ] [WICHTIG] Übergreifend · Flussdiagramm nur einmal gezeigt
+- [x] [WICHTIG] Übergreifend · Lektionsverweise (L5, L19, Lektion 11 …) falsch/unauffindbar — erledigt 03.10.
+- [x] [WICHTIG] Übergreifend · Ersatzschreibungen ae/oe/ue in M2–M5 (Wortliste, kein Regex) — erledigt 03.10.
+- [x] [WICHTIG] Übergreifend · Operatoren ||, <=, >=, != nie erklärt — erledigt 03.10.
+- [x] [WICHTIG] Übergreifend · Flussdiagramm nur einmal gezeigt — erledigt 03.10.
 - [ ] [WICHTIG] App · Zugriffsschutz für Lehrer-Inhalte nachschärfen (Details im lokalen Prüfbericht)
 - [ ] [WICHTIG] App · Ordering-Pfeile zu klein (UI)
 - [ ] [WICHTIG] App · Header/Prüfen/Login unter 44 px (UI)

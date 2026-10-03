@@ -1026,7 +1026,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 1,
       explanation:
-        "Während delay() läuft, ist der Arduino sozusagen eingefroren und kann nichts anderes erledigen. Für komplexere Projekte lernt man später millis().",
+        "Während delay() läuft, ist der Arduino sozusagen eingefroren und kann nichts anderes erledigen. Für die Prüfung reicht delay(). Profis nutzen dafür millis(), das brauchst du hier aber nicht.",
     },
     {
       type: "multiple-choice",
@@ -2174,7 +2174,7 @@ export const TEST_QUESTIONS = {
       ],
       correct: 0,
       explanation:
-        "Ein guter Schwellenwert liegt zwischen Hell- und Dunkelwert, in der Lektion 300. Liegt er über oder unter beiden Werten, kann die Schaltung Hell und Dunkel nicht mehr unterscheiden; egal ist er also nicht.",
+        "Ein guter Schwellenwert liegt zwischen Hell- und Dunkelwert, hier zum Beispiel 300. Liegt er über oder unter beiden Werten, kann die Schaltung Hell und Dunkel nicht mehr unterscheiden; egal ist er also nicht.",
     },
     {
       type: "multiple-choice",

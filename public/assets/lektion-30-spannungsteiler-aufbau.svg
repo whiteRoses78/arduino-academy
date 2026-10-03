@@ -208,5 +208,5 @@
   <path d="M 655 478 C 655 510, 400 510, 400 443" stroke="#222" stroke-width="2.5" fill="none" stroke-dasharray="6 3"/>
 
   <!-- Hinweis-Text -->
-  <text x="360" y="548" text-anchor="middle" font-size="11" fill="#666" font-style="italic">Erwartungswert: U&#8322; &#8776; 2,5 V (beide Widerstaende gleich gross &#8594; halbe Versorgungsspannung)</text>
+  <text x="360" y="548" text-anchor="middle" font-size="11" fill="#666" font-style="italic">Erwartungswert: U&#8322; &#8776; 2,5 V (beide Widerstände gleich groß &#8594; halbe Versorgungsspannung)</text>
 </svg>

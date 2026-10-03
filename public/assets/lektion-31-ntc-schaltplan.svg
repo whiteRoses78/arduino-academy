@@ -55,5 +55,5 @@
   <text x="50" y="220" font-size="11" fill="#888">= 5 V</text>
 
   <!-- Hinweis-Text unten -->
-  <text x="230" y="340" text-anchor="middle" font-size="11" fill="#666" font-style="italic">heiss &#8594; NTC-Widerstand sinkt &#8594; U&#8322; sinkt &#8594; analogRead sinkt</text>
+  <text x="230" y="340" text-anchor="middle" font-size="11" fill="#666" font-style="italic">heiß &#8594; NTC-Widerstand sinkt &#8594; U&#8322; sinkt &#8594; analogRead sinkt</text>
 </svg>
