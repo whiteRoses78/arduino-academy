@@ -8,6 +8,31 @@ import { TestResultView } from "./test-result";
 
 type Phase = "intro" | "running" | "done" | "locked";
 
+// Zwischenstand im sessionStorage: Lädt die Seite während des Tests neu
+// (oder verwirft das iPad den Tab), sind die Antworten beim erneuten Start
+// wieder da. Bewusst weiche Sperre — der Versuch zählt erst beim Abschicken.
+// Schlüssel mit User-ID: Auf einem geteilten iPad sieht Schüler B nie die
+// Antworten von Schüler A.
+const storageKey = (key: string) => `test-answers:${key}`;
+
+function loadSaved(key: string): TestAnswers {
+  try {
+    const parsed = JSON.parse(sessionStorage.getItem(storageKey(key)) ?? "{}");
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveAnswers(key: string, answers: TestAnswers | null) {
+  try {
+    if (answers) sessionStorage.setItem(storageKey(key), JSON.stringify(answers));
+    else sessionStorage.removeItem(storageKey(key));
+  } catch {
+    // privater Modus o. ä.: dann eben ohne Zwischenspeicher
+  }
+}
+
 // Steuert den Test-Ablauf clientseitig: Start → Fragen sammeln → Abschicken →
 // Ergebnis. Bewertung passiert serverseitig (submit_test); hier nur Anzeige.
 // Solange der Test läuft, liegen die Fragen in einem Vollbild-Overlay über
@@ -15,10 +40,13 @@ type Phase = "intro" | "running" | "done" | "locked";
 export function TestRunner({
   lessonId,
   lessonTitle,
+  userId,
 }: {
   lessonId: string;
   lessonTitle: string;
+  userId: string;
 }) {
+  const saveKey = `${userId}:${lessonId}`;
   const [phase, setPhase] = useState<Phase>("intro");
   const [questions, setQuestions] = useState<TestQuestion[]>([]);
   const [answers, setAnswers] = useState<TestAnswers>({});
@@ -44,7 +72,10 @@ export function TestRunner({
     const res = await loadTest(lessonId);
     setBusy(false);
     if (!res.ok) {
-      if (res.error === "ALREADY_DONE") return setPhase("locked");
+      if (res.error === "ALREADY_DONE") {
+        saveAnswers(saveKey, null);
+        return setPhase("locked");
+      }
       setMsg(
         res.error === "AUTH"
           ? "Bitte zuerst anmelden."
@@ -52,6 +83,14 @@ export function TestRunner({
       );
       return;
     }
+    // Nur gespeicherte Antworten zu Fragen übernehmen, die es noch gibt.
+    const saved = loadSaved(saveKey);
+    const restored: TestAnswers = {};
+    for (const q of res.questions) {
+      const v = saved[q.id];
+      if (Number.isInteger(v) && v >= 0 && v < q.options.length) restored[q.id] = v;
+    }
+    setAnswers(restored);
     setQuestions(res.questions);
     setPhase("running");
   }
@@ -62,10 +101,14 @@ export function TestRunner({
     const res = await submitTest(lessonId, answers);
     setBusy(false);
     if (!res.ok) {
-      if (res.error === "ALREADY_DONE") return setPhase("locked");
+      if (res.error === "ALREADY_DONE") {
+        saveAnswers(saveKey, null);
+        return setPhase("locked");
+      }
       setMsg("Abschicken fehlgeschlagen. Bitte nochmal versuchen.");
       return;
     }
+    saveAnswers(saveKey, null);
     setResult(res.result);
     setPhase("done");
   }
@@ -113,7 +156,13 @@ export function TestRunner({
                 question={q}
                 index={i}
                 selected={answers[q.id] ?? null}
-                onSelect={(opt) => setAnswers((a) => ({ ...a, [q.id]: opt }))}
+                onSelect={(opt) =>
+                  setAnswers((a) => {
+                    const next = { ...a, [q.id]: opt };
+                    saveAnswers(saveKey, next);
+                    return next;
+                  })
+                }
               />
             ))}
             {msg && <p className="text-sm text-destructive">{msg}</p>}

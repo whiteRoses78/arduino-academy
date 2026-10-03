@@ -11,8 +11,8 @@ export type LessonSolution =
 // Praxis-Teil einer Lektion (Hands-on-Aufbau). Faithful zur Vanilla-Struktur,
 // ABER bewusst OHNE das migrierte Feld `loesung`: Die Lehrer-Lösung kommt
 // ausschliesslich aus der separaten Tabelle `lesson_solutions` (eine gepflegte
-// Quelle). `content.praxis.loesung` bleibt ungenutzt in der DB und absichtlich
-// untypisiert, damit es niemand versehentlich rendert.
+// Quelle). `content.praxis.loesung` wurde am 03.10.2026 aus der DB entfernt
+// (lessons ist ohne Login lesbar); db/seed.mjs filtert das Feld beim Upsert.
 export type LessonPraxis = {
   aufgabe?: { titel?: string; auftrag?: string; lernziel?: string };
   bauteile?: { name: string; anzahl?: number; hinweis?: string }[];

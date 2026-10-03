@@ -16,7 +16,11 @@ export function Matching({
 }) {
   const rights = payload.pairs.map((p) => p.right);
   // Rechte Begriffe deterministisch gemischt (sonst stünden sie direkt daneben).
-  const [order] = useState(() => seededOrder(rights.length, seed));
+  // Ergibt das Mischen zufällig die Ausgangsreihenfolge, einmal rotieren.
+  const [order] = useState(() => {
+    const o = seededOrder(rights.length, seed);
+    return o.every((v, i) => v === i) ? [...o.slice(1), o[0]] : o;
+  });
   const shuffledRights = order.map((i) => rights[i]);
 
   // Pro linker Zeile: gewählter Index in shuffledRights (oder null).
@@ -52,7 +56,7 @@ export function Matching({
             <span className="shrink-0 text-muted-foreground">→</span>
             <select
               className={cn(
-                "flex-1 rounded-lg border bg-card px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "min-h-11 flex-1 rounded-lg border bg-card px-3 py-2 text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 checked && selection[i] !== null
                   ? isRowCorrect(i)
                     ? "border-primary bg-primary/10"
@@ -81,6 +85,8 @@ export function Matching({
         <Button
           type="button"
           variant="secondary"
+          size="lg"
+          className="min-h-11"
           onClick={() => setChecked(true)}
           disabled={selection.some((s) => s === null)}
         >

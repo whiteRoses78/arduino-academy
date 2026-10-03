@@ -159,6 +159,12 @@ const EXAM_RELEVANT = {
 // --- 2) Lektionen anlegen ---
 const lessons = LESSONS.map((lesson, i) => {
   const { id, title, exercises, ...content } = lesson;
+  // Musterlösung NIE in lessons.content: die Spalte ist ohne Login lesbar.
+  // Lehrer-Lösungen kommen nur aus lesson_solutions (Lehrer-RLS).
+  if (content.praxis) {
+    content.praxis = { ...content.praxis };
+    delete content.praxis.loesung;
+  }
   return {
     row: {
       course_id: course.id,

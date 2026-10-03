@@ -6,11 +6,11 @@ import { TestRunner } from "./test-runner";
 export function StartTest({
   lessonId,
   lessonTitle,
-  isLoggedIn,
+  userId,
 }: {
   lessonId: string;
   lessonTitle: string;
-  isLoggedIn: boolean;
+  userId: string | null;
 }) {
   return (
     <section
@@ -21,8 +21,8 @@ export function StartTest({
       <p className="mt-2 mb-4 text-sm text-muted-foreground">
         Ein Versuch — das Ergebnis zählt. Am besten im Unterricht bearbeiten.
       </p>
-      {isLoggedIn ? (
-        <TestRunner lessonId={lessonId} lessonTitle={lessonTitle} />
+      {userId ? (
+        <TestRunner lessonId={lessonId} lessonTitle={lessonTitle} userId={userId} />
       ) : (
         <p className="text-sm text-muted-foreground">
           Zum Testen bitte zuerst{" "}

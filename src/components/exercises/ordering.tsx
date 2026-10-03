@@ -15,9 +15,11 @@ export function Ordering({
   onSolved?: () => void;
 }) {
   // current = aktuelle Reihenfolge als Original-Indizes, deterministisch gemischt.
-  const [current, setCurrent] = useState<number[]>(() =>
-    seededOrder(payload.items.length, seed),
-  );
+  // Ergibt das Mischen zufällig schon die Lösung, einmal rotieren.
+  const [current, setCurrent] = useState<number[]>(() => {
+    const o = seededOrder(payload.items.length, seed);
+    return o.every((v, i) => v === payload.correctOrder[i]) ? [...o.slice(1), o[0]] : o;
+  });
   const [checked, setChecked] = useState(false);
 
   const correct = payload.correctOrder;
@@ -65,13 +67,13 @@ export function Ordering({
               className="flex-1"
               dangerouslySetInnerHTML={{ __html: payload.items[origIdx] }}
             />
-            <span className="flex shrink-0 flex-col leading-none">
+            <span className="flex shrink-0 gap-1">
               <button
                 type="button"
                 onClick={() => move(pos, -1)}
                 disabled={pos === 0 || solved}
                 aria-label="nach oben"
-                className="px-2 py-0.5 text-muted-foreground hover:text-foreground disabled:opacity-30"
+                className="flex min-h-11 min-w-11 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30"
               >
                 ▲
               </button>
@@ -80,7 +82,7 @@ export function Ordering({
                 onClick={() => move(pos, 1)}
                 disabled={pos === current.length - 1 || solved}
                 aria-label="nach unten"
-                className="px-2 py-0.5 text-muted-foreground hover:text-foreground disabled:opacity-30"
+                className="flex min-h-11 min-w-11 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30"
               >
                 ▼
               </button>
@@ -90,7 +92,7 @@ export function Ordering({
       </ol>
       {!solved ? (
         <div className="space-y-2">
-          <Button type="button" variant="secondary" onClick={() => setChecked(true)}>
+          <Button type="button" variant="secondary" size="lg" className="min-h-11" onClick={() => setChecked(true)}>
             Prüfen
           </Button>
           {checked && !isDone && (

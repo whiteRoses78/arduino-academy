@@ -95,7 +95,7 @@ export default async function LessonPage({ params }: Props) {
         <StartTest
           lessonId={lesson.id}
           lessonTitle={lesson.title}
-          isLoggedIn={!!user}
+          userId={user?.id ?? null}
         />
       ),
     });

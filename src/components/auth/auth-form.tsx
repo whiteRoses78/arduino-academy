@@ -57,6 +57,7 @@ export function AuthForm({ action, mode }: AuthFormProps) {
           autoComplete="email"
           placeholder="du@beispiel.de"
           aria-invalid={!!errors.email}
+          className="h-11 text-base md:text-base"
           {...register("email")}
         />
         {errors.email && (
@@ -74,6 +75,7 @@ export function AuthForm({ action, mode }: AuthFormProps) {
           autoComplete={isSignup ? "new-password" : "current-password"}
           placeholder={isSignup ? "mindestens 8 Zeichen" : undefined}
           aria-invalid={!!errors.password}
+          className="h-11 text-base md:text-base"
           {...register("password")}
         />
         {errors.password && (
@@ -92,7 +94,7 @@ export function AuthForm({ action, mode }: AuthFormProps) {
         </p>
       )}
 
-      <Button type="submit" size="lg" disabled={isPending} className="w-full">
+      <Button type="submit" size="lg" disabled={isPending} className="min-h-11 w-full">
         {isPending ? pendingLabel : submitLabel}
       </Button>
     </form>

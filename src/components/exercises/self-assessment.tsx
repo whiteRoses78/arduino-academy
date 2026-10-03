@@ -88,17 +88,10 @@ export function SelfAssessment({
           Schön! Damit dein Fortschritt und die cleveren Wiederholungen
           gespeichert werden,{" "}
           <Link
-            href="/registrieren"
-            className="font-medium text-primary underline-offset-4 hover:underline"
-          >
-            leg dir ein Konto an
-          </Link>{" "}
-          oder{" "}
-          <Link
             href="/anmelden"
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
-            melde dich an
+            melde dich mit deinem Klassen-Zugang an
           </Link>
           .
         </p>

@@ -38,17 +38,25 @@ export default function DatenschutzPage() {
           </h2>
           <p className="mt-2">
             Die Lerninhalte lassen sich ohne Anmeldung lesen und bearbeiten.
-            Erst wenn du ein Konto anlegst, verarbeiten wir:
+            Erst wenn du dich mit deinem Klassen-Zugang anmeldest, verarbeiten
+            wir:
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>
-              <strong>Kontodaten:</strong> E-Mail-Adresse und Passwort (das
-              Passwort wird ausschließlich verschlüsselt gespeichert).
+              <strong>Zugangsdaten:</strong> dein Klassen-Zugang (eine
+              ausgedachte Adresse wie „arduino07@klasse.de“, nicht dein echter
+              Name) und das
+              Passwort (es wird ausschließlich verschlüsselt gespeichert).
             </li>
             <li>
               <strong>Lernfortschritt:</strong> welche Lektionen du abgeschlossen
               hast, dein Wiederholungs-Status (Leitner-Fach, Fälligkeitsdatum)
               und deine Selbsteinschätzung.
+            </li>
+            <li>
+              <strong>Kompetenztests:</strong> deine Antworten und dein Ergebnis
+              (Punkte und Prozent) je Lektion. Deine Lehrkraft sieht diese
+              Ergebnisse.
             </li>
           </ul>
         </section>
@@ -60,7 +68,7 @@ export default function DatenschutzPage() {
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>
               <strong>Supabase</strong> (Datenbank und Authentifizierung):
-              speichert Konto- und Fortschrittsdaten. Datenstandort: Frankfurt
+              speichert Zugangs-, Fortschritts- und Testdaten. Datenstandort: Frankfurt
               am Main, Deutschland (EU-Region eu-central-1).
             </li>
             <li>
@@ -76,8 +84,8 @@ export default function DatenschutzPage() {
           <p className="mt-2">
             Du hast das Recht auf Auskunft, Berichtigung, Löschung und
             Einschränkung der Verarbeitung deiner Daten sowie auf
-            Datenübertragbarkeit und Widerspruch. Wende dich dafür an die oben
-            genannte verantwortliche Person.
+            Datenübertragbarkeit und Widerspruch. Wende dich dafür an deine
+            Lehrkraft.
           </p>
         </section>
       </div>

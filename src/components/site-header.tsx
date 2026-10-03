@@ -35,21 +35,21 @@ export async function SiteHeader() {
 
         {user ? (
           <div className="flex items-center gap-2 sm:gap-3">
-            <Button asChild variant="ghost" size="sm">
+            <Button asChild variant="ghost" size="sm" className="min-h-11">
               <Link href="/dashboard">Dashboard</Link>
             </Button>
             {canSeeTests && (
-              <Button asChild variant="ghost" size="sm">
+              <Button asChild variant="ghost" size="sm" className="min-h-11">
                 <Link href="/lehrer/tests">Tests</Link>
               </Button>
             )}
             {canSeeTests && (
-              <Button asChild variant="ghost" size="sm">
+              <Button asChild variant="ghost" size="sm" className="min-h-11">
                 <Link href="/lehrer/material">Material</Link>
               </Button>
             )}
             {isAdmin && (
-              <Button asChild variant="ghost" size="sm">
+              <Button asChild variant="ghost" size="sm" className="min-h-11">
                 <Link href="/admin">Admin</Link>
               </Button>
             )}
@@ -57,14 +57,14 @@ export async function SiteHeader() {
               {user.email}
             </span>
             <form action={signOutAction}>
-              <Button type="submit" variant="ghost" size="sm">
+              <Button type="submit" variant="ghost" size="sm" className="min-h-11">
                 Abmelden
               </Button>
             </form>
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm">
+            <Button asChild variant="ghost" size="sm" className="min-h-11">
               <Link href="/anmelden">Anmelden</Link>
             </Button>
           </div>
