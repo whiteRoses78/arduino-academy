@@ -873,7 +873,7 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Was passiert in Version 1, wenn die Bedingung if (zustand == LOW) wahr ist?",
+      question: "Was passiert im Programm, wenn die Bedingung if (zustand == LOW) wahr ist?",
       options: [
         "digitalWrite(ledPin, HIGH) schaltet die LED an",
         "digitalWrite(ledPin, LOW) schaltet die LED aus",
@@ -886,12 +886,12 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Was ist der häufigste Anfänger-Fehler, vor dem die Lektion warnt?",
+      question: "Die LED geht nie an, obwohl du den Taster drückst. Welcher Tippfehler in der Bedingung ist die Ursache?",
       options: [
-        "HIGH mit LOW zu verwechseln",
-        "= (Zuweisung) mit == (Vergleich) zu verwechseln",
-        "setup mit loop zu verwechseln",
-        "int mit bool zu verwechseln",
+        "Dort steht HIGH statt LOW",
+        "Dort steht = (Zuweisung) statt == (Vergleich)",
+        "Dort fehlt das Wort else",
+        "Dort steht LOW in Großbuchstaben",
       ],
       correct: 1,
       explanation:
@@ -899,36 +899,42 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Welche zwei Werte kann ein Datentyp bool annehmen?",
-      options: ["0 bis 255", "HIGH oder LOW", "true oder false", "an, aus oder unbekannt"],
+      question: "Welche zwei pinMode-Einstellungen braucht das Programm für Taster und LED?",
+      options: [
+        "Taster: OUTPUT, LED: INPUT_PULLUP",
+        "Taster: OUTPUT, LED: OUTPUT",
+        "Taster: INPUT_PULLUP, LED: OUTPUT",
+        "Taster: INPUT_PULLUP, LED: INPUT_PULLUP",
+      ],
       correct: 2,
-      explanation: "bool kann nur true (wahr) oder false (falsch) sein, also genau zwei Werte.",
+      explanation:
+        "Der Taster ist eine Eingabe und bekommt INPUT_PULLUP. Die LED ist eine Ausgabe und bekommt OUTPUT.",
     },
     {
       type: "multiple-choice",
-      question: "Was bewirkt das Ausrufezeichen ! bei einem bool-Wert, z.B. in ledAn = !ledAn?",
+      question: "Wozu braucht das Programm den else-Teil?",
       options: [
-        "Es macht aus dem bool eine Zahl",
-        "Es verdoppelt den Wert",
-        "Es löscht die Variable komplett",
-        "Es dreht den Wert um: aus true wird false und umgekehrt",
+        "Damit die LED heller leuchtet",
+        "Damit der Taster entprellt wird",
+        "Damit das Programm nach dem Drücken neu startet",
+        "Damit die LED wieder ausgeht, wenn der Taster nicht gedrückt ist",
       ],
       correct: 3,
       explanation:
-        "Das ! kehrt den bool-Wert um. War ledAn vorher false, wird es true und umgekehrt — so entsteht der Toggle-Effekt.",
+        "Der else-Teil läuft, wenn die Bedingung nicht stimmt, also wenn niemand drückt. Dort wird die LED ausgeschaltet. Ohne else bliebe sie nach dem ersten Druck an.",
     },
     {
       type: "multiple-choice",
-      question: "Wozu dient die Variable letzterDruck im Toggle-Programm?",
+      question: "Wie oft fragt der Arduino in diesem Programm den Taster ab?",
       options: [
-        "Sie merkt sich, ob der Taster im letzten Durchlauf schon gedrückt war, damit nur bei einem NEUEN Druck umgeschaltet wird",
-        "Sie zählt, wie oft die LED insgesamt geleuchtet hat",
-        "Sie speichert, an welchem Pin der Taster angeschlossen ist",
-        "Sie misst, wie lange der Taster gedrückt gehalten wird",
+        "Bei jedem Durchlauf von loop(), also ständig neu",
+        "Nur ein einziges Mal beim Einschalten",
+        "Genau einmal pro Sekunde",
+        "Nur, wenn die LED gerade aus ist",
       ],
       correct: 0,
       explanation:
-        "letzterDruck speichert den Tasterzustand vom vorherigen Durchlauf. So wird nur einmal umgeschaltet, auch wenn man den Taster gedrückt hält.",
+        "digitalRead() und die if-Abfrage stehen in loop(). loop() wiederholt sich ständig, darum reagiert die LED sofort auf den Taster.",
     },
   ],
 

@@ -426,7 +426,11 @@ void loop() {
   digitalWrite(led1, LOW);
   digitalWrite(led2, HIGH);
   delay(1000);             // 1 Sekunde halten
-}`,
+}
+
+// Praxis-Zusatz 1 (schneller): beide delay(1000) durch delay(250) ersetzen.
+// Praxis-Zusatz 2 (Polizeilicht): LED 1 zweimal an / delay(200) / aus / delay(200),
+// danach dasselbe mit LED 2. Die jeweils andere LED bleibt dabei LOW.`,
       wiring: `Zwei identisch aufgebaute LED-Stränge: LED 1 (grün) an Pin 12, LED 2 (rot) an Pin 13.
 Jede LED bekommt einen eigenen 220-Ohm-Vorwiderstand. Pro Strang: Pin -> 220 Ohm -> Anode (langes Bein) -> Kathode (kurzes Bein) -> GND-Schiene.
 Beide Kathoden gehen auf dieselbe gemeinsame Minus-/GND-Schiene des Breadboards; diese Schiene per Jumper an einen GND-Pin des Arduino (ein gemeinsamer GND reicht für beide LEDs).`,
@@ -472,7 +476,10 @@ void loop() {
 }
 
 // Ausblick: Mit einer for-Schleife + Array (späteres Modul) schrumpft dieser Code
-// auf wenige Zeilen — egal ob 5 oder 50 LEDs.`,
+// auf wenige Zeilen — egal ob 5 oder 50 LEDs.
+
+// Praxis: Die Grundaufgabe ist nur der Vorwärts-Teil (eine Richtung; im Code-Gerüst steht wartezeit = 200, im Sketch oben 150).
+// Zusatz 2 (hin und zurück) ist der komplette Sketch oben.`,
       wiring: `Fünf identisch aufgebaute LED-Stränge an Pin 8, 9, 10, 11, 12 (am besten in fünf verschiedenen Farben, das macht die Laufrichtung sichtbar).
 Pro LED: Pin -> eigener 220-Ohm-Vorwiderstand -> Anode (langes Bein) -> Kathode (kurzes Bein) -> gemeinsame Minus-/GND-Schiene.
 Alle fünf Kathoden auf dieselbe GND-Schiene; diese einmal per Jumper an einen GND-Pin des Arduino. Ordentlich nebeneinander stecken (gleicher Spaltenabstand), damit die Bewegung als "Laufen" erkennbar ist.`,
@@ -500,7 +507,12 @@ void loop() {
   zustand = digitalRead(tasterPin);  // Pin 7 lesen
   Serial.println(zustand);           // Wert ausgeben: 1 = nicht gedrückt, 0 = gedrückt (Pull-up-Logik!)
   delay(100);                        // kurze Pause, damit der Monitor nicht überflutet wird
-}`,
+}
+
+// Praxis-Zusatz 1: Mit delay(1000) erscheint nur ein Wert pro Sekunde. Kurze Tastendrücke
+// zwischen zwei Abfragen werden verpasst.
+// Praxis-Zusatz 2: Mit INPUT statt INPUT_PULLUP schwebt der Pin. Ohne Drücken können die
+// Werte zufällig zwischen 0 und 1 springen (je nach Aufbau auch mal stabil bleiben).`,
       wiring: `Taster über die Mittelrinne des Breadboards stecken, sodass die zwei Beinpaare auf gegenüberliegenden Hälften liegen (so sind die intern verbundenen Beine getrennt).
 Ein Bein des Tasters per Jumper an Pin 7 (Signal). Das diagonal gegenüberliegende Bein per Jumper an GND.
 Dank INPUT_PULLUP ist KEIN externer Widerstand nötig — der interne Pull-up (ca. 20-50 kOhm) zieht den Pin auf HIGH, solange der Taster offen ist. Nur diese zwei Kabel.
@@ -512,10 +524,10 @@ Logik merken: nicht gedrückt -> HIGH (1), gedrückt -> LOW (0), weil der Taster
 • Falsche Tasterbeine erwischt: die beiden benutzten Beine gehören zur selben internen Brücke -> Taster scheint wirkungslos.`,
       didactics: `• Prüfungsbezug: digitalRead(pin) und INPUT_PULLUP sind die Eingabe-Grundbausteine der BW-Abschlussprüfung — Voraussetzung für jede taster-/sensorgesteuerte Aufgabe. Die invertierte Logik (gedrückt = LOW) bewusst thematisieren.
 • Serial Monitor als Diagnose-Werkzeug etablieren: Schüler:innen sollen erst den Wert "sehen" (1 <-> 0 beim Drücken), bevor sie damit etwas steuern.
-• Floating-Problem mit der Feder-Analogie (Schalter ohne Rückstellung = zufällig) erklären und an der Tafel eine kleine Wahrheitstabelle (Taster | Pin-Zustand | Wert) anlegen. Das Prellen (delay(50)) erst hier kurz ankündigen, vertiefen in der nächsten Lektion.`,
+• Floating-Problem mit der Feder-Analogie (Schalter ohne Rückstellung = zufällig) erklären und an der Tafel eine kleine Wahrheitstabelle (Taster | Pin-Zustand | Wert) anlegen. Das Prellen (delay(50)) hier nur kurz ankündigen.`,
     },
     "led-mit-taster-steuern": {
-      sketch: `// LED mit Taster steuern, Version 1: solange gedrückt = LED an (if/else)
+      sketch: `// LED mit Taster steuern: solange gedrückt = LED an (if/else)
 
 int tasterPin = 7;   // Taster an Pin 7 (Eingang)
 int ledPin = 8;      // LED an Pin 8 (Ausgang)
@@ -535,41 +547,36 @@ void loop() {
   }
 }
 
-/* --- Version 2: Toggle (ein Druck an, nächster Druck aus, wie ein echter Lichtschalter) ---
+/* --- Zusatz 1 "Umgekehrt": HIGH und LOW in den beiden digitalWrite-Zeilen tauschen ---
 
-int tasterPin = 7;
-int ledPin = 8;
-bool ledAn = false;           // merkt sich den LED-Zustand
-bool letzterDruck = false;    // war der Taster im letzten Durchlauf schon gedrückt?
-
-void setup() {
-  pinMode(tasterPin, INPUT_PULLUP);
-  pinMode(ledPin, OUTPUT);
-}
-
-void loop() {
-  bool gedrueckt = (digitalRead(tasterPin) == LOW);
-
-  if (gedrueckt && !letzterDruck) {   // nur bei NEUEM Druck reagieren (Flankenerkennung)
-    ledAn = !ledAn;                   // Zustand umdrehen
-    digitalWrite(ledPin, ledAn);
+  if (zustand == LOW) {
+    digitalWrite(ledPin, LOW);   // gedrückt: LED aus
+  } else {
+    digitalWrite(ledPin, HIGH);  // nicht gedrückt: LED an
   }
 
-  letzterDruck = gedrueckt;           // aktuellen Zustand für den nächsten Durchlauf merken
-  delay(50);                          // entprellen (Bouncing abfangen)
-}
+   --- Zusatz 2 "Blink-Taster": im if-Teil blinken, im else-Teil aus ---
+
+  if (zustand == LOW) {
+    digitalWrite(ledPin, HIGH);
+    delay(200);
+    digitalWrite(ledPin, LOW);
+    delay(200);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
 */`,
-      wiring: `Kombination aus den zwei vorigen Lektionen. Taster: ein Bein an Pin 7, das diagonal gegenüberliegende an GND — über die Mittelrinne gesteckt, dank INPUT_PULLUP kein externer Widerstand.
-LED: Pin 8 -> 220-Ohm-Vorwiderstand -> Anode (langes Bein) -> Kathode (kurzes Bein) -> GND-Schiene.
-Beide Bauteile teilen sich die gemeinsame GND-Schiene des Breadboards; diese einmal per Jumper an einen GND-Pin des Arduino. Stromweg: Taster gedrückt -> digitalRead(7) = LOW -> digitalWrite(8, HIGH) -> LED leuchtet.`,
+      wiring: `Aufbau wie im Praxis-Bild. Taster über der Mittelrinne (Beine e5, e7, f5, f7): Pin 7 an d5, das diagonal gegenüberliegende Bein über g7 an die untere Minus-Schiene. Dank INPUT_PULLUP kein externer Widerstand.
+LED: Pin 8 -> a11, 220-Ohm-Vorwiderstand c11 -> c12, LED mit Anode (langes Bein) in a12 und Kathode (kurzes Bein) in a13, b13 an die obere Minus-Schiene.
+GND-Pin des Arduino an die obere Minus-Schiene; obere und untere Minus-Schiene mit einem Kabel verbinden (sonst hat der Taster kein GND). Stromweg: Taster gedrückt -> digitalRead(7) = LOW -> digitalWrite(8, HIGH) -> LED leuchtet.`,
       mistakes: `• = statt == in der Bedingung: if (zustand = LOW) weist zu statt zu vergleichen — LOW ist 0, die Zuweisung liefert 0 = falsch: die Bedingung ist NIE erfüllt, die LED geht nie an. Klassiker, gezielt thematisieren.
 • Pull-up-Logik vertauscht: auf HIGH statt LOW geprüft -> LED leuchtet, wenn NICHT gedrückt wird.
-• Toggle ohne letzterDruck (Flankenerkennung): die LED schaltet bei jedem loop()-Durchlauf (mit delay(50) etwa 20-mal pro Sekunde) um -> ständiges Hin- und Herschalten, solange man hält.
-• delay(50) zum Entprellen weggelassen: ein Tastendruck wird durch Prellen als mehrere erkannt, der Toggle "springt" unkontrolliert.
+• Brücke zwischen oberer und unterer Minus-Schiene vergessen: der Taster hängt an der unteren Schiene und hat dann keine GND-Verbindung -> Drücken bewirkt nichts.
+• Taster-Kabel an zwei intern verbundenen Beinen statt diagonal: Pin liegt dauerhaft auf GND, LED leuchtet immer.
 • tasterPin und ledPin im Code vertauscht oder Kabel falsch gesteckt: Eingang/Ausgang verwechselt.`,
       didactics: `• Prüfungsbezug: Hier verbinden sich die Kern-Prüfungsbausteine — digitalRead, if/else, digitalWrite, INPUT_PULLUP. Das Muster "Eingang abfragen -> Bedingung -> Ausgang schalten" ist das Grundgerüst fast jeder Steuerungs-Aufgabe der BW-Abschlussprüfung.
 • Den Unterschied = (zuweisen) vs. == (vergleichen) explizit an der Tafel gegenüberstellen ("Mach die Tür auf!" vs. "Ist die Tür offen?") — das ist der häufigste Logikfehler.
-• Stufenweise: erst Version 1 (gedrückt = an) stabil zum Laufen bringen, dann Version 2 (Toggle). Die Zustandstabelle (Taster jetzt | Taster vorher | Aktion) hilft, die Flankenerkennung zu verstehen — und das delay(50)-Entprellen durch Weglassen einmal bewusst "kaputt" zeigen.`,
+• Die Lektion ist bewusst schlank: nur Taster -> LED mit if/else, dann sofort bauen. Der Umschalter (Toggle mit bool und Merk-Variable) kommt erst in Modul 5 bei der Lüftung, die Vergleichszeichen (<=, >=, ||) in Modul 3 bei PWM. Schnelle Schüler:innen bekommen die zwei Zusatzaufgaben im Praxisteil (Umgekehrt, Blink-Taster).`,
     },
     "einfache-ampelschaltung": {
       sketch: `// Einfache Ampelschaltung: deutsche Phasenfolge Rot -> Rot-Gelb -> Grün -> Gelb
@@ -634,7 +641,11 @@ void loop() {
   ampelSchalten(false, false, true,  5000);  // Grün
   ampelSchalten(false, true,  false, 2000);  // Gelb
 }
-*/`,
+*/
+
+// Praxis-Zusatz 1 (eilige Ampel): alle delay-Werte halbieren (2500 / 500 / 2500 / 1000).
+// Praxis-Zusatz 2 (Nachtmodus): im setup() Rot und Grün auf LOW, im loop() nur
+// digitalWrite(gelbPin, HIGH); delay(1000); digitalWrite(gelbPin, LOW); delay(1000);`,
       wiring: `Drei LEDs wie eine echte Ampel anordnen: Rot oben (Pin 2), Gelb Mitte (Pin 3), Grün unten (Pin 4).
 Pro LED: Pin -> eigener 220-Ohm-Vorwiderstand -> Anode (langes Bein) -> Kathode (kurzes Bein) -> gemeinsame Minus-/GND-Schiene.
 Alle drei Kathoden auf dieselbe GND-Schiene; diese einmal per Jumper an einen GND-Pin des Arduino. Drei Vorwiderstände, einer pro LED.`,
