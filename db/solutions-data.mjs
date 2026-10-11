@@ -617,7 +617,7 @@ void loop() {
   delay(2000);
 }
 
-/* --- Elegantere Variante mit eigener Hilfsfunktion (weniger Wiederholung) ---
+/* --- Nur als Ausblick für die Lehrkraft (nicht mehr Stoff der Lektion): Variante mit eigener Hilfsfunktion ---
 
 int rotPin = 2, gelbPin = 3, gruenPin = 4;
 
@@ -657,7 +657,7 @@ Alle drei Kathoden auf dieselbe GND-Schiene; diese einmal per Jumper an einen GN
 • Pin im Code und Steckplatz vertauscht (Rot/Gelb/Grün durcheinander): Reihenfolge der Farben stimmt nicht mit dem Code überein.`,
       didactics: `• Prüfungsbezug: Diese Schaltung ist die Basis für das Prüfungsprojekt (Modul 5). Sie bündelt pinMode, digitalWrite, delay und die feste Ablauflogik — und lässt sich exakt um typische Prüfungserweiterungen ergänzen (Fußgänger-Taster mit digitalRead/if, Nachtmodus mit blinkendem Gelb, zweite Ampel für die Querstraße).
 • Die deutsche Phasenfolge inkl. Rot-Gelb als Zustandstabelle (Phase | Rot | Gelb | Grün | Dauer) an der Tafel führen lassen, bevor codiert wird — Hardware und Code aus einer gemeinsamen Tabelle ableiten beugt Logikfehlern vor.
-• Die Hilfsfunktion ampelSchalten() als didaktischen Höhepunkt nutzen: erst die lange, wiederholende Version verstehen, dann die kompakte Funktions-Version — das motiviert eigene Funktionen (Modularität) und bereitet auf wartbaren Code in der Prüfung vor.`,
+• Die Lektion ist bewusst schlank: Ampel mit digitalWrite und delay, dann sofort bauen. Eigene Funktionen (ampelSchalten) und bool sind nicht mehr Stoff der Lektion und werden weder im Kompetenztest noch in der Modularbeit gefragt. Wer mag, zeigt die Funktions-Variante aus dem Sketch als Ausblick. Schnelle Schüler:innen bekommen die zwei Zusatzaufgaben im Praxisteil (eilige Ampel, Nachtmodus).`,
     },
   },
 

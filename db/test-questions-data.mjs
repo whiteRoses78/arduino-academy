@@ -984,16 +984,16 @@ export const TEST_QUESTIONS = {
     {
       type: "multiple-choice",
       question:
-        "Welche Ampelphase schaltet der Aufruf ampelSchalten(true, true, false, 1000); ?",
+        "Wie lange dauert ein kompletter Durchlauf der Ampel aus der Lektion (Rot 5 s, Rot-Gelb 1 s, Grün 5 s, Gelb 2 s)?",
       options: [
-        "Rot-Gelb für 1 Sekunde",
-        "Rot und Gelb für 1000 Sekunden",
-        "Nur Gelb für 1 Sekunde",
-        "Grün für 1 Sekunde",
+        "11 Sekunden",
+        "8 Sekunden",
+        "13 Sekunden",
+        "4 Sekunden",
       ],
-      correct: 0,
+      correct: 2,
       explanation:
-        "Die Werte werden der Reihe nach eingesetzt: rot = true, gelb = true, gruen = false, dauer = 1000. Also leuchten Rot und Gelb, und zwar 1000 Millisekunden = 1 Sekunde.",
+        "Die vier Phasen laufen nacheinander ab, ihre Wartezeiten addieren sich: 5 s + 1 s + 5 s + 2 s = 13 Sekunden.",
     },
     {
       type: "multiple-choice",
@@ -1036,16 +1036,17 @@ export const TEST_QUESTIONS = {
     },
     {
       type: "multiple-choice",
-      question: "Warum lohnt es sich, eine eigene Funktion wie ampelSchalten() zu verwenden?",
+      question:
+        "Die Ampel hat gerade die letzte Phase (Gelb) beendet. Was passiert als Nächstes?",
       options: [
-        "Damit die LEDs heller leuchten",
-        "Damit der Arduino schneller hochfährt",
-        "Weil man dann keine Widerstände mehr braucht",
-        "Weil der Code kürzer und übersichtlicher wird und Änderungen nur an einer Stelle nötig sind",
+        "Das Programm ist zu Ende und alle LEDs gehen aus",
+        "Die Ampel bleibt auf Gelb stehen, bis man den Arduino neu startet",
+        "Das Programm läuft rückwärts: erst Grün, dann Rot-Gelb",
+        "loop() beginnt von vorn und die Ampel zeigt wieder Rot",
       ],
       correct: 3,
       explanation:
-        "Die Hilfsfunktion fasst die wiederkehrenden Befehle zusammen. Der Code wird kürzer und lesbarer, und Änderungen muss man nur an einer Stelle vornehmen.",
+        "Alle vier Phasen stehen in loop(). loop() wiederholt sich endlos, darum folgt auf Gelb wieder die erste Phase: Rot.",
     },
   ],
   "analog/spannungsteiler-verstehen": [
