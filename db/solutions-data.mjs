@@ -929,7 +929,22 @@ void loop() {
 // Variante "sanfter Sweep" (statt der zwei write() oben im loop):
 //   for (int winkel = 0;   winkel <= 180; winkel++) { meinServo.write(winkel); delay(15); }
 //   for (int winkel = 180; winkel >= 0;  winkel--) { meinServo.write(winkel); delay(15); }
-// Die for-Schleife fährt alle Zwischenwinkel an -> flüssige Bewegung statt Sprung.`,
+// Die for-Schleife fährt alle Zwischenwinkel an -> flüssige Bewegung statt Sprung.
+
+// Ausblick (seit 12.10.2026 nicht mehr in der Lektion): Piezo-Summer und Ultraschall-Sensor HC-SR04.
+// Beide wurden im Kurs nie praktisch aufgebaut, darum stehen sie nur noch hier.
+// Aktiver Summer an Pin 8 (+ an den Pin, - an GND), Ansteuerung wie eine LED:
+//   digitalWrite(8, HIGH); delay(500); digitalWrite(8, LOW); delay(500);
+// Passiver Summer: tone(8, 440); erzeugt den Ton, noTone(8); schaltet ihn ab.
+// HC-SR04 (VCC an 5V, Trig an Pin 7, Echo an Pin 6, GND an GND),
+// im setup(): pinMode(7, OUTPUT); pinMode(6, INPUT); Serial.begin(9600);
+// im loop():
+//   digitalWrite(7, LOW);  delayMicroseconds(2);
+//   digitalWrite(7, HIGH); delayMicroseconds(10);   // kurzer Ping
+//   digitalWrite(7, LOW);
+//   long dauer = pulseIn(6, HIGH);   // Laufzeit in Mikrosekunden
+//   long cm = dauer / 58;            // Entfernung in Zentimetern
+//   Serial.println(cm);`,
       wiring: `SG90-Servo hat ein dreiadriges Kabel. Braun (oder schwarz) = Masse an einen GND-Pin des Arduino. Rot = Versorgung an 5V. Orange (oder gelb) = Signal an Pin 9. Die kleinen SG90 dürfen direkt am Arduino-5V hängen (USB-Strom reicht für einen Servo). Merkhilfe: das außenliegende Kabel ist immer das Signal, die Mitte immer Plus (rot). Über das Breadboard: rotes Servokabel auf die +Schiene, braunes auf die -Schiene, oranges zu Pin 9. Größere Servos oder mehrere Servos brauchen eine externe 5-V-Versorgung; deren Masse muss zwingend mit dem Arduino-GND verbunden werden (gemeinsame Masse). Niemals Plus (rot) mit dem Signal-Pin verwechseln — das kann den Arduino-Pin durchbrennen.`,
       mistakes: `• Plus (rot) und Masse (braun) vertauscht -> Servo überhitzt, im schlimmsten Fall stirbt auch der Arduino-Pin.
 • Signal-Kabel (orange) nicht oder am falschen Pin angeschlossen -> Servo brummt, bewegt sich aber nicht; prüfen ob wirklich an Pin 9 und ob im Code attach(9) steht.
@@ -977,7 +992,7 @@ void loop() {
 • Mehr als 5 V (z.B. 9-V-Block) an 5V-Pin/+Schiene -> zerstört den Arduino und überlastet den Motor.`,
       didactics: `• Prüfungskern "Aktor ansteuern" / Transistorgrundschaltung: Hier wird das zentrale Argument aufgebaut — ein Arduino-Pin liefert nur ca. 20-40 mA, ein Motor braucht das Mehrfache, also übernimmt der Transistor das Schalten des großen Stroms aus einer separaten Quelle, der Pin steuert nur. Diese Begründung ist prüfungsrelevant und kehrt beim L298N wieder.
 • Drei Bauteile zuordnen lassen: Transistor = Schalter, 1-kOhm-Widerstand = schützt den Pin (begrenzt Basisstrom), Freilaufdiode = schützt den Transistor (fängt Spannungsspitze der Spule). Die Diodenpolung (Ring zur +-Seite) ist der häufigste Fehler — als eigenen Prüfpunkt vor dem Einschalten etablieren.
-• Software-Sicht entkoppelt von Hardware: Der Code ist identisch zur LED-Ansteuerung (digitalWrite HIGH/LOW). PWM hier nur als Plus-Box (analogWrite für Drehzahl). Wichtige Klarstellung: Laut BW-Skript wird der DC-Motor selbst mit dem L298N gesteuert, nicht mit Einzeltransistor; diese Lektion ist die Grundlage.`,
+• Software-Sicht entkoppelt von Hardware: Der Code ist identisch zur LED-Ansteuerung (digitalWrite HIGH/LOW). PWM kommt hier nur als Zusatzaufgabe im Praxisteil vor (analogWrite für Drehzahl). Wichtige Klarstellung: Laut BW-Skript wird der DC-Motor selbst mit dem L298N gesteuert, nicht mit Einzeltransistor; diese Lektion ist die Grundlage.`,
     },
     "dc-motor-mit-l298n": {
       sketch: `// DC-Motor mit L298N -- Richtung (IN1/IN2) + Drehzahl (ENA per PWM)
