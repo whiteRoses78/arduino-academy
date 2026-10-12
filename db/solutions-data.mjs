@@ -576,7 +576,7 @@ GND-Pin des Arduino an die obere Minus-Schiene; obere und untere Minus-Schiene m
 • tasterPin und ledPin im Code vertauscht oder Kabel falsch gesteckt: Eingang/Ausgang verwechselt.`,
       didactics: `• Prüfungsbezug: Hier verbinden sich die Kern-Prüfungsbausteine — digitalRead, if/else, digitalWrite, INPUT_PULLUP. Das Muster "Eingang abfragen -> Bedingung -> Ausgang schalten" ist das Grundgerüst fast jeder Steuerungs-Aufgabe der BW-Abschlussprüfung.
 • Den Unterschied = (zuweisen) vs. == (vergleichen) explizit an der Tafel gegenüberstellen ("Mach die Tür auf!" vs. "Ist die Tür offen?") — das ist der häufigste Logikfehler.
-• Die Lektion ist bewusst schlank: nur Taster -> LED mit if/else, dann sofort bauen. Der Umschalter (Toggle mit bool und Merk-Variable) kommt erst in Modul 5 bei der Lüftung, die Vergleichszeichen (<=, >=, ||) in Modul 3 bei PWM. Schnelle Schüler:innen bekommen die zwei Zusatzaufgaben im Praxisteil (Umgekehrt, Blink-Taster).`,
+• Die Lektion ist bewusst schlank: nur Taster -> LED mit if/else, dann sofort bauen. Der Umschalter (Toggle mit bool und Merk-Variable) kommt erst in Modul 5 bei der Lüftung, die Vergleichszeichen (<, >, <=, >=) in Modul 3, Lektion 6. Schnelle Schüler:innen bekommen die zwei Zusatzaufgaben im Praxisteil (Umgekehrt, Blink-Taster).`,
     },
     "einfache-ampelschaltung": {
       sketch: `// Einfache Ampelschaltung: deutsche Phasenfolge Rot -> Rot-Gelb -> Grün -> Gelb
@@ -699,7 +699,11 @@ void loop() {
   Serial.println(" V");
 
   delay(200);                         // 5 Messungen pro Sekunde
-}`,
+}
+
+// Praxis-Zusatz 1 (Zielwert treffen): reine Übung, keine Code-Änderung.
+// Praxis-Zusatz 2 (Kabel tauschen): 5V und GND an den äußeren Beinen vertauscht -> nur die
+// Drehrichtung kehrt sich um (links = 1023, rechts = 0). Schadet dem Poti nicht.`,
       wiring: `Potentiometer (10 kOhm) ist ein verstellbarer Spannungsteiler mit drei Beinen: linkes Bein an GND, mittleres Bein (Schleifer/Abgriff) an A0, rechtes Bein an 5V (5V und GND an den äußeren Beinen sind vertauschbar — das kehrt nur die Drehrichtung um). Der Mittelabgriff liefert eine stufenlose Spannung zwischen 0 V (ganz links) und 5 V (ganz rechts); A0 misst genau diese Spannung. Ergebnis: ganz links -> analogRead = 0, Mitte -> ca. 512, ganz rechts -> 1023. Kein Vorwiderstand und kein pinMode() nötig. USB anstecken, Serial Monitor mit 9600 Baud öffnen, dann am Poti drehen.`,
       mistakes: `• Mittleres Bein (Abgriff) nicht an A0, sondern an 5V oder GND -> konstanter Wert (1023 bzw. 0), Drehen ändert nichts.
 • digitalRead() statt analogRead() verwendet -> nur 0/1 statt 0-1023; analoger Verlauf geht verloren.
@@ -735,7 +739,28 @@ void loop() {
   Serial.println(ledWert);
 
   delay(100);
-}`,
+}
+
+/* --- Nur als Ausblick für die Lehrkraft (nicht mehr Stoff der Lektion): LED sanft heller und dunkler (Fading) ---
+
+int ledPin = 9;       // PWM-Pin!
+int helligkeit = 0;   // Startwert
+int schritt = 5;      // Änderung pro Durchlauf
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  analogWrite(ledPin, helligkeit);    // Helligkeit setzen
+  helligkeit = helligkeit + schritt;  // Helligkeit ändern
+
+  if (helligkeit <= 0 || helligkeit >= 255) {   // || heißt ODER
+    schritt = -schritt;               // Richtung umkehren
+  }
+  delay(30);
+}
+*/`,
       wiring: `Zwei getrennte Teile auf einem Breadboard. Eingang: Potentiometer (10 kOhm) als Spannungsteiler — linkes Bein an GND, Mittelabgriff an A0, rechtes Bein an 5V. Ausgang: LED an PWM-Pin ~9 -> Anode (langes Bein) über 220-Ohm-Vorwiderstand zum Pin ~9, Kathode (kurzes Bein) an GND. Wichtig: Die LED muss an einem mit Tilde (~) markierten Pin hängen — an einem normalen Digitalpin (z. B. 8) macht analogWrite() nur ganz an/aus statt dimmen. analogWrite() braucht Werte 0-255 (0 = aus, 255 = voll), analogRead() liefert 0-1023 — deshalb die map()-Umrechnung.`,
       mistakes: `• LED an einem Nicht-PWM-Pin (z. B. Pin 8, ohne ~) -> kein Dimmen, nur an/aus. PWM-Pins am Uno: ~3, ~5, ~6, ~9, ~10, ~11.
 • map() vergessen und den rohen analogRead-Wert (0-1023) direkt an analogWrite() gegeben -> Werte über 255 werden zurückgefaltet (Modulo 256), die Helligkeit "springt" unsinnig.
@@ -767,7 +792,11 @@ void loop() {
   Serial.println(ldrWert);
 
   delay(300);                      // ca. 3 Messungen pro Sekunde
-}`,
+}
+
+// Praxis: Die Schüler:innen notieren Hell- und Dunkelwert (Grundlage für die Schwellen in Lektion 6).
+// Zusätze "Hell-Rekord" / "Dunkel-Rekord": reine Messaufgaben ohne Code-Änderung. Typisch sind
+// Werte von 800 bis 950 unter einer Lampe und deutlich unter 100 bei vollständig abgedecktem LDR.`,
       wiring: `LDR-Spannungsteiler: 5V -> LDR -> A0-Knoten -> 10-kOhm-Festwiderstand -> GND; A0 greift am Knoten zwischen LDR und Festwiderstand ab. Bei dieser Anordnung (LDR oben, 10 kOhm unten) gilt: hell -> LDR-Widerstand klein -> der meiste Spannungsabfall liegt über dem unteren 10 kOhm -> hoher A0-Wert (ca. 920); dunkel -> LDR-Widerstand groß (ca. 100 kOhm) -> niedriger A0-Wert (ca. 100). Der 10-kOhm-Festwiderstand ist kein Schutz-, sondern der Mess-Partner — ohne ihn lägen am A0 nur 0 V oder 5 V und es gäbe keinen Helligkeitsverlauf. Beine des LDR sind nicht gepolt. USB anstecken, Serial Monitor 9600 Baud.`,
       mistakes: `• LDR und 10-kOhm-Widerstand im Spannungsteiler vertauscht -> Hell/Dunkel-Logik kehrt sich um (dann hell = niedriger Wert).
 • A0 nicht am Mittelknoten abgegriffen, sondern direkt an 5V/GND -> konstanter Wert (1023 bzw. 0), reagiert nicht auf Licht.
