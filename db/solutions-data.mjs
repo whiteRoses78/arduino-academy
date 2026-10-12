@@ -76,7 +76,19 @@ void loop() {
     digitalWrite(autoGelb, LOW);    // Auto Gelb aus
     digitalWrite(autoGruen, HIGH);  // Auto Grün an (zurück zum Normalzustand)
   }
-}`,
+}
+
+// Praxis: Das Gerüst gibt Pins, setup() (ohne die Taster-Zeile) und Phase 1 vor.
+// Die Phasen 2 bis 4 stehen oben im Sketch.
+// Zusatz 1 (Mehr Zeit): delay(5000) in Phase 2 wird delay(8000).
+// Zusatz 2 (Länger warnen): in der for-Schleife i < 5 statt i < 3.
+// Zusatz 3 (Signal kommt): direkt nach delay(200), noch vor Phase 1:
+//   for (int i = 0; i < 2; i++) {
+//     digitalWrite(fussRot, LOW);
+//     delay(300);
+//     digitalWrite(fussRot, HIGH);
+//     delay(300);
+//   }`,
       wiring: `Auto-Ampel: rote LED an Pin 2, gelbe an Pin 3, grüne an Pin 4 — jede Anode (langes Bein) über einen eigenen 220-Ω-Vorwiderstand an den Pin.
 Fußgänger-Ampel: rote LED an Pin 5, grüne an Pin 6, ebenfalls je 220 Ω.
 Alle Kathoden (kurzes Bein) gemeinsam auf die GND-Schiene.
@@ -178,7 +190,16 @@ void loop() {
     digitalWrite(autoGelb, LOW);
     delay(500);
   }
-}`,
+}
+
+// Praxis: Die Schüler:innen messen zuerst Hell- und Dunkelwert (Kalibrierungs-Sketch aus dem
+// Beispiel) und tragen ihre eigene SCHWELLE ein. Der Sketch oben ist die Lösung des Gerüsts.
+// Im Gerüst ist lichtWert oben als eigene Zeile angelegt, in loop() steht dann nur
+//   lichtWert = analogRead(A0);
+// (Im Sketch oben wird lichtWert direkt in loop() angelegt und A0 heißt ldrPin.)
+// Zusatz 1 (Ruhiger blinken): im Nachtmodus beide delay(500) durch delay(1000) ersetzen.
+// Zusatz 2 (Messwert anzeigen): Serial.begin(9600); in setup() und Serial.println(lichtWert);
+// in loop() - so wie im Sketch oben schon enthalten.`,
       wiring: `Ampel-Teil wie gehabt: jede LED über 220 Ω an ihren Pin (Auto Rot=2, Gelb=3, Grün=4, Fußgänger Rot=5, Grün=6), alle Kathoden an die GND-Schiene.
 Taster zwischen Pin 7 und GND (INPUT_PULLUP, kein externer Widerstand).
 LDR-Spannungsteiler neu: 5V → LDR → A0-Knoten → 10-kΩ-Widerstand → GND; A0 greift am Knoten zwischen LDR und Festwiderstand ab.
@@ -941,7 +962,11 @@ void loop() {
 
 // Plus-Variante Drehzahl (Pin 9 ist PWM-fähig):
 //   analogWrite(motorPin, 128);   // halbe Drehzahl
-//   analogWrite(motorPin, 255);   // volle Drehzahl`,
+//   analogWrite(motorPin, 255);   // volle Drehzahl
+
+// Praxis-Zusatz 1 (Anderer Takt): delay(1000) nach dem Einschalten, delay(3000) nach dem Ausschalten.
+// Praxis-Zusatz 2 (Langsamer drehen): analogWrite(motorPin, 128) statt digitalWrite(motorPin, HIGH).
+// Pin 9 ist PWM-fähig. Kleine Motoren laufen bei 128 manchmal nicht an, dann 180 nehmen.`,
       wiring: `BC547 mit der flachen (beschrifteten) Seite zum Betrachter, Beine nach unten: von links Collector (C) - Basis (B) - Emitter (E). Emitter an GND. Collector an ein Motorkabel; das andere Motorkabel an +5V (Low-Side-Schaltung: Motor zwischen +5V und Collector). Basis über einen 1-kOhm-Widerstand an Pin 9 — der Widerstand begrenzt den Basisstrom auf ca. 4 mA und schützt den Arduino-Pin. Parallel zum Motor kommt die Freilaufdiode 1N4148 (ersatzweise 1N4007): der Ring (Kathode) zeigt zur +5V-Seite, das andere Bein an die Collector-Seite. Im Normalbetrieb sperrt sie, beim Abschalten leitet sie die Spannungsspitze der Motorspule sicher ab. Nie mehr als 5 V an den 5V-Pin bzw. die +Schiene (auch keinen 9-V-Block): Startet der Arduino beim Motor-Start neu, anderen USB-Port probieren. Hinweis: Der BC547 ist nur bis ca. 100 mA belastbar; für stärkere Motoren den L298N (nächste Lektion) nehmen.`,
       mistakes: `• Motor direkt an einen Arduino-Pin statt über den Transistor -> Pin zieht zu viel Strom (Motor 50-100 mA, Pin nur ca. 20 mA) und brennt durch.
 • Basiswiderstand (1 kOhm) vergessen -> ungebremster Basisstrom killt den Pin; Motor zuckt nur.
@@ -987,7 +1012,15 @@ void loop() {
   digitalWrite(pinIN1, LOW);   // Stopp
   digitalWrite(pinIN2, LOW);
   delay(2000);
-}`,
+}
+
+// Praxis-Zusatz 1 (Sauberer Wechsel): der Stopp-Block am Ende von loop() im Sketch oben.
+// Praxis-Zusatz 2 (Drei Gänge): IN1 HIGH, IN2 LOW einmal setzen, dann
+//   analogWrite(pinEn, 120); delay(3000);
+//   analogWrite(pinEn, 180); delay(3000);
+//   analogWrite(pinEn, 255); delay(3000);
+// danach weiter mit Stopp und Rückwärtslauf. Läuft der Motor bei 120 nicht an: 150 nehmen.
+// (Im Schüler-Gerüst heißt der Pin pinENA, im Sketch oben pinEn.)`,
       wiring: `Motor A an die Klemmen OUT1/OUT2 des L298N-Moduls. Die Motorspannung kommt aus einer eigenen Quelle (bei uns ein 9-V-Block; am Motor kommen rund 7 V an, kleine Motoren nicht lange mit Vollgas betreiben) an den Versorgungseingang des Moduls — nicht aus dem Arduino. Zwingend: GND des L298N-Moduls mit dem GND des Arduino verbinden (gemeinsame Masse), sonst haben die Steuersignale keinen gemeinsamen Bezugspunkt. Steuerleitungen: ENA an Pin 10 (PWM-Pin mit ~, für die Drehzahl), IN1 an Pin 9, IN2 an Pin 8 (beide für die Drehrichtung). Falls am ENA-Eingang ein Jumper steckt, muss er entfernt werden, damit Pin 10 die Drehzahl per PWM regeln kann — bleibt der Jumper drauf, läuft der Motor immer mit voller Drehzahl. Im Inneren sitzt eine H-Brücke (vier Schalter), die den Strom in beide Richtungen durch den Motor schickt — daher Vorwärts/Rückwärts.`,
       mistakes: `• GND von L298N-Modul und Arduino nicht verbunden -> häufigster Fehler bei externen Lasten: Steuersignale ohne gemeinsamen Bezugspunkt, Motor reagiert nicht.
 • Motorspannung aus dem Arduino statt aus eigener Quelle ziehen wollen -> Arduino liefert nur ca. 20-40 mA, viel zu wenig für den Motor.
