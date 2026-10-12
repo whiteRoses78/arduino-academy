@@ -975,7 +975,7 @@ void loop() {
   delay(2000);                     // 2 Sekunden Pause
 }
 
-// Plus-Variante Drehzahl (Pin 9 ist PWM-fähig):
+// Variante Drehzahl (Pin 9 ist PWM-fähig):
 //   analogWrite(motorPin, 128);   // halbe Drehzahl
 //   analogWrite(motorPin, 255);   // volle Drehzahl
 
