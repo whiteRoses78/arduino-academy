@@ -1,4 +1,5 @@
 # Haelt die Supabase-Free-Projekte wach (Pause nach 7 Tagen ohne Zugriff).
+# Wichtig: echte Tabelle abfragen! rpc/ping (ohne Tabelle) zaehlte nicht als Aktivitaet -> hsap am 19.10.2026 trotzdem pausiert.
 # Laeuft auf GitHubs Servern, unabhaengig vom Mac. Mac-Job bleibt als Backup:
 # ~/Library/Scripts/arduino-supabase-ping.sh
 # Die Keys sind PUBLISHABLE Keys (gehen ohnehin an jeden Browser) -> kein Geheimnis.
@@ -23,4 +24,4 @@ jobs:
         run: |
           curl -fsS --retry 5 --retry-delay 30 --retry-all-errors -o /dev/null \
             -H "apikey: sb_publishable_xpEKD3qnMArLMoBGSj0hCQ_cZN5XayQ" \
-            "https://lvejgcbumfiipdusuvga.supabase.co/rest/v1/rpc/ping"
+            "https://lvejgcbumfiipdusuvga.supabase.co/rest/v1/profiles?select=id&limit=1"
